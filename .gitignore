@@ -1,0 +1,14 @@
+.idea
+.svn
+.DS_STORE
+.DS_Store
+.build
+.classpath
+.hg
+.settings
+.thumbsdb
+.project
+/target
+*.class
+Thumbs.db
+/bin
