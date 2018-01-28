@@ -8,14 +8,33 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>medical-root</name>
-	<description>Spring Boot project for backend of cs631 group project</description>
+	<name>The Medical App for NJIT CS 631</name>
+	<description>This is a web application used to demonstrate database proficiency utilizing the business domain of a medical practice.</description>
+
+	<scm>
+		<url>git@bitbucket.org:cs631_2018_spring/backend.git</url>
+		<connection>git@bitbucket.org:cs631_2018_spring/backend.git</connection>
+		<developerConnection>https://bitbucket.org/cs631_2018_spring/backend</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>nelson</id>
+			<name>Nelson Brown</name>
+			<email>nrb6 AT njit DOT edu</email>
+		</developer>
+		<developer>
+			<id>jon-paul</id>
+			<name>Jon-Paul Marnien</name>
+			<email>jm727 AT njit DOT edu</email>
+		</developer>
+	</developers>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -25,6 +44,27 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -54,15 +94,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.restdocs</groupId>
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
+
 	</dependencies>
 
 	<build>
