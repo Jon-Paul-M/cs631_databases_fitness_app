@@ -5,7 +5,7 @@
   <head>
     <title>Good Thymes Virtual Grocery</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../../example/css/gtvg.css" th:href="@{/example/css/gtvg.css}" />
   </head>
 
   <body th:object="${order}">
@@ -19,7 +19,7 @@
 
     <h2>Customer</h2>
       
-    <div th:object="*{customer}">
+    <div th:object="${order.customer}">
       <p><b>Name:</b> <span th:text="*{name}">Frederic Tomato</span></p>
       <p><b>Since:</b> <span th:text="*{#calendars.format(customerSince,'dd MMM yyyy')}">13 jan 2011</span></p>
     </div>
@@ -40,11 +40,11 @@
     </table>
 
     <div>
-      <b>TOTAL:</b> <span th:text="*{#aggregates.sum(orderLines.{purchasePrice * amount})}">35.23</span>
+      <b>TOTAL:</b> <span th:text="${order.total()}">35.23</span>
     </div>
   
     <p>
-      <a href="list.html" th:href="@{/order/list}">Return to order list</a>
+      <a href="list.html" th:href="@{/example/order/list}">Return to order list</a>
     </p>
     
   </body>

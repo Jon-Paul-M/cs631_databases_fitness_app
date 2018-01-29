@@ -21,29 +21,28 @@ package edu.njit.cs631.example.business.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import edu.njit.cs631.example.business.entities.Order;
 import edu.njit.cs631.example.business.entities.repositories.OrderRepository;
 
+@Service
 public class OrderService {
 
-    
-    
-    public OrderService() {
-        super();
-    }
-    
-    
-    
-    public List<Order> findAll() {
-        return OrderRepository.getInstance().findAll();
-    }
+	public OrderService() {
+		super();
+	}
 
-    public Order findById(final Integer id) {
-        return OrderRepository.getInstance().findById(id);
-    }
+	public List<Order> findAll() {
+		return OrderRepository.getInstance().findAll();
+	}
 
-    public List<Order> findByCustomerId(final Integer customerId) {
-        return OrderRepository.getInstance().findByCustomerId(customerId);
-    }
-    
+	public Order findById(final Integer id) {
+		return OrderRepository.getInstance().findById(id);
+	}
+
+	public List<Order> findByCustomerId(final Integer customerId) {
+		return OrderRepository.getInstance().findByCustomerId(customerId);
+	}
+
 }

@@ -19,6 +19,7 @@
  */
 package edu.njit.cs631.example.business.entities;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -58,9 +59,17 @@ public class Order {
         this.customer = customer;
     }
     
-
     public Set<OrderLine> getOrderLines() {
         return this.orderLines;
     }
     
+    public BigDecimal total() {
+		BigDecimal total = new BigDecimal(0.0);
+		for (OrderLine line : getOrderLines()) {
+			total = total.add(line.getPurchasePrice().multiply(new BigDecimal(line.getAmount())));
+		}
+		return total;
+
+    	
+    }
 }
