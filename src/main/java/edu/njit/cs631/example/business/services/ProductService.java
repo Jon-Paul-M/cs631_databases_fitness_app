@@ -21,18 +21,17 @@ package edu.njit.cs631.example.business.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import edu.njit.cs631.example.business.entities.Product;
 import edu.njit.cs631.example.business.entities.repositories.ProductRepository;
 
+@Service
 public class ProductService {
 
-    
-    
     public ProductService() {
         super();
     }
-    
-    
     
     public List<Product> findAll() {
         return ProductRepository.getInstance().findAll();

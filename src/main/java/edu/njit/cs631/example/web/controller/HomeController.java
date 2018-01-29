@@ -21,7 +21,7 @@ public class HomeController {
 	@RequestMapping(value="/")
 	public ModelAndView home() {
 		logger.info("In HomeController.home");
-		ModelAndView modelAndView = new ModelAndView("home");
+		ModelAndView modelAndView = new ModelAndView("example/home");
 		modelAndView.addObject("today", Calendar.getInstance());
 		return modelAndView;
 	}
