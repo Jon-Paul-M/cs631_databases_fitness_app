@@ -1,0 +1,8 @@
+-- This is where inalizing and sample data will go
+
+
+INSERT INTO TITLE (TITLE_ID, TITLE) VALUES (1, 'Mr.');
+INSERT INTO TITLE (TITLE_ID, TITLE) VALUES (2, 'Mrs.');
+INSERT INTO TITLE (TITLE_ID, TITLE) VALUES (3, 'Ms.');
+INSERT INTO TITLE (TITLE_ID, TITLE) VALUES (4, 'Dr.');
+

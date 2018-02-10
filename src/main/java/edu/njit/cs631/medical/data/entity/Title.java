@@ -10,7 +10,9 @@ import javax.persistence.Id;
 public class Title {
 
 	private Long id;
-    @Id
+	private String title;
+	
+	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="title_id", nullable=false)
 	public Long getId() {
@@ -19,5 +21,14 @@ public class Title {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	@Column(name="title", nullable=false)
+    public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 
 }
