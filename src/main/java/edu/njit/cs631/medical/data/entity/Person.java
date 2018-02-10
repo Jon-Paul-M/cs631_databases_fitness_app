@@ -1,12 +1,11 @@
 package edu.njit.cs631.medical.data.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -28,6 +27,7 @@ public class Person {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="person_id", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +35,7 @@ public class Person {
 		this.id = id;
 	}
 	
+	@Column(name="first_name", nullable=false)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -42,6 +43,7 @@ public class Person {
 		this.firstName = firstName;
 	}
 	
+	@Column(name="last_name", nullable=false)
 	public String getLastName() {
 		return lastName;
 	}
@@ -49,6 +51,7 @@ public class Person {
 		this.lastName = lastName;
 	}
 	
+	@Column(name="middle_name", nullable=true)
 	public String getMiddleName() {
 		return middleName;
 	}
@@ -65,6 +68,7 @@ public class Person {
 		this.title = title;
 	}
 	
+	@Column(name="suffix", nullable=true)
 	public String getSuffix() {
 		return suffix;
 	}
@@ -72,6 +76,7 @@ public class Person {
 		this.suffix = suffix;
 	}
 	
+	@Column(name="ssn", nullable=false, unique=true)
 	public String getSsn() {
 		return ssn;
 	}
@@ -88,6 +93,7 @@ public class Person {
 		this.address = address;
 	}
 	
+	@Column(name="phone", nullable=true)
 	public String getPhone() {
 		return phone;
 	}
