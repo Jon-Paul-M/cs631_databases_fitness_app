@@ -6,9 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="PERSONS")
 public class Person {
 
 	public Person() {
@@ -16,16 +18,23 @@ public class Person {
 	}
 	
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String middleName;
     private Title title;
-    private String suffix;
+    private String firstName;
+    private String middleInitial;
+    private String lastName;
+    private String gender;
     private String ssn;
-    private Address address;
-    private String phone;
+    private String homePhone;
+    private String mobilePhone;
+    private String email;
+    private String address;
+    private String city;
+    private String county;
+    private String state;
+    private String postalCode;
     
-    @Id
+    
+	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="person_id", nullable=false)
 	public Long getId() {
@@ -33,6 +42,15 @@ public class Person {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="title_id")
+	public Title getTitle() {
+		return title;
+	}
+	public void setTitle(Title title) {
+		this.title = title;
 	}
 	
 	@Column(name="first_name", nullable=false)
@@ -43,6 +61,14 @@ public class Person {
 		this.firstName = firstName;
 	}
 	
+	@Column(name="middle_initial", nullable=false)
+	public String getMiddleInitial() {
+		return middleInitial;
+	}
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
+	}
+	
 	@Column(name="last_name", nullable=false)
 	public String getLastName() {
 		return lastName;
@@ -50,30 +76,13 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	@Column(name="middle_name", nullable=true)
-	public String getMiddleName() {
-		return middleName;
+		
+	@Column(name="gender", nullable=false)
+	public String getGender() {
+		return gender;
 	}
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-	
-	@OneToOne(optional=true)
-	@JoinColumn(name="title_id")
-	public Title getTitle() {
-		return title;
-	}
-	public void setTitle(Title title) {
-		this.title = title;
-	}
-	
-	@Column(name="suffix", nullable=true)
-	public String getSuffix() {
-		return suffix;
-	}
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	
 	@Column(name="ssn", nullable=false, unique=true)
@@ -83,23 +92,69 @@ public class Person {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
+		
+	@Column(name="home_phone", nullable=true)
+	public String getHomePhone() {
+		return homePhone;
+	}
+	public void setHomePhone(String homePhone) {
+		this.homePhone = homePhone;
+	}
+
+	@Column(name="mobile_phone", nullable=true)
+    public String getMobilePhone() {
+		return mobilePhone;
+	}
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
 	
-	@OneToOne(optional=true)
-	@JoinColumn(name="address_id")
-	public Address getAddress() {
+	@Column(name="email", nullable=true)
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	@Column(name="address", nullable=true)
+	public String getAddress() {
 		return address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 	
-	@Column(name="phone", nullable=true)
-	public String getPhone() {
-		return phone;
+	@Column(name="city", nullable=true)
+	public String getCity() {
+		return city;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	@Column(name="county", nullable=true)
+	public String getCounty() {
+		return county;
+	}
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	
+	@Column(name="state", nullable=true)
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	@Column(name="postal_code", nullable=true)
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String zip) {
+		this.postalCode = zip;
 	}
 
-    
 }
