@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="PERSONS")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
 	public Person() {
