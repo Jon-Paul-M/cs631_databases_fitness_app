@@ -8,15 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TITLES")
-public class Title {
+@Table(name="PERSONNEL_TYPE")
+public class PersonnelType {
 
-	private Long id;
-	private String title;
+	public PersonnelType() {
+		super();
+	}
 	
+    private Long id;
+    private String name;
+    
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="TITLE_ID", nullable=false)
+    @Column(name="PERSONNEL_TYPE_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -24,13 +28,12 @@ public class Title {
 		this.id = id;
 	}
 	
-	@Column(name="TITLE", nullable=false)
-    public String getTitle() {
-		return title;
+	@Column(name="TYPE_NAME", nullable=false)
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 
 }

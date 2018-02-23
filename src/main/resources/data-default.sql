@@ -139,3 +139,10 @@ INSERT INTO PERSONS (person_id, title_id, gender, first_name, last_name, middle_
 INSERT INTO PERSONS (person_id, title_id, gender, first_name, last_name, middle_initial, ssn, home_phone, mobile_phone, email, address, city, county, state, postal_code) VALUES (130, 3, 'F', 'Lili', 'Paskin', NULL, '381-95-3872', '201-431-2989', '201-478-8540', 'lili.paskin@cox.net', '20113 4th Ave E', 'Kearny', 'Hudson', 'NJ', '07032');
 INSERT INTO PERSONS (person_id, title_id, gender, first_name, last_name, middle_initial, ssn, home_phone, mobile_phone, email, address, city, county, state, postal_code) VALUES (131, 2, 'F', 'Loren', 'Asar', NULL, '235-25-5414', '570-648-3035', '570-569-2356', 'loren.asar@aol.com', '6 Ridgewood Center Dr', 'Old Forge', 'Lackawanna', 'PA', '18518');
 INSERT INTO PERSONS (person_id, title_id, gender, first_name, last_name, middle_initial, ssn, home_phone, mobile_phone, email, address, city, county, state, postal_code) VALUES (132, 4, 'F', 'Catalina', 'Tillotson', NULL, '281-05-7906', '609-373-3332', '609-826-4990', 'catalina@hotmail.com', '3338 A Lockport Pl #6', 'Margate City', 'Atlantic', 'NJ', '08402');
+
+INSERT INTO PERSONNEL_TYPE (personnel_type_id, type_name) values (1, 'Physician');
+INSERT INTO PERSONNEL_TYPE (personnel_type_id, type_name) values (2, 'Surgeon');
+INSERT INTO PERSONNEL_TYPE (personnel_type_id, type_name) values (3, 'Nurse');
+INSERT INTO PERSONNEL_TYPE (personnel_type_id, type_name) values (4, 'Staff');
+
+
