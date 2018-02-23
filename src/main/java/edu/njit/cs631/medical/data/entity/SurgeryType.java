@@ -15,7 +15,7 @@ public class SurgeryType {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="surgery_type_id", nullable=false)
+    @Column(name="SURGERY_TYPE_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}

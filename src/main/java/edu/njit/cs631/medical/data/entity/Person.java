@@ -39,7 +39,7 @@ public class Person {
     
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="person_id", nullable=false)
+    @Column(name="PERSON_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -48,7 +48,7 @@ public class Person {
 	}
 	
 	@ManyToOne(optional=true)
-	@JoinColumn(name="title_id")
+	@JoinColumn(name="TITLE_ID")
 	public Title getTitle() {
 		return title;
 	}
@@ -56,7 +56,7 @@ public class Person {
 		this.title = title;
 	}
 	
-	@Column(name="first_name", nullable=false)
+	@Column(name="FIRST_NAME", nullable=false)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -64,7 +64,7 @@ public class Person {
 		this.firstName = firstName;
 	}
 	
-	@Column(name="middle_initial", nullable=false)
+	@Column(name="MIDDLE_INITIAL", nullable=false)
 	public String getMiddleInitial() {
 		return middleInitial;
 	}
@@ -72,7 +72,7 @@ public class Person {
 		this.middleInitial = middleInitial;
 	}
 	
-	@Column(name="last_name", nullable=false)
+	@Column(name="LAST_NAME", nullable=false)
 	public String getLastName() {
 		return lastName;
 	}
@@ -80,7 +80,7 @@ public class Person {
 		this.lastName = lastName;
 	}
 		
-	@Column(name="gender", nullable=false)
+	@Column(name="GENDER", nullable=false)
 	public String getGender() {
 		return gender;
 	}
@@ -88,7 +88,7 @@ public class Person {
 		this.gender = gender;
 	}
 	
-	@Column(name="ssn", nullable=false, unique=true)
+	@Column(name="SSN", nullable=false, unique=true)
 	public String getSsn() {
 		return ssn;
 	}
@@ -96,7 +96,7 @@ public class Person {
 		this.ssn = ssn;
 	}
 		
-	@Column(name="home_phone", nullable=true)
+	@Column(name="HOME_PHONE", nullable=true)
 	public String getHomePhone() {
 		return homePhone;
 	}
@@ -104,7 +104,7 @@ public class Person {
 		this.homePhone = homePhone;
 	}
 
-	@Column(name="mobile_phone", nullable=true)
+	@Column(name="MOBILE_PHONE", nullable=true)
     public String getMobilePhone() {
 		return mobilePhone;
 	}
@@ -112,7 +112,7 @@ public class Person {
 		this.mobilePhone = mobilePhone;
 	}
 	
-	@Column(name="email", nullable=true)
+	@Column(name="EMAIL", nullable=true)
 	public String getEmail() {
 		return email;
 	}
@@ -120,7 +120,7 @@ public class Person {
 		this.email = email;
 	}
 	
-	@Column(name="address", nullable=true)
+	@Column(name="ADDRESS", nullable=true)
 	public String getAddress() {
 		return address;
 	}
@@ -128,7 +128,7 @@ public class Person {
 		this.address = address;
 	}
 	
-	@Column(name="city", nullable=true)
+	@Column(name="CITY", nullable=true)
 	public String getCity() {
 		return city;
 	}
@@ -136,7 +136,7 @@ public class Person {
 		this.city = city;
 	}
 	
-	@Column(name="county", nullable=true)
+	@Column(name="COUNTY", nullable=true)
 	public String getCounty() {
 		return county;
 	}
@@ -144,7 +144,7 @@ public class Person {
 		this.county = county;
 	}
 	
-	@Column(name="state", nullable=true)
+	@Column(name="STATE", nullable=true)
 	public String getState() {
 		return state;
 	}
@@ -152,7 +152,7 @@ public class Person {
 		this.state = state;
 	}
 	
-	@Column(name="postal_code", nullable=true)
+	@Column(name="POSTAL_CODE", nullable=true)
 	public String getPostalCode() {
 		return postalCode;
 	}

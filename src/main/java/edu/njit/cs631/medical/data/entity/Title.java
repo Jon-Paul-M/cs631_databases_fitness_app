@@ -16,7 +16,7 @@ public class Title {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="title_id", nullable=false)
+    @Column(name="TITLE_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -24,7 +24,7 @@ public class Title {
 		this.id = id;
 	}
 	
-	@Column(name="title", nullable=false)
+	@Column(name="TITLE", nullable=false)
     public String getTitle() {
 		return title;
 	}

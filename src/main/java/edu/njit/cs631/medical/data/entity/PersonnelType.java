@@ -20,7 +20,7 @@ public class PersonnelType {
     
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="personnel_type_id", nullable=false)
+    @Column(name="PERSONNEL_TYPE_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -28,7 +28,7 @@ public class PersonnelType {
 		this.id = id;
 	}
 	
-	@Column(name="type_name", nullable=false)
+	@Column(name="TYPE_NAME", nullable=false)
 	public String getName() {
 		return name;
 	}
