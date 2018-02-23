@@ -46,7 +46,6 @@ public class Nurse extends Personnel {
 	public List<SurgerySkill> getSurgerySkills() {
 		return surgerySkills;
 	}
-
 	public void setSurgerySkills(List<SurgerySkill> surgerySkills) {
 		this.surgerySkills = surgerySkills;
 	}
