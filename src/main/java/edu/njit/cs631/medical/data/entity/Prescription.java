@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +36,16 @@ public class Prescription {
 	}
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+	
+	private Medication medication;
+	@JoinColumn(name="MEDICATION_ID")
+	@ManyToOne(optional=true)
+	public Medication getMedication() {
+		return medication;
+	}
+	public void setMedication(Medication medication) {
+		this.medication = medication;
 	}
 	
 	
