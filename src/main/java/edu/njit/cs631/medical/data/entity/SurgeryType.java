@@ -45,4 +45,14 @@ public class SurgeryType {
 	public void setSurgerySkills(List<SurgerySkill> surgerySkills) {
 		this.surgerySkills = surgerySkills;
 	}
+	
+	private String name;
+	@Column(name="TYPE_NAME", nullable=false)
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
