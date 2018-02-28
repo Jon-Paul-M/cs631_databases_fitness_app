@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -43,5 +44,17 @@ public class Patient extends Person {
 	public void setPrimaryCarePhysician(Physician primaryCarePhysician) {
 		this.primaryCarePhysician = primaryCarePhysician;
 	}
+	
+	private List<Prescription> prescriptions;
+	@OneToMany(mappedBy="patient")
+	public List<Prescription> getPrescriptions() {
+		return prescriptions;
+	}
+	public void setPrescriptions(List<Prescription> prescriptions) {
+		this.prescriptions = prescriptions;
+	}
+	
+	
+	
 	
 }
