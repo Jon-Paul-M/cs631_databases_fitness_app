@@ -12,22 +12,26 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SURGERY_SKILLS")
-public class SurgerySkill {
+@Table(name="ILLNESSES")
+public class Illness {
 
+	public Illness() {
+		super();
+	}
+	
 	private Long id;
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="SURGERY_SKILL_ID", nullable=false)
+    @Column(name="ILLNESS_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	private String name;
-	@Column(name="SKILL_NAME", nullable=false)
+	@Column(name="ILLNESS_NAME", nullable=false)
 	public String getName() {
 		return name;
 	}
@@ -35,22 +39,12 @@ public class SurgerySkill {
 		this.name = name;
 	}
 	
-	private List<Nurse> nurses;
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "surgerySkills")
-	public List<Nurse> getNurses() {
-		return nurses;
+	private List<Patient> patients;
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "illnesses")
+	public List<Patient> getPatients() {
+		return patients;
 	}
-	public void setNurses(List<Nurse> nurses) {
-		this.nurses = nurses;
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
 	}
-	
-	private List<SurgeryType> surgeryTypes;
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "surgerySkills")
-	public List<SurgeryType> getSurgeryTypes() {
-		return surgeryTypes;
-	}
-	public void setSurgeryTypes(List<SurgeryType> surgeryTypes) {
-		this.surgeryTypes = surgeryTypes;
-	}
-
 }
