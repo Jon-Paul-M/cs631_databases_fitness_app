@@ -58,4 +58,25 @@ public class Prescription {
 		this.prescribingPhysician = prescribingPhysician;
 	}
 	
+	// TODO: make dosage a first class entity
+	private String dosage;
+	@Column(name="DOSAGE", nullable=false)
+	public String getDosage() {
+		return dosage;
+	}
+	public void setDosage(String dosage) {
+		this.dosage = dosage;
+	}
+	
+	// TODO: make frequency a first class entity
+	private String frequency;
+	@Column(name="FREQUENCY", nullable=false)
+	public String getFrequency() {
+		return frequency;
+	}
+	public void setFrequency(String frequency) {
+		this.frequency = frequency;
+	}
+	
+	
 }
