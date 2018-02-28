@@ -28,3 +28,4 @@ After running the first time, you can rerun it from the run icon up top (green c
 
 Running the app this way from eclipse, changes to classes, templates, etc will be automatically reloaded.
 
+Look for some more documentation in the wiki.
