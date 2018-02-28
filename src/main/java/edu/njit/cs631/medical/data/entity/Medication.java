@@ -1,10 +1,14 @@
 package edu.njit.cs631.medical.data.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,5 +37,14 @@ public class Medication {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	private List<Prescription> prescriptions;
+	@OneToMany(mappedBy="medication", fetch=FetchType.LAZY)
+	public List<Prescription> getPrescriptions() {
+		return prescriptions;
+	}
+	public void setPrescriptions(List<Prescription> prescriptions) {
+		this.prescriptions = prescriptions;
 	}
 }
