@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -33,4 +34,14 @@ public class Patient extends Person {
 		this.illnesses = illnesses;
 	}
 
+	private Physician primaryCarePhysician;
+	@ManyToOne(optional=true)
+	@JoinColumn(name="PRIMARY_PHYSICIAN_ID")
+	public Physician getPrimaryCarePhysician() {
+		return primaryCarePhysician;
+	}
+	public void setPrimaryCarePhysician(Physician primaryCarePhysician) {
+		this.primaryCarePhysician = primaryCarePhysician;
+	}
+	
 }
