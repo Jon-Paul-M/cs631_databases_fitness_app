@@ -48,5 +48,14 @@ public class Prescription {
 		this.medication = medication;
 	}
 	
+	private Physician prescribingPhysician;
+	@ManyToOne(optional=true)
+	@JoinColumn(name="PHYSICIAN_ID")
+	public Physician getPrescribingPhysician() {
+		return prescribingPhysician;
+	}
+	public void setPrescribingPhysician(Physician prescribingPhysician) {
+		this.prescribingPhysician = prescribingPhysician;
+	}
 	
 }
