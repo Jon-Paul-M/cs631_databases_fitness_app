@@ -1,4 +1,4 @@
-package edu.njit.cs631.example.web.Interceptor;
+package edu.njit.cs631.example.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
