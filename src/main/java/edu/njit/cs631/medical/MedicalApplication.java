@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"edu.njit.cs631.medical.config",
-	            "edu.njit.cs631.example.config"})
+@ComponentScan({"edu.njit.cs631.medical.config"})
 public class MedicalApplication {
 
 	public static void main(String[] args) {
