@@ -14,8 +14,6 @@ public class Personnel extends Person {
 		super();
 	}
 	
-	//AnnualSalary
-	//EmployeeNo
 	//ContractId
 	//SpecialtyId
 
@@ -37,4 +35,15 @@ public class Personnel extends Person {
 	public void setAnnualSalary(int annualSalary) {
 		this.annualSalary = annualSalary;
 	}
+	
+	private String employmentNumber;
+	@Column(name="EMPLOYMENT_NUMBER", nullable=false)
+	public String getEmploymentNumber() {
+		return employmentNumber;
+	}
+	public void setEmploymentNumber(String employmentNumber) {
+		this.employmentNumber = employmentNumber;
+	}
+	
+	
 }
