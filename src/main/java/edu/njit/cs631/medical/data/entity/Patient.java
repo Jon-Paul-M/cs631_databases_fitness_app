@@ -54,7 +54,4 @@ public class Patient extends Person {
 		this.prescriptions = prescriptions;
 	}
 	
-	
-	
-	
 }
