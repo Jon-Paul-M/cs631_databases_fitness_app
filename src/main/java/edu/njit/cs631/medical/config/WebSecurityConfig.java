@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         UserDetails user =
              User.withUsername("user")
-                .password("{noop}password")
+                .password("password")
                 .roles("USER")
                 .build();
 
