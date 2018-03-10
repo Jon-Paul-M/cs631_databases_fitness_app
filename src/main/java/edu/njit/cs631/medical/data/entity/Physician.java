@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PHYSICIAN")
+@Table(name="PHYSICIANS")
 public class Physician extends Person {
 
 	public Physician() {

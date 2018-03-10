@@ -31,7 +31,6 @@ public class Nurse extends Personnel {
 	public SurgeryType getSurgeryType() {
 		return surgeryType;
 	}
-
 	public void setSurgeryType(SurgeryType surgeryType) {
 		this.surgeryType = surgeryType;
 	}
