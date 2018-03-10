@@ -35,13 +35,13 @@ public class Physician extends Person {
 		this.prescriptions = prescriptions;
 	}
 	
-	private Speciality speciality;
+	private Specialty specialty;
 	@ManyToOne(optional=true)
-	@JoinColumn(name="SPECIALITY_ID")
-	public Speciality getSpeciality() {
-		return speciality;
+	@JoinColumn(name="SPECIALTY_ID")
+	public Specialty getSpecialty() {
+		return specialty;
 	}
-	public void setSpeciality(Speciality speciality) {
-		this.speciality = speciality;
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
 	}
 }

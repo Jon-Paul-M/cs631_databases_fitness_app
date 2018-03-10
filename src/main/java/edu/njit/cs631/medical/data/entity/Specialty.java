@@ -9,16 +9,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="SPECIALITIES")
-public class Speciality {
+public class Specialty {
 
-	public Speciality() {
+	public Specialty() {
 		super();
 	}
 
 	private Long id;
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="SPECIALITY_ID", nullable=false)
+    @Column(name="SPECIALTY_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -27,7 +27,7 @@ public class Speciality {
 	}
 
 	private String name;
-	@Column(name="SPECIALITY_NAME", nullable=false)
+	@Column(name="SPECIALTY_NAME", nullable=false)
 	public String getName() {
 		return name;
 	}

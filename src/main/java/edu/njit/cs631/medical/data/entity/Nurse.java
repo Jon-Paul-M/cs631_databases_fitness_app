@@ -19,6 +19,7 @@ public class Nurse extends Personnel {
 		super();
 	}
 
+	// TODO: what is a surgery type? is a surgery type the same as a surgery specialty 
 	// A nurse can have at most 1 Surgery Type
 	private SurgeryType surgeryType;
 
