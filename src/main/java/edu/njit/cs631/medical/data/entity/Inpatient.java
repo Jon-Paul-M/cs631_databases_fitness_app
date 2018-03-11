@@ -24,7 +24,7 @@ public class Inpatient {
 	
 	private Long id;
 	@Id
-    @Column(name="PERSON_ID", nullable=false)
+    @Column(name="PATIENT_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -33,7 +33,7 @@ public class Inpatient {
 	}
 
 	private Patient patient;
-	@JoinColumn(name = "PERSON_ID")
+	@JoinColumn(name = "PATIENT_ID")
 	@OneToOne(fetch = FetchType.LAZY)
     @MapsId
 	public Patient getPatient() {
