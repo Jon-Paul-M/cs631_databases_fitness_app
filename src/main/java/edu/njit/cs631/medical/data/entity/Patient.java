@@ -75,4 +75,12 @@ public class Patient extends Person {
 		this.medicalProfile = medicalProfile;
 	}
 	
+	private Inpatient inpatient;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.LAZY)
+	public Inpatient getInpatient() {
+		return inpatient;
+	}
+	public void setInpatient(Inpatient inpatient) {
+		this.inpatient = inpatient;
+	}
 }
