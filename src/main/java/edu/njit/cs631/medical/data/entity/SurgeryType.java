@@ -76,4 +76,12 @@ public class SurgeryType {
 		this.location = location;
 	}
 	
+	private String specialNeeds;
+	@Column(name="SPECIAL_NEEDS", nullable=true)
+	public String getSpecialNeeds() {
+		return specialNeeds;
+	}
+	public void setSpecialNeeds(String specialNeeds) {
+		this.specialNeeds = specialNeeds;
+	}
 }
