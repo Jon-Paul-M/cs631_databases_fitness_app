@@ -118,51 +118,6 @@ public class Person {
 		this.email = email;
 	}
 	
-	private String address;
-	@Column(name="ADDRESS", nullable=true)
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	private String city;
-	@Column(name="CITY", nullable=true)
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
-	private String county;
-	@Column(name="COUNTY", nullable=true)
-	public String getCounty() {
-		return county;
-	}
-	public void setCounty(String county) {
-		this.county = county;
-	}
-	
-	private String state;
-	@Column(name="STATE", nullable=true)
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	
-	private String postalCode;
-	@Column(name="POSTAL_CODE", nullable=true)
-	public String getPostalCode() {
-		return postalCode;
-	}
-	public void setPostalCode(String zip) {
-		this.postalCode = zip;
-	}
-
 	private Date dateOfBirth;
 	@Column(name="DATE_OF_BIRTH", nullable=true)
 	public Date getDateOfBirth() {
@@ -171,8 +126,18 @@ public class Person {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
 	
+	private Address address; 
+	@ManyToOne(optional=true)
+	@JoinColumn(name="ADDRESS_ID")
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+
 	public enum Gender {
 		FEMALE,
 		MALE

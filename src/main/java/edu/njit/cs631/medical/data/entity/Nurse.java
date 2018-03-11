@@ -43,7 +43,7 @@ public class Nurse extends Personnel {
 			CascadeType.PERSIST, 
 			CascadeType.MERGE })
 	@JoinTable(name = "NURSES_TO_SKILLS", 
-	  joinColumns = @JoinColumn(name = "PERSON_ID"), 
+	  joinColumns = @JoinColumn(name = "PERSONNEL_ID"), 
 	  inverseJoinColumns = @JoinColumn(name = "SURGERY_SKILL_ID"))
 	@OrderBy("id ASC")
 	public List<SurgerySkill> getSurgerySkills() {

@@ -27,7 +27,7 @@ public class MedicalProfile {
 	
     private Long id;
 	@Id
-    @Column(name="PERSON_ID", nullable=false)
+    @Column(name="PATIENT_ID", nullable=false)
 	public Long getId() {
 		return id;
 	}
@@ -36,7 +36,7 @@ public class MedicalProfile {
 	}
 	
     private Patient patient;
-	@JoinColumn(name = "PERSON_ID")
+	@JoinColumn(name = "PATIENT_ID")
 	@OneToOne(fetch = FetchType.LAZY)
     @MapsId
 	public Patient getPatient() {
@@ -98,7 +98,7 @@ public class MedicalProfile {
 			CascadeType.PERSIST, 
 			CascadeType.MERGE })
 	@JoinTable(name = "MEDICAL_PROFILES_TO_ALLERGIES", 
-	  joinColumns = @JoinColumn(name = "PERSON_ID"), 
+	  joinColumns = @JoinColumn(name = "PATIENT_ID"), 
 	  inverseJoinColumns = @JoinColumn(name = "ALLERGY_ID"))
 	@OrderBy("id ASC")
 	public List<Allergy> getAllergies() {
