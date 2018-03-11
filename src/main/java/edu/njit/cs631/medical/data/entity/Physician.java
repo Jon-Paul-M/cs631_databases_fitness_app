@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PHYSICIAN")
+@Table(name="PHYSICIANS")
 public class Physician extends Person {
 
 	public Physician() {
@@ -33,4 +35,13 @@ public class Physician extends Person {
 		this.prescriptions = prescriptions;
 	}
 	
+	private Specialty specialty;
+	@ManyToOne(optional=true)
+	@JoinColumn(name="SPECIALTY_ID")
+	public Specialty getSpecialty() {
+		return specialty;
+	}
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
+	}
 }
