@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ANATOMICAL_LOCATION")
+@Table(name="ANATOMICAL_LOCATIONS")
 public class AnatomicalLocation {
 
 	public AnatomicalLocation() {
