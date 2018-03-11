@@ -35,6 +35,15 @@ public class SurgerySkill {
 		this.name = name;
 	}
 	
+	private String skillCode;
+	@Column(name="SKILL_CODE", nullable=false)
+	public String getSkillCode() {
+		return skillCode;
+	}
+	public void setSkillCode(String skillCode) {
+		this.skillCode = skillCode;
+	}
+
 	private List<Nurse> nurses;
 	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "surgerySkills")
 	public List<Nurse> getNurses() {

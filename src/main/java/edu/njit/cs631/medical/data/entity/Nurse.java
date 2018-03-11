@@ -27,11 +27,6 @@ public class Nurse extends Personnel {
 	//
 	// A nurse can have at most 1 Surgery Type
 	private SurgeryType surgeryType;
-
-	// In order to assign a nurse to a surgery type, a nurse should possess
-	// one or more of the skills required for the surgery type
-	private List<SurgerySkill> surgerySkills;
-
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "SURGERY_TYPE_ID")
 	public SurgeryType getSurgeryType() {
@@ -41,6 +36,9 @@ public class Nurse extends Personnel {
 		this.surgeryType = surgeryType;
 	}
 
+	// In order to assign a nurse to a surgery type, a nurse should possess
+	// one or more of the skills required for the surgery type
+	private List<SurgerySkill> surgerySkills;
 	@ManyToMany(cascade = { 
 			CascadeType.PERSIST, 
 			CascadeType.MERGE })
