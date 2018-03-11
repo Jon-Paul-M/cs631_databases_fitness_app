@@ -3,6 +3,7 @@ package edu.njit.cs631.medical.data.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,6 +21,15 @@ public class Patient extends Person {
 		super();
 	}
 	
+	private String patientNumber;
+	@Column(name="PATIENT_NUMBER", nullable=false)
+	public String getPatientNumber() {
+		return patientNumber;
+	}
+	public void setPatientNumber(String patientNumber) {
+		this.patientNumber = patientNumber;
+	}
+
 	private List<Illness> illnesses;
 	@ManyToMany(cascade = { 
 			CascadeType.PERSIST, 

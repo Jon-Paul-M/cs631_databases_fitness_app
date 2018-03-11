@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -86,6 +88,7 @@ public class SurgeryType {
 	}
 	
 	private Category category;
+	@Enumerated(EnumType.STRING)
 	@Column(name="CATEGORY", nullable=true)
 	public Category getCategory() {
 		return category;
@@ -95,10 +98,8 @@ public class SurgeryType {
 	}
 
 
-
 	public enum Category {
 		H, // hospitalization
 		O  // outpatient
 	}
-
 }
