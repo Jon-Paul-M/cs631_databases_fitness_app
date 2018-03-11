@@ -57,20 +57,29 @@ public class Nurse extends Personnel {
 
 	private Grade grade;
 	@Enumerated(EnumType.STRING)
-	@Column(name="GRADE", nullable=false)
+	@Column(name="GRADE", nullable=true)
 	public Grade getGrade() {
 		return grade;
 	}
 	public void setGrade(Grade grade) {
 		this.grade = grade;
 	}
+	
+	private Integer yearsOfExperience;
+	@Column(name="YEARS_OF_EXPERIENCE", nullable=true)
+	public Integer getYearsOfExperience() {
+		return yearsOfExperience;
+	}
+	public void setYearsOfExperience(Integer yearsOfExperience) {
+		this.yearsOfExperience = yearsOfExperience;
+	}
 
-	// TODO: what is a nurse grade ?
+
+	// TODO: what is a nurse grade actually?
 	public enum Grade {
-		B,
-		A,
-		AA,
-		AAA
+		GOOD,
+		BETTER,
+		BEST
 	}
 
 }

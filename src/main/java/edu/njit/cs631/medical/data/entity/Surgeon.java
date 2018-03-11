@@ -24,7 +24,7 @@ public class Surgeon extends Personnel {
 		this.specialty = specialty;
 	}
 	
-	// TODO: the reqs don't specify what type of data goes in contract type
+	// TODO: the requirements don't specify what type of data goes in contract type
 	private String contractType;
 	@Column(name="CONTRACT_TYPE", nullable=true)
 	public String getContractType() {
@@ -35,7 +35,7 @@ public class Surgeon extends Personnel {
 	}
 	
 	private Integer contractLength;
-	@Column(name="CONTRACT_TYPE", nullable=true)
+	@Column(name="CONTRACT_LENGTH", nullable=true)
 	public Integer getContractLength() {
 		return contractLength;
 	}
