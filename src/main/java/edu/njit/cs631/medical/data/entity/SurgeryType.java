@@ -84,4 +84,21 @@ public class SurgeryType {
 	public void setSpecialNeeds(String specialNeeds) {
 		this.specialNeeds = specialNeeds;
 	}
+	
+	private Category category;
+	@Column(name="CATEGORY", nullable=true)
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
+
+	public enum Category {
+		H, // hospitalization
+		O  // outpatient
+	}
+
 }
