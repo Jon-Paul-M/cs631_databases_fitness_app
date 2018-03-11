@@ -2,6 +2,8 @@ package edu.njit.cs631.medical.data.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +27,6 @@ public class Person {
     private String firstName;
     private String middleInitial;
     private String lastName;
-    private String gender;
     private String ssn;
     private String homePhone;
     private String mobilePhone;
@@ -79,12 +80,14 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-		
+	
+	private Gender gender;
+	@Enumerated(EnumType.STRING)
 	@Column(name="GENDER", nullable=false)
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 	
@@ -158,6 +161,11 @@ public class Person {
 	}
 	public void setPostalCode(String zip) {
 		this.postalCode = zip;
+	}
+
+	public enum Gender {
+		FEMALE,
+		MALE
 	}
 
 }
