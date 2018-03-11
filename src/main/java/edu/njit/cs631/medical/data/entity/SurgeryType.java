@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -64,4 +65,15 @@ public class SurgeryType {
 	public void setSurgeryCode(String surgeryCode) {
 		this.surgeryCode = surgeryCode;
 	}
+	
+	private AnatomicalLocation location;
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "LOCATION_ID")
+	public AnatomicalLocation getLocation() {
+		return location;
+	}
+	public void setLocation(AnatomicalLocation location) {
+		this.location = location;
+	}
+	
 }
