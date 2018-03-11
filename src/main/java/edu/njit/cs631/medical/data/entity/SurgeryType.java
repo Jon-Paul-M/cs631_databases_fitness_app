@@ -55,4 +55,13 @@ public class SurgeryType {
 		this.name = name;
 	}
 	
+	
+	private String surgeryCode;
+	@Column(name="SURGERY_CODE", nullable=false)
+	public String getSurgeryCode() {
+		return surgeryCode;
+	}
+	public void setSurgeryCode(String surgeryCode) {
+		this.surgeryCode = surgeryCode;
+	}
 }
