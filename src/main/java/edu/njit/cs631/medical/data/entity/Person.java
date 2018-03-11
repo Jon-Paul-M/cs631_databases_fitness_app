@@ -163,6 +163,16 @@ public class Person {
 		this.postalCode = zip;
 	}
 
+	private Date dateOfBirth;
+	@Column(name="DATE_OF_BIRTH", nullable=true)
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	
 	public enum Gender {
 		FEMALE,
 		MALE
