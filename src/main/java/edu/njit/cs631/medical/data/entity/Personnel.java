@@ -13,9 +13,6 @@ public class Personnel extends Person {
 	public Personnel() {
 		super();
 	}
-	
-	//ContractId
-	//SpecialtyId
 
 	private PersonnelType personnelType;
 	@ManyToOne(optional=false)
