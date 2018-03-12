@@ -3,29 +3,65 @@ package edu.njit.cs631.medical.data.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="PATIENTS")
-public class Patient extends Person {
+public class Patient {
 
 	public Patient() {
 		super();
 	}
 	
+	private Long id;
+	@Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @Column(name="PATIENT_ID", nullable=false)
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	private Person person;
+	@JoinColumn(name = "PERSON_ID")
+	@OneToOne(fetch = FetchType.LAZY)
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	private String patientNumber;
+	@Column(name="PATIENT_NUMBER", nullable=false)
+	public String getPatientNumber() {
+		return patientNumber;
+	}
+	public void setPatientNumber(String patientNumber) {
+		this.patientNumber = patientNumber;
+	}
+
 	private List<Illness> illnesses;
 	@ManyToMany(cascade = { 
 			CascadeType.PERSIST, 
 			CascadeType.MERGE })
 	@JoinTable(name = "PATIENTS_TO_ILLNESSES", 
-	  joinColumns = @JoinColumn(name = "PERSON_ID"), 
+	  joinColumns = @JoinColumn(name = "PATIENT_ID"), 
 	  inverseJoinColumns = @JoinColumn(name = "ILLNESS_ID"))
 	@OrderBy("id ASC")
 	public List<Illness> getIllnesses() {
@@ -54,7 +90,21 @@ public class Patient extends Person {
 		this.prescriptions = prescriptions;
 	}
 	
+	private MedicalProfile medicalProfile;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.LAZY)
+	public MedicalProfile getMedicalProfile() {
+		return medicalProfile;
+	}
+	public void setMedicalProfile(MedicalProfile medicalProfile) {
+		this.medicalProfile = medicalProfile;
+	}
 	
-	
-	
+	private Inpatient inpatient;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.LAZY)
+	public Inpatient getInpatient() {
+		return inpatient;
+	}
+	public void setInpatient(Inpatient inpatient) {
+		this.inpatient = inpatient;
+	}
 }

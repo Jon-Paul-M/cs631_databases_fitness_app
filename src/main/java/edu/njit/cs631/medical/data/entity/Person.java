@@ -1,7 +1,11 @@
 package edu.njit.cs631.medical.data.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,22 +25,6 @@ public class Person {
 	}
 	
     private Long id;
-    private Title title;
-    private String firstName;
-    private String middleInitial;
-    private String lastName;
-    private String gender;
-    private String ssn;
-    private String homePhone;
-    private String mobilePhone;
-    private String email;
-    private String address;
-    private String city;
-    private String county;
-    private String state;
-    private String postalCode;
-    
-    
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="PERSON_ID", nullable=false)
@@ -47,6 +35,7 @@ public class Person {
 		this.id = id;
 	}
 	
+	private Title title;
 	@ManyToOne(optional=true)
 	@JoinColumn(name="TITLE_ID")
 	public Title getTitle() {
@@ -56,6 +45,7 @@ public class Person {
 		this.title = title;
 	}
 	
+	private String firstName;
 	@Column(name="FIRST_NAME", nullable=false)
 	public String getFirstName() {
 		return firstName;
@@ -64,6 +54,7 @@ public class Person {
 		this.firstName = firstName;
 	}
 	
+	private String middleInitial;
 	@Column(name="MIDDLE_INITIAL", nullable=false)
 	public String getMiddleInitial() {
 		return middleInitial;
@@ -72,6 +63,7 @@ public class Person {
 		this.middleInitial = middleInitial;
 	}
 	
+	private String lastName;
 	@Column(name="LAST_NAME", nullable=false)
 	public String getLastName() {
 		return lastName;
@@ -79,15 +71,18 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-		
+	
+	private Gender gender;
+	@Enumerated(EnumType.STRING)
 	@Column(name="GENDER", nullable=false)
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 	
+	private String ssn;
 	@Column(name="SSN", nullable=false, unique=true)
 	public String getSsn() {
 		return ssn;
@@ -95,7 +90,8 @@ public class Person {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-		
+	
+	private String homePhone;
 	@Column(name="HOME_PHONE", nullable=true)
 	public String getHomePhone() {
 		return homePhone;
@@ -104,6 +100,7 @@ public class Person {
 		this.homePhone = homePhone;
 	}
 
+	private String mobilePhone;
 	@Column(name="MOBILE_PHONE", nullable=true)
     public String getMobilePhone() {
 		return mobilePhone;
@@ -112,6 +109,7 @@ public class Person {
 		this.mobilePhone = mobilePhone;
 	}
 	
+	private String email;
 	@Column(name="EMAIL", nullable=true)
 	public String getEmail() {
 		return email;
@@ -120,44 +118,29 @@ public class Person {
 		this.email = email;
 	}
 	
-	@Column(name="ADDRESS", nullable=true)
-	public String getAddress() {
+	private Date dateOfBirth;
+	@Column(name="DATE_OF_BIRTH", nullable=true)
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	
+	private Address address; 
+	@ManyToOne(optional=true)
+	@JoinColumn(name="ADDRESS_ID")
+	public Address getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	@Column(name="CITY", nullable=true)
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
-	@Column(name="COUNTY", nullable=true)
-	public String getCounty() {
-		return county;
-	}
-	public void setCounty(String county) {
-		this.county = county;
-	}
-	
-	@Column(name="STATE", nullable=true)
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	
-	@Column(name="POSTAL_CODE", nullable=true)
-	public String getPostalCode() {
-		return postalCode;
-	}
-	public void setPostalCode(String zip) {
-		this.postalCode = zip;
+
+
+	public enum Gender {
+		FEMALE,
+		MALE
 	}
 
 }

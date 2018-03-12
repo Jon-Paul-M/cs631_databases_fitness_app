@@ -1,21 +1,34 @@
 package edu.njit.cs631.medical.data.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PHYSICIAN")
-public class Physician extends Person {
+@Table(name="PHYSICIANS")
+public class Physician extends Personnel {
 
 	public Physician() {
 		super();
 	}
+	
+	private BigDecimal ownershipPercentage;
+	@Column(name="OWNERSHIP_PERCENTAGE", nullable=true)
+	public BigDecimal getOwnershipPercentage() {
+		return ownershipPercentage;
+	}
+	public void setOwnershipPercentage(BigDecimal ownershipPercentage) {
+		this.ownershipPercentage = ownershipPercentage;
+	}
 
-	List<Patient> primaryCarePatients;
+	private List<Patient> primaryCarePatients;
 	@OneToMany(mappedBy="primaryCarePhysician", fetch=FetchType.LAZY)
 	public List<Patient> getPrimaryCarePatients() {
 		return primaryCarePatients;
@@ -33,4 +46,13 @@ public class Physician extends Person {
 		this.prescriptions = prescriptions;
 	}
 	
+	private Specialty specialty;
+	@ManyToOne(optional=true)
+	@JoinColumn(name="SPECIALTY_ID")
+	public Specialty getSpecialty() {
+		return specialty;
+	}
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
+	}
 }
