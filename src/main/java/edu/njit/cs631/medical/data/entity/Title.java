@@ -11,16 +11,16 @@ import javax.persistence.Table;
 @Table(name="TITLES")
 public class Title {
 
-	private Long id;
+	private Integer id;
 	private String title;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="TITLE_ID", nullable=false)
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
