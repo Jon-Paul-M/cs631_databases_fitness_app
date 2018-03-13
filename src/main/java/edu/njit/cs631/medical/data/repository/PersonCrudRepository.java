@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import edu.njit.cs631.medical.data.entity.Person;
 
-public interface PersonCrudRepository extends CrudRepository<Person, Long> {
+public interface PersonCrudRepository extends CrudRepository<Person, Integer> {
 
 	List<Person> findByLastName(String lastName);
 }

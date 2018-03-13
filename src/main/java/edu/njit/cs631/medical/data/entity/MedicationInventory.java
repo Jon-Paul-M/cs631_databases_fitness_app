@@ -19,13 +19,13 @@ public class MedicationInventory {
 		super();
 	}
 
-    private Long id;
+    private Integer id;
 	@Id
     @Column(name="MEDICATION_ID", nullable=false)
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -67,12 +67,12 @@ public class MedicationInventory {
 		this.unitCost = unitCost;
 	}
 	
-	private Long usageYearToDate;
+	private Integer usageYearToDate;
 	@Column(name="USAGE_YEAR_TO_DATE", nullable=true)
-	public Long getUsageYearToDate() {
+	public Integer getUsageYearToDate() {
 		return usageYearToDate;
 	}
-	public void setUsageYearToDate(Long usageYearToDate) {
+	public void setUsageYearToDate(Integer usageYearToDate) {
 		this.usageYearToDate = usageYearToDate;
 	}
 
