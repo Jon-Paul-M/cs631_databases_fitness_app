@@ -21,14 +21,14 @@ public class Medication {
 		super();
 	}
 
-	private Long id;
+	private Integer id;
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="MEDICATION_ID", nullable=false)
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
