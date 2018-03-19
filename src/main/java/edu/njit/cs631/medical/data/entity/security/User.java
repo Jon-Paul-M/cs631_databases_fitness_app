@@ -28,7 +28,7 @@ public class User {
 
     private boolean enabled;
     @Column(name="ENABLED", nullable=false)
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
     public void setEnabled(boolean enabled) {
@@ -37,7 +37,7 @@ public class User {
 
     private boolean tokenExpired;
     @Column(name="TOKEN_EXPIRED", nullable=false)
-    public boolean getTokenExpired() {
+    public boolean isTokenExpired() {
         return tokenExpired;
     }
     public void setTokenExpired(boolean tokenExpired) {
@@ -72,12 +72,26 @@ public class User {
         this.person = person;
     }
 
-    @ManyToMany
+    private Collection<Role> roles;
+
+    // Note: Moving these annotations to the getter method seems to
+    // remove a category of errors where the hibernate core can't
+    // find a relevant type to match against the Collection<Role>
+    // see
+    // https://stackoverflow.com/questions/6164123/org-hibernate-mappingexception-could-not-determine-type-for-java-util-set
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USERS_ROLES",
             joinColumns = @JoinColumn(
                     name = "USER_ID", referencedColumnName = "USER_ID"),
             inverseJoinColumns = @JoinColumn(
                     name = "ROLE_ID", referencedColumnName = "ROLE_ID"))
-    private Collection<Role> roles;
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(final Collection<Role> roles) {
+        this.roles = roles;
+    }
 }
