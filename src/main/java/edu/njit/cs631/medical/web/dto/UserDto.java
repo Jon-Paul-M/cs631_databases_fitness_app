@@ -29,8 +29,6 @@ public class UserDto {
     @Size(min = 1)
     private String email;
 
-    private boolean isUsing2FA;
-
     public String getEmail() {
         return email;
     }
@@ -80,5 +78,19 @@ public class UserDto {
     public void setMatchingPassword(final String matchingPassword) {
         this.matchingPassword = matchingPassword;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder
+                .append("UserDto [firstName=").append(firstName)
+                .append(", lastName=").append(lastName)
+                .append(", password=").append(password)
+                .append(", matchingPassword=").append(matchingPassword)
+                .append(", email=").append(email)
+                .append(", role=").append(role).append("]");
+        return builder.toString();
+    }
+
 }
 
