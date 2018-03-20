@@ -44,13 +44,11 @@ public class User {
         this.tokenExpired = tokenExpired;
     }
 
-    private String email;
-    @Column(name="EMAIL", nullable=false)
     public String getEmail() {
-        return email;
+        return this.person.getEmail();
     }
     public void setEmail(String value) {
-        email = value;
+        this.person.setEmail(value);
     }
 
     private String passwordHash;
