@@ -33,7 +33,8 @@ public class MedicalUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("No user found with username: " + email);
             }
 
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
+            return new org.springframework.security.core.userdetails.User(
+                            user.getEmail(),
                             user.getPasswordHash(),
                             user.isEnabled(),
                             true, // accountNonExpired
