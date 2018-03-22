@@ -3,7 +3,7 @@
 
 --DROP SEQUENCE hibernate_sequence IF EXISTS;
 
-CREATE SEQUENCE hibernate_sequence START WITH 1 INCREMENT BY 1; 
+CREATE SEQUENCE hibernate_sequence START WITH 200 INCREMENT BY 1;
 CREATE TABLE TITLES (
     TITLE_ID       INTEGER ,
     TITLE          VARCHAR(32)   NOT NULL,
@@ -57,7 +57,7 @@ ALTER TABLE PERSONS
 
 --- Security tables (see edu.njit.cs631.medical.entity.security)
 CREATE TABLE USER (
-	USER_ID             INTEGER NOT NULL,
+	USER_ID             INTEGER AUTO_INCREMENT NOT NULL,
 	PERSON_ID           INTEGER NOT NULL,
 	ENABLED             BOOLEAN NOT NULL,
 	TOKEN_EXPIRED       BOOLEAN NOT NULL,

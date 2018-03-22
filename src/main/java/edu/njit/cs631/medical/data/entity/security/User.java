@@ -14,10 +14,10 @@ public class User {
         super();
     }
 
-    private Integer id;
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="USER_ID", nullable=false)
+    private Integer id;
     public Integer getId() {
         return id;
     }
@@ -26,8 +26,8 @@ public class User {
         this.id = id;
     }
 
-    private boolean enabled;
     @Column(name="ENABLED", nullable=false)
+    private boolean enabled;
     public boolean isEnabled() {
         return enabled;
     }
@@ -35,8 +35,8 @@ public class User {
         this.enabled = enabled;
     }
 
-    private boolean tokenExpired;
     @Column(name="TOKEN_EXPIRED", nullable=false)
+    private boolean tokenExpired;
     public boolean isTokenExpired() {
         return tokenExpired;
     }
@@ -44,8 +44,8 @@ public class User {
         this.tokenExpired = tokenExpired;
     }
 
-    private String passwordHash;
     @Column(name="PASSWORD_HASH", nullable=false)
+    private String passwordHash;
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -53,23 +53,15 @@ public class User {
         passwordHash = hash;
     }
 
-    private Person person;
     @JoinColumn(name = "PERSON_ID")
     @OneToOne(fetch = FetchType.LAZY)
+    private Person person;
     public Person getPerson() {
         return person;
     }
     public void setPerson(Person person) {
         this.person = person;
     }
-
-    private Collection<Role> roles;
-
-    // Note: Moving these annotations to the getter method seems to
-    // remove a category of errors where the hibernate core can't
-    // find a relevant type to match against the Collection<Role>
-    // see
-    // https://stackoverflow.com/questions/6164123/org-hibernate-mappingexception-could-not-determine-type-for-java-util-set
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -78,6 +70,8 @@ public class User {
                     name = "USER_ID", referencedColumnName = "USER_ID"),
             inverseJoinColumns = @JoinColumn(
                     name = "ROLE_ID", referencedColumnName = "ROLE_ID"))
+    private Collection<Role> roles;
+
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -88,6 +82,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("<Person %s %s %s>", id, getPerson().getEmail(), getPerson().getFirstName());
+        return String.format("<User %s %s %s %s>",
+                id, getPerson().getEmail(), getPerson().getFirstName(), getPerson().getLastName());
     }
 }
