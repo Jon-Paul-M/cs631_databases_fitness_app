@@ -5,6 +5,8 @@ import edu.njit.cs631.medical.data.entity.security.Role;
 import edu.njit.cs631.medical.data.entity.security.User;
 import edu.njit.cs631.medical.data.repository.security.UserRepository;
 import edu.njit.cs631.medical.service.api.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +24,8 @@ import java.util.List;
 @Transactional
 public class MedicalUserDetailsService implements UserDetailsService {
 
+    Logger logger = LoggerFactory.getLogger(MedicalUserDetailsService.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -31,9 +35,11 @@ public class MedicalUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+
         try {
             final User user = userRepository.findByEmail(email);
             if (user == null) {
+                userRepository.findAll().forEach((x) -> logger.error(x.toString()));
                 throw new UsernameNotFoundException("No user found with username: " + email);
             }
 

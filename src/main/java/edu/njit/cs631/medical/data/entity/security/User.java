@@ -85,4 +85,9 @@ public class User {
     public void setRoles(final Collection<Role> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public String toString() {
+        return String.format("<Person %s %s %s>", id, getPerson().getEmail(), getPerson().getFirstName());
+    }
 }

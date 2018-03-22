@@ -23,7 +23,10 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"edu.njit.cs631.medical.data.entity"})
+@EnableJpaRepositories(basePackages = {"edu.njit.cs631.medical.data.entity",
+                                       "edu.njit.cs631.medical.data.entity.security",
+                                       "edu.njit.cs631.medical.data.repository",
+                                       "edu.njit.cs631.medical.data.repository.security"})
 @ComponentScan({"edu.njit.cs631.medical.web.controller"})
 @ComponentScan({"edu.njit.cs631.medical.service"})
 public class MedicalConfig {
@@ -39,7 +42,10 @@ public class MedicalConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "edu.njit.cs631.medical.data.entity" });
+        em.setPackagesToScan(new String[] {"edu.njit.cs631.medical.data.entity",
+                                       "edu.njit.cs631.medical.data.entity.security",
+                                       "edu.njit.cs631.medical.data.repository",
+                                       "edu.njit.cs631.medical.data.repository.security"});
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

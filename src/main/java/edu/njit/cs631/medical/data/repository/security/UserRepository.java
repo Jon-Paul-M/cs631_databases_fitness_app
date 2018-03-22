@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM USER u, PERSON p WHERE  u.PERSON_ID = p.PERSON_ID AND p.EMAIL = :email")
+    @Query("SELECT u FROM User u, Person p WHERE  u.person = p AND p.email = :email")
     User findByEmail(@Param("email") String email);
 
     @Override
