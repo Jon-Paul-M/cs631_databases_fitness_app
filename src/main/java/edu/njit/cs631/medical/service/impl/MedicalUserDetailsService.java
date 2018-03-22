@@ -11,11 +11,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Service("userDetailsService")
+@Transactional
 public class MedicalUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -34,12 +38,12 @@ public class MedicalUserDetailsService implements UserDetailsService {
             }
 
             return new org.springframework.security.core.userdetails.User(
-                            user.getEmail(),
+                            user.getPerson().getEmail(),
                             user.getPasswordHash(),
                             user.isEnabled(),
                             true, // accountNonExpired
                             true, // creditailsNonExpired
-                            true, // accountNonLocked
+                            user.isEnabled(), // accountNonLocked
                             getAuthorities(user.getRoles()));
         } catch (final Exception e) {
             throw new RuntimeException(e);

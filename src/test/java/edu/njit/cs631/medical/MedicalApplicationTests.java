@@ -36,7 +36,7 @@ public class MedicalApplicationTests {
 
         Assert.assertNotNull(servletContext);
         Assert.assertTrue(servletContext instanceof MockServletContext);
-        Arrays.asList(wac.getBeanDefinitionNames()).forEach(System.out::println);
+        // Arrays.asList(wac.getBeanDefinitionNames()).forEach(System.out::println);
         // Assert.assertNotNull(wac.getBean("greetController"));
 	}
 

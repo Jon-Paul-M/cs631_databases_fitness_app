@@ -44,13 +44,6 @@ public class User {
         this.tokenExpired = tokenExpired;
     }
 
-    public String getEmail() {
-        return this.person.getEmail();
-    }
-    public void setEmail(String value) {
-        this.person.setEmail(value);
-    }
-
     private String passwordHash;
     @Column(name="PASSWORD_HASH", nullable=false)
     public String getPasswordHash() {
