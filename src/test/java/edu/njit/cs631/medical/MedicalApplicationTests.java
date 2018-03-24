@@ -4,54 +4,14 @@ import com.google.common.collect.Iterables;
 import edu.njit.cs631.medical.data.entity.Address;
 import edu.njit.cs631.medical.data.entity.Person;
 import edu.njit.cs631.medical.data.entity.security.User;
-import edu.njit.cs631.medical.data.repository.PersonCrudRepository;
-import edu.njit.cs631.medical.data.repository.security.UserRepository;
+import edu.njit.cs631.medical.testutils.BaseTest;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
-import javax.transaction.Transactional;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest // (classes = {TestIntegrationConfig.class})
-@Transactional
-public class MedicalApplicationTests {
-
-    @Autowired
-    private WebApplicationContext wac;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PersonCrudRepository personCrudRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setUp() throws Exception {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-
-    }
+public class MedicalApplicationTests extends BaseTest {
 
 	@Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)

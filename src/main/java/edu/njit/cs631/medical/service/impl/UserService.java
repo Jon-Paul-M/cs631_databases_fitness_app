@@ -9,18 +9,21 @@ import edu.njit.cs631.medical.service.api.IUserService;
 import edu.njit.cs631.medical.web.dto.UserDto;
 import edu.njit.cs631.medical.web.error.PersonNotFoundException;
 import edu.njit.cs631.medical.web.error.UserAlreadyExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
-import java.util.List;
 
 
-@Service
+@Service("userService")
 @Transactional
-public class UserService implements IUserService{
+public class UserService implements IUserService {
+
+    Logger logger = LoggerFactory.getLogger(MedicalUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -47,6 +50,11 @@ public class UserService implements IUserService{
     @Override
     public User registerNewUserAccount(final UserDto userDto) throws UserAlreadyExistException {
         // Note, this will be used to look up an existing PersonID, and turn them into a User
+
+        if (userDto == null) {
+            logger.info("I heard a null user dto!");
+            return null;
+        }
 
         if(findUserByEmail(userDto.getEmail()) != null) {
             throw new UserAlreadyExistException("A user with that e-mail address already exists: " + userDto.getEmail());

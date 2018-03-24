@@ -5,6 +5,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import edu.njit.cs631.medical.service.api.IUserService;
+import edu.njit.cs631.medical.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -26,9 +28,13 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableJpaRepositories(basePackages = {"edu.njit.cs631.medical.data.entity",
                                        "edu.njit.cs631.medical.data.entity.security",
                                        "edu.njit.cs631.medical.data.repository",
-                                       "edu.njit.cs631.medical.data.repository.security"})
+                                       "edu.njit.cs631.medical.data.repository.security",
+                                       "edu.njit.cs631.medical.service.api",
+                                       "edu.njit.cs631.meidcal.service.impl"})
 @ComponentScan({"edu.njit.cs631.medical.web.controller"})
-@ComponentScan({"edu.njit.cs631.medical.service"})
+@ComponentScan({"edu.njit.cs631.medical.service",
+                "edu.njit.cs631.medical.service.api",
+                "edu.njit.cs631.medical.service.impl"})
 public class MedicalConfig {
 
     public MedicalConfig() {
@@ -45,7 +51,9 @@ public class MedicalConfig {
         em.setPackagesToScan(new String[] {"edu.njit.cs631.medical.data.entity",
                                        "edu.njit.cs631.medical.data.entity.security",
                                        "edu.njit.cs631.medical.data.repository",
-                                       "edu.njit.cs631.medical.data.repository.security"});
+                                       "edu.njit.cs631.medical.data.repository.security",
+                                       "edu.njit.cs631.medical.service.api",
+                                       "edu.njit.cs631.medical.service.impl"});
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

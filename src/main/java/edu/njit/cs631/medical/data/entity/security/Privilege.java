@@ -8,6 +8,16 @@ import java.util.Collection;
 public class Privilege {
 
     private Integer id;
+
+    public Privilege() {
+        super();
+    }
+
+    public Privilege(String name) {
+        super();
+        this.setName(name);
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="PRIVILEGE_ID", nullable=false)

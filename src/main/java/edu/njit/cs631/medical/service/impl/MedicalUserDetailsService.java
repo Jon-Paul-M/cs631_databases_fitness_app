@@ -8,6 +8,7 @@ import edu.njit.cs631.medical.service.api.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,12 +30,9 @@ public class MedicalUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private IUserService service;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
 
         try {
             final User user = userRepository.findByEmail(email);

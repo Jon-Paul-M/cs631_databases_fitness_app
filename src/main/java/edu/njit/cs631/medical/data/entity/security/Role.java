@@ -7,6 +7,16 @@ import java.util.Collection;
 @Table(name="ROLE")
 public class Role {
     private Integer id;
+
+    public Role() {
+        super();
+    }
+
+    public Role(String name) {
+        super();
+        this.setName(name);
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="ROLE_ID", nullable=false)

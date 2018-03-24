@@ -9,13 +9,6 @@ import javax.validation.constraints.Size;
 
 @PasswordMatches
 public class UserDto {
-    @NotNull
-    @Size(min = 1)
-    private String firstName;
-
-    @NotNull
-    @Size(min = 1)
-    private String lastName;
 
     @ValidPassword
     private String password;
@@ -47,22 +40,6 @@ public class UserDto {
         this.role = role;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -82,10 +59,8 @@ public class UserDto {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder
-                .append("UserDto [firstName=").append(firstName)
-                .append(", lastName=").append(lastName)
-                .append(", password=").append(password)
+        builder.append("[UserDto ")
+                .append("password=").append(password)
                 .append(", matchingPassword=").append(matchingPassword)
                 .append(", email=").append(email)
                 .append(", role=").append(role).append("]");

@@ -3,6 +3,7 @@ package edu.njit.cs631.medical.config;
 
 import edu.njit.cs631.medical.service.api.IUserService;
 import edu.njit.cs631.medical.service.impl.MedicalUserDetailsService;
+import edu.njit.cs631.medical.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,12 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private IUserService userService;
 
     public WebSecurityConfig() {
         super();
@@ -55,10 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        if (userDetailsService == null) {
-            userDetailsService = new MedicalUserDetailsService();
-        }
-        return userDetailsService;
+        return new MedicalUserDetailsService();
     }
 
     @Bean
@@ -70,14 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(encoder());
-        auth.setUserDetailsService(userDetailsService);
+        auth.setUserDetailsService(userDetailsService());
         return auth;
     }
-
-    @Bean
-    public IUserService userService() {
-        return userService;
-    }
-
 
 }
