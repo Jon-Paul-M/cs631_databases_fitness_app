@@ -139,8 +139,8 @@ public class Person {
 
 
 	public enum Gender {
-		FEMALE,
-		MALE
+		F,
+		M
 	}
 
 }

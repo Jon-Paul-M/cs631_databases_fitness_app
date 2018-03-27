@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import edu.njit.cs631.example.web.interceptor.SessionInterceptor;
@@ -23,9 +21,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super();
 	}
 
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		super.addViewControllers(registry);
+		registry.addViewController("/home").setViewName("home");
+        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/userdetails").setViewName("userdetails");
+        registry.addViewController("/login").setViewName("login");
+	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new SessionInterceptor()).addPathPatterns(new String[] { "/example", "/example/*" });
+		registry.addInterceptor(new SessionInterceptor()).addPathPatterns(new String[] { "/medical", "/medical/*" });
 		registry.addInterceptor(localeChangeInterceptor);
 	}
 
