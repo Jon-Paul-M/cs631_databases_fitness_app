@@ -2,7 +2,9 @@ package edu.njit.cs631.medical.usecases.mvp.patient;
 
 import org.junit.Test;
 
-public class T_005_ViewScheduledPerDoctorAndPerDay {
+import edu.njit.cs631.medical.testutils.BaseTest;
+
+public class T_005_ViewScheduledPerDoctorAndPerDayTests extends BaseTest {
 
 	// UnitOfWork_StateUnderTest_ExpectedBehavior
 	@Test

@@ -2,7 +2,9 @@ package edu.njit.cs631.medical.usecases.mvp.patient;
 
 import org.junit.Test;
 
-public class T_003_ScheduleAnAppointmentWithADoctor {
+import edu.njit.cs631.medical.testutils.BaseTest;
+
+public class T_003_ScheduleAnAppointmentWithADoctorTests extends BaseTest {
 
 	// UnitOfWork_StateUnderTest_ExpectedBehavior
 	@Test
