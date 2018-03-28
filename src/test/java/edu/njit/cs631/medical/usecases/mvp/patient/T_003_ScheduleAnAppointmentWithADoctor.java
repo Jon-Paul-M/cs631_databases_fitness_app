@@ -2,7 +2,7 @@ package edu.njit.cs631.medical.usecases.mvp.patient;
 
 import org.junit.Test;
 
-public class PatientDoctorConultaionTests {
+public class T_003_ScheduleAnAppointmentWithADoctor {
 
 	// UnitOfWork_StateUnderTest_ExpectedBehavior
 	@Test

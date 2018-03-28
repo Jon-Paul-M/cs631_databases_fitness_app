@@ -2,7 +2,7 @@ package edu.njit.cs631.medical.usecases.mvp.patient;
 
 import org.junit.Test;
 
-public class ConsultationScheduleTests2 {
+public class T_005_ViewScheduledPerDoctorAndPerDay {
 
 	// UnitOfWork_StateUnderTest_ExpectedBehavior
 	@Test
