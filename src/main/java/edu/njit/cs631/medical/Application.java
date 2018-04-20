@@ -6,9 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({"edu.njit.cs631.medical.config"})
-public class MedicalApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedicalApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

@@ -11,7 +11,7 @@ import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.jdbc.Sql;
 import javax.servlet.ServletContext;
 
-public class MedicalApplicationTests extends BaseTest {
+public class ApplicationTests extends BaseTest {
 
 	@Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
