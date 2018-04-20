@@ -1,27 +1,22 @@
 package edu.njit.cs631.fitness;
 
 
-import edu.njit.cs631.fitness.data.entity.Person;
-import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.service.api.IUserService;
-import edu.njit.cs631.fitness.service.impl.UserService;
-import edu.njit.cs631.fitness.testutils.BaseTest;
-import edu.njit.cs631.fitness.web.dto.UserDto;
-import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
-import org.assertj.core.util.Lists;
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.jdbc.Sql;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import javax.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.assertj.core.util.Lists;
+import org.junit.Test;
+import org.springframework.test.context.jdbc.Sql;
+
+import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.testutils.BaseTest;
+import edu.njit.cs631.fitness.web.dto.UserDto;
+import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 
 public class UserServiceIntegrationTest extends BaseTest {
 

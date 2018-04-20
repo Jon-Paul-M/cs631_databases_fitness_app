@@ -21,19 +21,19 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"edu.njit.cs631.medical.data.entity",
-                                       "edu.njit.cs631.medical.data.entity.security",
-                                       "edu.njit.cs631.medical.data.repository",
-                                       "edu.njit.cs631.medical.data.repository.security",
-                                       "edu.njit.cs631.medical.service.api",
+@EnableJpaRepositories(basePackages = {"edu.njit.cs631.fitness.data.entity",
+                                       "edu.njit.cs631.fitness.data.entity.security",
+                                       "edu.njit.cs631.fitness.data.repository",
+                                       "edu.njit.cs631.fitness.data.repository.security",
+                                       "edu.njit.cs631.fitness.service.api",
                                        "edu.njit.cs631.meidcal.service.impl"})
-@ComponentScan({"edu.njit.cs631.medical.web.controller"})
-@ComponentScan({"edu.njit.cs631.medical.service",
-                "edu.njit.cs631.medical.service.api",
-                "edu.njit.cs631.medical.service.impl"})
-public class MedicalConfig {
+@ComponentScan({"edu.njit.cs631.fitness.web.controller"})
+@ComponentScan({"edu.njit.cs631.fitness.service",
+                "edu.njit.cs631.fitness.service.api",
+                "edu.njit.cs631.fitness.service.impl"})
+public class MainConfig {
 
-    public MedicalConfig() {
+    public MainConfig() {
         super();
     }
 
@@ -44,12 +44,12 @@ public class MedicalConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] {"edu.njit.cs631.medical.data.entity",
-                                       "edu.njit.cs631.medical.data.entity.security",
-                                       "edu.njit.cs631.medical.data.repository",
-                                       "edu.njit.cs631.medical.data.repository.security",
-                                       "edu.njit.cs631.medical.service.api",
-                                       "edu.njit.cs631.medical.service.impl"});
+        em.setPackagesToScan(new String[] {"edu.njit.cs631.fitness.data.entity",
+                                       "edu.njit.cs631.fitness.data.entity.security",
+                                       "edu.njit.cs631.fitness.data.repository",
+                                       "edu.njit.cs631.fitness.data.repository.security",
+                                       "edu.njit.cs631.fitness.service.api",
+                                       "edu.njit.cs631.fitness.service.impl"});
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

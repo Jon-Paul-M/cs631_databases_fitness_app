@@ -1,9 +1,9 @@
 package edu.njit.cs631.fitness.testutils;
 
-import edu.njit.cs631.fitness.data.repository.PersonCrudRepository;
-import edu.njit.cs631.fitness.data.repository.security.UserRepository;
-import edu.njit.cs631.fitness.service.api.IUserService;
-import edu.njit.cs631.fitness.service.impl.UserService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import edu.njit.cs631.fitness.data.repository.PersonCrudRepository;
+import edu.njit.cs631.fitness.data.repository.security.UserRepository;
+import edu.njit.cs631.fitness.service.api.IUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest // (classes = {TestIntegrationConfig.class})
