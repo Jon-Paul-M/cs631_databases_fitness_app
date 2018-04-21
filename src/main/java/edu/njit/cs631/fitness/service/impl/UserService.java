@@ -1,8 +1,8 @@
 package edu.njit.cs631.fitness.service.impl;
 
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.PersonCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.IUserService;
@@ -32,7 +32,7 @@ public class UserService implements IUserService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PersonCrudRepository personRepository;
+    private MemberCrudRepository personRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -43,7 +43,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Person findPersonByEmail(String email) {
+    public Member findPersonByEmail(String email) {
         return personRepository.findByEmail(email);
     }
 
@@ -60,15 +60,14 @@ public class UserService implements IUserService {
             throw new UserAlreadyExistException("A user with that e-mail address already exists: " + userDto.getEmail());
         }
 
-        Person person = findPersonByEmail(userDto.getEmail());
+        Member member = findPersonByEmail(userDto.getEmail());
 
-        if (person == null) {
-            String norecord = "No record exists, please create an associated person record first for the e-mail: ";
+        if (member == null) {
+            String norecord = "No record exists, please create an associated member record first for the e-mail: ";
             throw new PersonNotFoundException(norecord + userDto.getEmail());
         }
 
         final User user = new User();
-        user.setPerson(person);
         user.setPasswordHash(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(true);
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
@@ -83,7 +82,7 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(final User user) {
-        // note, we will probably want to cascade deletion of user accounts if associated person account is deleted.
+        // note, we will probably want to cascade deletion of user accounts if associated member account is deleted.
         userRepository.delete(user);
     }
 

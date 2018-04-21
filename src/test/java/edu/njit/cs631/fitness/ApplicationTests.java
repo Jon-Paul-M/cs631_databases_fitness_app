@@ -1,8 +1,7 @@
 package edu.njit.cs631.fitness;
 
 import com.google.common.collect.Iterables;
-import edu.njit.cs631.fitness.data.entity.Address;
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.junit.Assert;
@@ -23,14 +22,18 @@ public class ApplicationTests extends BaseTest {
         Assert.assertNotNull(wac.getBean("userDetailsService"));
         userRepository.findAll().forEach(System.out::println);
 
-        // Find the first person and promote them to a user without the
-        Person personPromotion = Iterables.getFirst(personCrudRepository.findAll(), null); // the super special nelson brown id
+        // Find the first member and promote them to a user without the
+        // TODO: Rework for no member promotion, user the superclass
+        /*
+        Member memberPromotion = Iterables.getFirst(memberCrudRepository.findAll(), null); // the super special nelson brown id
 
-        Assert.assertNotNull(personPromotion);
-        System.out.println(String.format("Person to promote: %s %s", personPromotion.getId(), personPromotion.getFirstName()));
+        Assert.assertNotNull(memberPromotion);
+        System.out.println(String.format("Member as user: %s %s", memberPromotion.getId()));
+        */
 
         User associatedUser = new User();
-        associatedUser.setPerson(personPromotion);
+        associatedUser.setName("Hoobity Doobity");
+        associatedUser.setEmail("newMember@thecoolhoobity.com");
         associatedUser.setPasswordHash(encoder.encode("somepassword"));
         associatedUser.setEnabled(true);
         associatedUser.setTokenExpired(false);
@@ -43,30 +46,21 @@ public class ApplicationTests extends BaseTest {
         Assert.assertNotNull(associatedUser.getId());
         Assert.assertTrue(associatedUser.getId() >= 200);
 
-        // Create a new person
-        Person newPerson = new Person();
-        newPerson.setFirstName("Hoobity");
-        newPerson.setLastName("Doobity");
-        Address theirAddress = new Address();
-        theirAddress.setAddress1("Hoobity Doobity Street");
-        theirAddress.setCity("Doobityville");
-        theirAddress.setPostalCode("08405");
-        theirAddress.setState("NJ");
-        theirAddress.setCounty("Atlantic");
+        // Create a new member
+        Member newMember = new Member();
+        newMember.setName("The New Member");
+        newMember.setEmail("newMember@thecoolhoobity.com");
+        newMember.setPasswordHash(encoder.encode("somepassword"));
+        newMember.setAddress1("Hoobity Doobity Street");
+        newMember.setCity("Doobityville");
+        newMember.setPostalCode("08405");
+        newMember.setState("NJ");
+        newMember.setCounty("Atlantic");
 
-        newPerson.setAddress(theirAddress);
-        newPerson.setSsn("123-45-0000");
-        newPerson.setHomePhone("(123) 123-1234");
-        newPerson.setMobilePhone("(123) 123-0000");
-        newPerson.setGender(Person.Gender.M);
-        newPerson.setEmail("newPerson@thecoolhoobity.com");
-
-        entityManager.persist(theirAddress);
-        entityManager.persist(newPerson);
+        entityManager.persist(newMember);
         entityManager.flush();
 
-        Assert.assertTrue(newPerson.getId() >= 201);
-        Assert.assertTrue(theirAddress.getId() >= 201);
+        Assert.assertTrue(newMember.getId() >= 201);
 
 	}
 

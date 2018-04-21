@@ -1,18 +1,16 @@
 package edu.njit.cs631.fitness.service.api;
 
 
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
-
-import java.util.List;
 
 public interface IUserService {
 
     User findUserByEmail(String email);
 
-    Person findPersonByEmail(String email);
+    Member findPersonByEmail(String email);
 
     User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException;
 

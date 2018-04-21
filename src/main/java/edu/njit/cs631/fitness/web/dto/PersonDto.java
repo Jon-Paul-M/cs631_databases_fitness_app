@@ -1,6 +1,6 @@
 package edu.njit.cs631.fitness.web.dto;
 
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.validation.ValidEmail;
 import edu.njit.cs631.fitness.validation.ValidSSN;
 
@@ -24,9 +24,6 @@ public class PersonDto {
     @ValidSSN
     @NotNull
     private String ssn;
-
-    @NotNull
-    private Person.Gender gender;
 
     public PersonDto() {
     }
@@ -63,21 +60,12 @@ public class PersonDto {
         this.ssn = ssn;
     }
 
-    public Person.Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Person.Gender gender) {
-        this.gender = gender;
-    }
-
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("[UserDto ")
                 .append("firstName=").append(firstName)
                 .append(", lastName=").append(lastName)
-                .append(", gender=").append(gender)
                 .append(", ssn=").append(ssn)
                 .append(", email=").append(email)
                 .append("]");

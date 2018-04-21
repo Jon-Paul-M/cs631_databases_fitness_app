@@ -4,11 +4,9 @@ import edu.njit.cs631.fitness.data.entity.security.Privilege;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
-import edu.njit.cs631.fitness.service.api.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +40,7 @@ public class MedicalUserDetailsService implements UserDetailsService {
             }
 
             return new org.springframework.security.core.userdetails.User(
-                            user.getPerson().getEmail(),
+                            user.getEmail(),
                             user.getPasswordHash(),
                             user.isEnabled(),
                             true, // accountNonExpired
