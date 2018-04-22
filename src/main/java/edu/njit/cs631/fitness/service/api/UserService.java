@@ -6,7 +6,7 @@ import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 
-public interface IUserService {
+public interface UserService {
 
     User findUserByEmail(String email);
 

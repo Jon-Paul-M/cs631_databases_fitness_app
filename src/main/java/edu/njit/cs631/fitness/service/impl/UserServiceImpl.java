@@ -5,7 +5,7 @@ import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
-import edu.njit.cs631.fitness.service.api.IUserService;
+import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.PersonNotFoundException;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @Service("userService")
 @Transactional
-public class UserService implements IUserService {
+public class UserServiceImpl implements UserService {
 
     Logger logger = LoggerFactory.getLogger(MedicalUserDetailsService.class);
 

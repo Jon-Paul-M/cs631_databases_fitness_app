@@ -80,7 +80,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private final Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
+    private Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
         Role role = roleRepository.findByName(name);
         if (role == null) {
             role = new Role(name);
@@ -90,22 +90,11 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         return role;
     }
 
-    private class PersonUser {
-        final public Member member;
-        final public User user;
-
-        public PersonUser(Member p, User u) {
-            this.member = p;
-            this.user = u;
-        }
-    }
-
     @Transactional
-    private final User createUserIfNotFound(final String email,
-                                                  final String name,
-                                                  final String password,
-                                                  final Collection<Role> roles) {
-        // TODO : This needs to be reworked, we always have user before member
+    private User createUserIfNotFound(final String email,
+                                      final String name,
+                                      final String password,
+                                      final Collection<Role> roles) {
         User user = userRepository.findByEmail(email);
         if (user != null) return user;
         user = new User();

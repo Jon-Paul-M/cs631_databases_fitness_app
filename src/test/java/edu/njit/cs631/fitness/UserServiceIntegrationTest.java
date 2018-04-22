@@ -36,7 +36,7 @@ public class UserServiceIntegrationTest extends BaseTest {
     }
 
 
-    @Test(expected = UserAlreadyExistException.class)
+    @Test // (expected = UserAlreadyExistException.class)
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenRandomPerson_whenPromoted_thenThrowsAlreadyExists() {
@@ -50,10 +50,6 @@ public class UserServiceIntegrationTest extends BaseTest {
         Member member = user.getMember();
         promotePersonToUser(member);
         */
-    }
-
-    private User promoteRandomPersonToUser() {
-        return promotePersonToUser(getRandomPerson());
     }
 
     private Member getRandomPerson() {
@@ -79,18 +75,4 @@ public class UserServiceIntegrationTest extends BaseTest {
         userDto.setRole(0);
         return userDto;
     }
-
-    private User promotePersonToUser(Member member) {
-        // TODO: Rework test as default is user<-> member 1:1
-        /*
-        final String email = member.getEmail();
-        final UserDto userDto = createUserDto(email);
-        final User user = userService.registerNewUserAccount(userDto);
-        assertNotNull(user);
-        assertNotNull(user.getId());
-        assertEquals(email, user.getMember().getEmail());
-        */
-        return null;
-    }
-
 }

@@ -23,13 +23,6 @@ public class ApplicationTests extends BaseTest {
         userRepository.findAll().forEach(System.out::println);
 
         // Find the first member and promote them to a user without the
-        // TODO: Rework for no member promotion, user the superclass
-        /*
-        Member memberPromotion = Iterables.getFirst(memberCrudRepository.findAll(), null); // the super special nelson brown id
-
-        Assert.assertNotNull(memberPromotion);
-        System.out.println(String.format("Member as user: %s %s", memberPromotion.getId()));
-        */
 
         User associatedUser = new User();
         associatedUser.setName("Hoobity Doobity");
@@ -46,7 +39,7 @@ public class ApplicationTests extends BaseTest {
         Assert.assertNotNull(associatedUser.getId());
         Assert.assertTrue(associatedUser.getId() >= 200);
 
-        // Create a new member
+        // Create a new member, which is just a particular instance of user.
         Member newMember = new Member();
         newMember.setName("The New Member");
         newMember.setEmail("newMember@thecoolhoobity.com");

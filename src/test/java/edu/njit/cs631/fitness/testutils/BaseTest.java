@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
-import edu.njit.cs631.fitness.service.api.IUserService;
+import edu.njit.cs631.fitness.service.api.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest // (classes = {TestIntegrationConfig.class})
@@ -38,7 +38,7 @@ public abstract class BaseTest {
     protected PasswordEncoder encoder;
 
     @Autowired
-    protected IUserService userService;
+    protected UserService userService;
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -51,7 +51,7 @@ public abstract class BaseTest {
     }
 
     @Bean
-    public IUserService userService() {
+    public UserService userService() {
         return userService;
     }
 
