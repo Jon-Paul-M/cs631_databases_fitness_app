@@ -2,6 +2,7 @@ package edu.njit.cs631.fitness;
 
 import com.google.common.collect.Iterables;
 import edu.njit.cs631.fitness.data.entity.Member;
+import edu.njit.cs631.fitness.data.entity.Membership;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.junit.Assert;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.jdbc.Sql;
 import javax.servlet.ServletContext;
+import java.math.BigDecimal;
 
 public class ApplicationTests extends BaseTest {
 
@@ -39,9 +41,19 @@ public class ApplicationTests extends BaseTest {
         Assert.assertNotNull(associatedUser.getId());
         Assert.assertTrue(associatedUser.getId() >= 200);
 
+        // Must create a membership
+        Membership membership = new Membership();
+        membership.setFee(new BigDecimal("3.50")); // the funniest fee
+        membership.setAdvantages("Cheap, but used by many Lochness monsters.");
+        membership.setMembershipType("BASIC");
+
+        entityManager.persist(membership);
+        entityManager.flush();
+
         // Create a new member, which is just a particular instance of user.
         Member newMember = new Member();
         newMember.setName("The New Member");
+        newMember.setMembership(membership);
         newMember.setEmail("newMember@thecoolhoobity.com");
         newMember.setPasswordHash(encoder.encode("somepassword"));
         newMember.setAddress1("Hoobity Doobity Street");

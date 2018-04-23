@@ -2,6 +2,8 @@ package edu.njit.cs631.fitness.data.entity;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="EXERCISE")

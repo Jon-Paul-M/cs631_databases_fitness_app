@@ -57,11 +57,12 @@ public class Class {
         this.instructor = instructor;
     }
 
+    // Registered members for the class
     @OneToMany
     @JoinTable(
             name="REGISTER",
-            joinColumns = @JoinColumn( name="CLASS_ID"),
-            inverseJoinColumns = @JoinColumn( name="MEMBER_ID")
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CLASS_ID")
     )
     private Set<Member> members = new HashSet<>();
     public Set<Member> getMembers() { return members; }

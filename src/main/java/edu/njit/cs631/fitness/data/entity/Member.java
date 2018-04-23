@@ -5,18 +5,7 @@ import edu.njit.cs631.fitness.data.entity.security.User;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="MEMBER")
@@ -34,6 +23,17 @@ public class Member extends User {
 	public void setRegistrationDate(Timestamp registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="MEMBERSHIP_ID")
+    private Membership membership;
+    public Membership getMembership() {
+        return membership;
+    }
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
 
     @Column(name="ADDRESS1", nullable=true)
     private String address1;
