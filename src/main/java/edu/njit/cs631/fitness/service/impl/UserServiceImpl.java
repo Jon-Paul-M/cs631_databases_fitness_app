@@ -23,7 +23,7 @@ import java.util.Arrays;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    Logger logger = LoggerFactory.getLogger(MedicalUserDetailsService.class);
+    Logger logger = LoggerFactory.getLogger(FitnessUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;

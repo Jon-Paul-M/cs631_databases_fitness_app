@@ -21,9 +21,9 @@ import java.util.List;
 
 @Service("userDetailsService")
 @Transactional
-public class MedicalUserDetailsService implements UserDetailsService {
+public class FitnessUserDetailsService implements UserDetailsService {
 
-    Logger logger = LoggerFactory.getLogger(MedicalUserDetailsService.class);
+    Logger logger = LoggerFactory.getLogger(FitnessUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;
