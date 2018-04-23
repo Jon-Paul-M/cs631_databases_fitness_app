@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import edu.njit.cs631.fitness.service.impl.MedicalUserDetailsService;
+import edu.njit.cs631.fitness.service.impl.FitnessUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new MedicalUserDetailsService();
+        return new FitnessUserDetailsService();
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package edu.njit.cs631.fitness.data.entity.security;
 
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -24,6 +24,25 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    private String email;
+    @Column(name="EMAIL", nullable=false)
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    private String name;
+    @Column(name="NAME", nullable=false)
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Column(name="ENABLED", nullable=false)
@@ -53,16 +72,6 @@ public class User {
         passwordHash = hash;
     }
 
-    @JoinColumn(name = "PERSON_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Person person;
-    public Person getPerson() {
-        return person;
-    }
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USERS_ROLES",
@@ -82,7 +91,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("<User %s %s %s %s>",
-                id, getPerson().getEmail(), getPerson().getFirstName(), getPerson().getLastName());
+        return String.format("<User %s %s>",
+                id, getEmail(), getName());
     }
 }

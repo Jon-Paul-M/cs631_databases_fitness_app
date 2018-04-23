@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.njit.cs631.fitness.data.repository.PersonCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
-import edu.njit.cs631.fitness.service.api.IUserService;
+import edu.njit.cs631.fitness.service.api.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest // (classes = {TestIntegrationConfig.class})
@@ -32,13 +32,13 @@ public abstract class BaseTest {
     protected UserRepository userRepository;
 
     @Autowired
-    protected PersonCrudRepository personCrudRepository;
+    protected MemberCrudRepository memberCrudRepository;
 
     @Autowired
     protected PasswordEncoder encoder;
 
     @Autowired
-    protected IUserService userService;
+    protected UserService userService;
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -51,7 +51,7 @@ public abstract class BaseTest {
     }
 
     @Bean
-    public IUserService userService() {
+    public UserService userService() {
         return userService;
     }
 

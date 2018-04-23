@@ -1,10 +1,10 @@
 package edu.njit.cs631.fitness.config;
 
-import edu.njit.cs631.fitness.data.entity.Person;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.Privilege;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.PersonCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
 import edu.njit.cs631.fitness.data.repository.security.PrivilegeRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
@@ -29,7 +29,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
     private UserRepository userRepository;
 
     @Autowired
-    private PersonCrudRepository personRepository;
+    private MemberCrudRepository personRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -63,10 +63,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         // == create initial user
         createUserIfNotFound("admin@test.com",
                 "Admin",
-                "Admin",
                 "password",
-                "000-00-0000",
-                Person.Gender.F,
                 new ArrayList<>(Arrays.asList(adminRole)));
 
         alreadySetup = true;
@@ -83,7 +80,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private final Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
+    private Role createRoleIfNotFound(final String name, final Collection<Privilege> privileges) {
         Role role = roleRepository.findByName(name);
         if (role == null) {
             role = new Role(name);
@@ -93,45 +90,22 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         return role;
     }
 
-    private class PersonUser {
-        final public Person person;
-        final public User user;
-
-        public PersonUser(Person p, User u) {
-            this.person = p;
-            this.user = u;
-        }
-    }
-
     @Transactional
-    private final PersonUser createUserIfNotFound(final String email,
-                                                  final String firstName,
-                                                  final String lastName,
-                                                  final String password,
-                                                  final String ssn,
-                                                  final Person.Gender gender,
-                                                  final Collection<Role> roles) {
+    private User createUserIfNotFound(final String email,
+                                      final String name,
+                                      final String password,
+                                      final Collection<Role> roles) {
         User user = userRepository.findByEmail(email);
-        Person newPerson;
-        if (user == null) {
-            newPerson = new Person();
-            newPerson.setFirstName(firstName);
-            newPerson.setLastName(lastName);
-            newPerson.setSsn(ssn);
-            newPerson.setGender(gender);
-            newPerson.setEmail(email);
-            newPerson = personRepository.save(newPerson);
-            user = new User();
-            user.setPerson(newPerson);
-            user.setPasswordHash(passwordEncoder.encode(password));
-            user.setEnabled(true);
-            user.setTokenExpired(false);
-            user.setRoles(roles);
-            user = userRepository.save(user);
-        } else {
-            newPerson = user.getPerson();
-        }
-        return new PersonUser(newPerson, user);
+        if (user != null) return user;
+        user = new User();
+        user.setEmail(email);
+        user.setName(name);
+        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setEnabled(true);
+        user.setTokenExpired(false);
+        user.setRoles(roles);
+        user = userRepository.save(user);
+        return user;
     }
 
 }
