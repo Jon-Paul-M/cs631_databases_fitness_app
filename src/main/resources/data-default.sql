@@ -300,5 +300,5 @@ INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (12, 'Step Sculpt',
 INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (13, 'Hatha Yoga', 'Focus on flexabilty and strenth on this yoga class');
 INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (14, 'Hot Hatha', 'Come prepared to sweat practicing in a room heated to 105 degrees');
 
-
-
+INSERT INTO USER (USER_ID, EMAIL, NAME, ENABLED, TOKEN_EXPIRED, PASSWORD_HASH) VALUES (01, 'oria@njit.edu', 'Vincent Oria', 1, 0, '$2a$10$AIqpc4JhuHuXOdPchYgeZuVfU/vP3FJDUJk/NP8zG8hHqfoa7DWsG');
+INSERT INTO HOURLY_INSTRUCTOR (USER_ID, HOURS, HOURLY_WAGE) VALUES (01, 20, 22.75);
