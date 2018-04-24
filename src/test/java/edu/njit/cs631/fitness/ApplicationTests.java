@@ -1,16 +1,18 @@
 package edu.njit.cs631.fitness;
 
-import com.google.common.collect.Iterables;
-import edu.njit.cs631.fitness.data.entity.Member;
-import edu.njit.cs631.fitness.data.entity.Membership;
-import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.testutils.BaseTest;
+import java.math.BigDecimal;
+
+import javax.servlet.ServletContext;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.jdbc.Sql;
-import javax.servlet.ServletContext;
-import java.math.BigDecimal;
+
+import edu.njit.cs631.fitness.data.entity.Member;
+import edu.njit.cs631.fitness.data.entity.Membership;
+import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.testutils.BaseTest;
 
 public class ApplicationTests extends BaseTest {
 
