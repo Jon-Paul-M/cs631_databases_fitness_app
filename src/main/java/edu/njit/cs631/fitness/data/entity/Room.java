@@ -3,10 +3,11 @@ package edu.njit.cs631.fitness.data.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="ROOM")
+@Table(name=Room.TABLE_NAME)
 public class Room {
 
-
+	public static final String TABLE_NAME = "ROOM";
+	
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     @Column(name="ROOM_ID", nullable=false)

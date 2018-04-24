@@ -11,8 +11,10 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 
 import edu.njit.cs631.fitness.data.entity.Exercise;
 import edu.njit.cs631.fitness.data.entity.HourlyInstructor;
+import edu.njit.cs631.fitness.data.entity.Room;
 import edu.njit.cs631.fitness.data.repository.ExerciseCrudRepository;
 import edu.njit.cs631.fitness.data.repository.HourlyInstructorCrudRepository;
+import edu.njit.cs631.fitness.data.repository.RoomCrudRepository;
 import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.junit.Assert;
 
@@ -27,7 +29,10 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
 	private ExerciseCrudRepository exerciseCrudRepository;
 	
 	@Autowired
-	private  HourlyInstructorCrudRepository hourlyInstructorCrudRepository;
+	private HourlyInstructorCrudRepository hourlyInstructorCrudRepository;
+	
+	@Autowired
+	private RoomCrudRepository roomCrudRepository;
 	
 	@Test 
     public void findExercises_ExercisesExist_RepoReturnsExercises() {
@@ -47,5 +52,13 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	Assert.assertEquals("number of rows should should equal number of entities", rowCount, instructors.size());
 	}
 	
+	@Test 
+    public void findRooms_RoomsExist_RepoReturnsRooms() {
+    	int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, Room.TABLE_NAME);
+    	Collection<Room> rooms = (Collection<Room>) roomCrudRepository.findAll();
+    	Assert.assertNotNull("rooms should never be null", rooms);
+    	Assert.assertNotEquals("rooms should not be empty", 0, rooms.size());
+    	Assert.assertEquals("number of rows should should equal number of entities", rowCount, rooms.size());
+	}
 	
 }
