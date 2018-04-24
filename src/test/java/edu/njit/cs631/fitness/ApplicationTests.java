@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class ApplicationTests extends BaseTest {
 
 	@Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	public void contextLoadsWithNewUser() {
         ServletContext servletContext = wac.getServletContext();
 
