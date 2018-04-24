@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Homepage Medical Sample</title>
+    <title>CS631 GXM Fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../../static/css/styles.css" th:href="@{resources/static/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{resources/static/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="js/modernizr-custom.js" th:src="@{resources/static/js/modernizr-custom.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{resources/static/js/selectivizr-min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+<div th:fragment="footer">
+<footer>
+    <div class="care"></div>
+
+    <div class="wrapper">
+
+        <div class="row-fluid">
+            <div class="span4">
+                <h3>About us</h3>
+                <p>You can explain your business information here.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor and go incididunt ut labore et dolore magna aliqua. Ut  ullamco laboris nisi ut aliquip ex.</p>
+                <ul>
+                    <li><i class="icon-phone"></i> 000 011(1234) 123-1265</li>
+                    <li><i class="icon-building"></i> 123 T 15rd, New York, NY 1235</li>
+                    <li><i class="icon-mail"></i> info@gxm.com</li>
+                </ul>
+            </div>
+
+            <div class="span4">
+                <h3>Quick Menu</h3>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="single-news-page.html">Pages</a></li>
+                    <li><a href="classes.html">Classes</a></li>
+                    <li><a href="trainers.html">Trainers</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="pricing-page.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="span4">
+                <h3>Login to the GXM Fitness Portal</h3>
+
+                <form action="#">
+                    <fieldset>
+                        <input type="email" placeholder="Email" th:required="required"/>
+                        <input type="password" placeholder="Password" th:required="required"/>
+                    </fieldset>
+
+                    <fieldset>
+                        <span>&nbsp;</span>
+                        <input type="submit" value="LOGIN"/>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div class="wrapper">
+            <div class="row-fluid">
+                <div class="span7">
+                    COPYRIGHT © theme. ALL RIGHTS RESERVED. designed by coralix themes
+                </div>
+                <div class="span4 offset1">
+                    <ul>
+                        <li>Follow us:</li>
+                        <li><a href=""><i class="icon-skype"></i></a></li>
+                        <li><a href=""><i class="icon-linkedin"></i></a></li>
+                        <li><a href=""><i class="icon-flickr"></i></a></li>
+                        <li><a href=""><i class="icon-gplus"></i> </a></li>
+                        <li><a href=""><i class="icon-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/CoralixThemes"><i class="icon-twitter"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+
+<!-- ======================= JQuery libs =========================== -->
+<!-- Jquery -->
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<!-- Video -->
+<script src="js/video-js.js"></script>
+
+<!-- Bootstrap -->
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+
+<!-- Custom Script -->
+<script src="js/scripts.js"></script>
+<!-- ======================= End JQuery libs =========================== -->
+</div>
+
+</body>
+</html>

@@ -1042,7 +1042,7 @@ footer ul li .icon-phone, footer ul li .icon-building, footer ul li .icon-mail {
 	margin: 0 11px 11px 0;
 }
 
-footer form input[type="email"], footer form input[type="text"] {
+footer form input[type="email"], footer form input[type="text"], footer form input[type="password"] {
 	background-color: #202122;
 	border: 1px solid #121314;
 	color: #474747;

@@ -14,6 +14,22 @@
     <body>
         <div th:replace="fragments/header :: header"></div>
 
-        <p>Click <a th:href="@{/userdetails}">here</a> for authenticated page.</p>
+        <div class="wrapper">
+            <h2>The Ultimate Fitness Application</h2>
+
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a> <span class="divider">/</span></li>
+                <li class="active">(complete menu)</li>
+            </ul>
+
+            <div class="row-fluid">
+                <div class="span12">
+                <p>Click <a th:href="@{/userdetails}">here</a> for authenticated page.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div th:replace="fragments/footer :: footer"></div>
     </body>
 </html>
