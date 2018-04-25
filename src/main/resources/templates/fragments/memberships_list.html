@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Homepage Medical Sample</title>
+    <title>CS631 GXM Fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../../static/css/styles.css" th:href="@{resources/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{resources/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="../../static/js/modernizr-custom.js" th:src="@{resources/js/modernizr-custom.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{resources/js/selectivizr-min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div th:fragment="header">
+    <!--Header-->
+    <header>
+        <h1><a title="Home" href="index.html">GXM Fitness</a></h1>
+
+        <a class="responsive-menu hidden-desktop" href="">Menu</a>
+
+        <nav class="visible-desktop">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Classes</a>
+                    <ul class="visible-desktop">
+                        <li><a href="classes.html">All Classes</a></li>
+                        <li><a href="single-class-page.html">Single Class Page</a></li>
+                        <li><a href="single-class-page-cycling.html">Cycling</a></li>
+                        <li><a href="single-class-page-dance.html">Dance</a></li>
+                        <li><a href="single-class-page-kick-boxing.html">Kick Boxing</a></li>
+                        <li><a href="single-class-page-aerobic-steps.html">Aerobic and Step</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Trainers</a>
+                    <ul class="visible-desktop">
+                        <li><a href="trainers.html">Trainers Gallery 1</a></li>
+                        <li><a href="trainers-2.html">Trainers Gallery 2</a></li>
+                        <li><a href="single-trainer-page.html">Single Trainer Page</a></li>
+                        <li><a href="timetable.html">Time Table</a></li>
+                    </ul>
+                </li>
+                <li><a href="pricing-page.html">Pricing</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <!--End Header-->
+
+    <div class="slider top">
+        <img src="../../static/img/header/04.jpg" th:src="@{resources/img/header/04.jpg}" alt="Image Page Header"/>
+    </div>
+    <!-- End Inner Page Header -->
+
+    <div class="box-hero title">&nbsp;</div>
+</div>
+
+
+<div class="wrapper">
+    <h2>The Ultimate Fitness Application</h2>
+
+    <ul class="breadcrumb">
+        <li><a href="#">WELCOME</a> <span class="divider">/</span></li>
+        <li>(USER)</li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Title</h3>
+            <h5>Sub-Title</h5>
+
+        </div>
+    </div>
+
+    <!--Table-->
+    <div class="row-fluid pricing-table" th:fragment="memberships">
+        <div class="span3">
+            <h4>One Free Week Pass <span>Free</span></h4>
+            <ul>
+                <li>Fitness coaching</li>
+                <li>Group training</li>
+                <li>Twice weekly</li>
+                <li>Fitness Calculator</li>
+                <li>Cardio Floor</li>
+            </ul>
+            <a class="suscribe" href="">Suscribe Now</a>
+        </div>
+
+        <div class="span3">
+            <h4>3 Months Membership <span>$299<sup>.00</sup></span></h4>
+            <ul>
+                <li>Fitness coaching</li>
+                <li>Group training</li>
+                <li>Twice weekly</li>
+                <li>Fitness Calculator</li>
+                <li>Cardio Floor</li>
+            </ul>
+            <a class="suscribe" href="">Suscribe Now</a>
+        </div>
+
+        <div class="span3">
+            <h4>6 Months Membership <span>$450<sup>.00</sup></span></h4>
+            <ul>
+                <li>Flexible coaching</li>
+                <li>Semi-private training</li>
+                <li>Times to suit you</li>
+                <li>Pilates</li>
+                <li>Tennis</li>
+            </ul>
+            <a class="suscribe" href="">Suscribe Now</a>
+        </div>
+
+        <div class="span3">
+            <div class="top"></div>
+            <h4>12 Months Membership <span>$980<sup>.00</sup></span></h4>
+            <ul>
+                <li>Flexible coaching</li>
+                <li>Semi-private training</li>
+                <li>Times to suit you</li>
+                <li>Pilates</li>
+                <li>Tennis</li>
+            </ul>
+            <a class="suscribe" href="">Suscribe Now</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

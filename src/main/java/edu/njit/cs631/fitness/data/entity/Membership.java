@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="MEMBERSHIP")
+@Table(name=Membership.TABLE_NAME)
 public class Membership {
+
+    public static final String TABLE_NAME = "MEMBERSHIP";
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
