@@ -74,57 +74,23 @@
     </div>
 
     <!--Table-->
-    <div class="row-fluid pricing-table" th:fragment="memberships">
-        <div class="span3">
-            <h4>One Free Week Pass <span>Free</span></h4>
-            <ul>
-                <li>Fitness coaching</li>
-                <li>Group training</li>
-                <li>Twice weekly</li>
-                <li>Fitness Calculator</li>
-                <li>Cardio Floor</li>
-            </ul>
-            <a class="suscribe" href="">Suscribe Now</a>
+    <div th:fragment="memberships_list">
+        <div class="row-fluid wide-price" th:each="membership : ${memberships}">
+            <div class="wrapper-box">
+                <div class="span4">
+                    <h5 th:inline="text">[[${membership.membershipType}]] &dollar;[[${membership.fee}]]</h5>
+                    <!-- TODO: if we ever implement external vs admin registration, way down on the list -->
+                    <!-- a class="suscribe" href="#">Suscribe Now</div -->
+                </div>
+                <div class="span8">
+                    <ul th:each ="advantage : ${membership.splitAdvantages()}">
+                        <li th:text="|${advantage}|">[advantage]</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <div class="span3">
-            <h4>3 Months Membership <span>$299<sup>.00</sup></span></h4>
-            <ul>
-                <li>Fitness coaching</li>
-                <li>Group training</li>
-                <li>Twice weekly</li>
-                <li>Fitness Calculator</li>
-                <li>Cardio Floor</li>
-            </ul>
-            <a class="suscribe" href="">Suscribe Now</a>
-        </div>
-
-        <div class="span3">
-            <h4>6 Months Membership <span>$450<sup>.00</sup></span></h4>
-            <ul>
-                <li>Flexible coaching</li>
-                <li>Semi-private training</li>
-                <li>Times to suit you</li>
-                <li>Pilates</li>
-                <li>Tennis</li>
-            </ul>
-            <a class="suscribe" href="">Suscribe Now</a>
-        </div>
-
-        <div class="span3">
-            <div class="top"></div>
-            <h4>12 Months Membership <span>$980<sup>.00</sup></span></h4>
-            <ul>
-                <li>Flexible coaching</li>
-                <li>Semi-private training</li>
-                <li>Times to suit you</li>
-                <li>Pilates</li>
-                <li>Tennis</li>
-            </ul>
-            <a class="suscribe" href="">Suscribe Now</a>
-        </div>
-
     </div>
+
 </div>
 
 </body>
