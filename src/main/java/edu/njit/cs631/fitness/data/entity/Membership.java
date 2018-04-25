@@ -3,12 +3,14 @@ package edu.njit.cs631.fitness.data.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
-@Table(name="MEMBERSHIP")
+@Table(name=Membership.TABLE_NAME)
 public class Membership {
+
+    public static final String TABLE_NAME = "MEMBERSHIP";
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
@@ -45,4 +47,9 @@ public class Membership {
     public void setAdvantages(String advantages) {
         this.advantages = advantages;
     }
+
+    public List<String> splitAdvantages() {
+        return Arrays.asList(getAdvantages().split("\\\\n"));
+    }
+
 }

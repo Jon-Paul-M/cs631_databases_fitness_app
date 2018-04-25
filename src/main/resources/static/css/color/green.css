@@ -1,0 +1,254 @@
+@charset "utf-8";
+
+/* ============================== */
+/*
+    Title: Green Color
+*/
+/* ============================== */
+
+a:hover {
+	color: #409915;
+}
+
+.outside {
+    background: none repeat scroll 0 0 rgba(64, 153, 21, 0.95);
+}
+
+header h1 > a {
+	background-image: url("../../img/logo-green.png");
+}
+
+.ruler.green {
+	border-top: 4px solid #83c145;
+}
+
+.row-fluid.featured .item .span4 .row-fluid .span12  a:first-child:hover {
+	background-color: #83c145;
+}
+
+.row-fluid.control-group .offset2 a:first-child:hover {
+	background-color: #83c145;
+}
+
+.row-fluid.classes-row .span4:hover {
+	border-bottom: 3px solid #83c145;
+}
+
+span.name-trainer {
+	background-color: #83c145;
+}
+
+.news-row h4:hover {
+	background-color: #83c145;
+}
+
+ul.twitter li .icon-twitter {
+	color: #83c145;
+}
+
+.follow-twitter:hover {
+	background-color: #83c145;
+}
+
+ul.tags li a:hover {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+.reply:hover {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+a.like:hover {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+.row-fluid.pricing-table .span3:hover h4, .row-fluid.pricing-table .span3:hover a.suscribe {
+	background-color: #83c145
+}
+
+.row-fluid.wide-price:hover [class*="span"] a.suscribe {
+	background-color: #83c145;
+}
+
+form .row-fluid [class*="span"] input[type="submit"]:hover,
+form .row-fluid [class*="span"] input[type="reset"]:hover,
+.widget form input[type="submit"]:hover {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+.ruler.green {
+	border-top: 4px solid #83c145;
+}
+
+.row-fluid.control-group .offset2 a:first-child:hover {
+	background-color: #83c145;
+}
+
+.social-contact li a:hover {
+	color: #409915;
+}
+
+.social-contact > a:hover {
+	color: #409915;
+}
+
+nav > ul > li:hover {
+	border-bottom: 3px solid #409915;
+}
+
+nav ul li > ul li:hover {
+	border-left: 3px solid #409915;
+}
+
+nav a[data-handler].open, nav a[data-handler]:focus, .responsive-menu.open {
+	color: #409915;
+}
+
+.responsive-menu:hover {
+	border-bottom: 3px solid #409915;
+}
+
+.box-hero.title {
+	background-color: #409915;
+}
+
+.box-hero blockquote p span {
+	color: #409915;
+}
+
+.row-fluid.tabs ul.nav-tabs li a:hover {
+	color: #409915;
+}
+
+.row-fluid.twitter .span12 .twitter-line a {
+	color: #409915;
+}
+
+footer ul li .icon-phone, footer ul li .icon-building, footer ul li .icon-mail {
+	color: #409915;
+}
+
+footer .footer-bottom ul li a:hover {
+	color: #409915;
+}
+
+.read-more:hover {
+	color: #409915;
+}
+
+ul.comment li a:hover {
+	color: #409915;
+}
+
+ul.flickr li a:hover img {
+	border: 2px solid #409915;
+}
+
+.row-fluid.contact [class*="span"] ul li a {
+	color: #409915;
+}
+
+.widget form .legend {
+    color: #409915;
+}
+
+.row-fluid.featured .span4 .row-fluid .span12 > a:first-child:hover {
+	border-color: #409915;
+}
+
+.row-fluid.tabs + .row-fluid > .span4:last-child a:hover {
+	color:#409915;
+}
+
+.row-fluid.featured .span4 .row-fluid [class*="span"] a:hover {
+	color:#409915;
+}
+
+input:focus:invalid:focus {
+	border-color: #409915;
+	box-shadow: 0 0 6px #409915;
+}
+
+textarea:focus, input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+	border-color: #409915 !important;
+	box-shadow: 0 0 10px -3px #409915 !important;
+}
+
+.accordion-heading .accordion-toggle.open {
+    background-color: #83C145;
+}
+
+.img-circle:hover {
+	background-color: #83c145;
+}
+
+h4 a:hover {
+	color: #83c145;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+	background-color: #83c145;
+}
+
+.pagination-large ul > li > a:hover, .pagination-large ul > li > span:hover {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+.pagination-large ul > li > a.active {
+	background-color: #83c145;
+	border-bottom: 1px solid #77b23c;
+}
+
+.progress .bar {
+	background-color: #83c145;
+}
+
+.row-fluid [class*="span"] blockquote.right {
+    background-color: #ECECEC;
+    border-left: 2px solid #83C145;
+
+}
+
+.row-fluid [class*="span"] blockquote {
+    background-color: #ECECEC;
+    border-left: 2px solid #83C145;
+}
+
+.row-fluid.control-group .offset2 a {
+	background-image: url("../../img/icons/nav-carousel-green.png");
+}
+
+h4 a[data-slide] {
+	background-image: url("../../img/icons/nav-carousel-green.png");
+}
+
+.row-fluid.tabs ul.nav-tabs li a span {
+    background-image: url("../../img/icons/icons-tabs-green.png");
+}
+
+/* ---------------------------------------------------------------------- */
+/*	Small Desktops
+/* ---------------------------------------------------------------------- */
+
+	nav > ul > li:hover {
+		border-bottom: 1px solid #409915;
+	}
