@@ -1,0 +1,136 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot?93239639');
+  src: url('../font/fontello.eot?93239639#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff?93239639') format('woff'),
+       url('../font/fontello.ttf?93239639') format('truetype'),
+       url('../font/fontello.svg?93239639#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?93239639#fontello') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-youtube:before { content: '\e80a'; } /* '' */
+.icon-mail:before { content: '\e808'; } /* '' */
+.icon-wordpress:before { content: '\e80f'; } /* '' */
+.icon-facebook:before { content: '\e800'; } /* '' */
+.icon-gplus:before { content: '\e803'; } /* '' */
+.icon-rss:before { content: '\e80c'; } /* '' */
+.icon-building:before { content: '\e807'; } /* '' */
+.icon-flickr:before { content: '\e802'; } /* '' */
+.icon-vimeo:before { content: '\e80b'; } /* '' */
+.icon-twitter:before { content: '\e805'; } /* '' */
+.icon-pinterest:before { content: '\e80d'; } /* '' */
+.icon-linkedin:before { content: '\e804'; } /* '' */
+.icon-dribbble:before { content: '\e80e'; } /* '' */
+.icon-dropbox:before { content: '\e810'; } /* '' */
+.icon-skype:before { content: '\e801'; } /* '' */
+.icon-behance:before { content: '\e809'; } /* '' */
+.icon-thumbs-up:before { content: '\e811'; } /* '' */
+.icon-thumbs-down:before { content: '\e812'; } /* '' */
+.icon-phone:before { content: '\e806'; } /* '' */
+
+.icon-thumbs-up, .icon-thumbs-down {
+  background-image: none;
+  width: auto;
+  margin: 0;
+}
+
+/* Social Hover Events */
+ul.social li a [class^="icon-"], ul.social li a [class*=" icon-"] {
+  width: auto;
+  margin: 2px 0 0;
+}
+
+ul.social li a.vimeo:hover {
+  background-color: #0085ff;
+}
+
+ul.social li a.be:hover {
+  background-color: #006cff;
+}
+
+ul.social li a.dribbble:hover {
+  background-color: #56961d;
+}
+
+ul.social li a.linkedin:hover, ul.social li a.dropbox:hover {
+  background-color: #0085db;
+}
+
+ul.social li a.pinterest:hover {
+  background-color: #ff2323;
+}
+
+ul.social li a.twitter:hover {
+  background-color: #00c5fe;
+}
+
+ul.social li a.skype:hover {
+  background-color: #00abff;
+}
+
+ul.social li a.flickr:hover {
+  background-color: #fb25fd;
+}
+
+ul.social li a.gplus:hover {
+  background-color: #d94835;
+  color: #fff;
+}
+
+ul.social li a.rss:hover {
+  background-color: #ff7900;
+}
+
+ul.social li a.facebook:hover {
+  background-color: #194fb2;
+}
+
+ul.social li a.youtube:hover {
+  background-color: #e70202;
+}
+
+ul.social li a.wordpress:hover {
+  background-color: #828282;
+}

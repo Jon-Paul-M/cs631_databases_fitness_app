@@ -307,3 +307,8 @@ INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (01, 25,
 INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (02, 13, 'Studio A', 'Central Gymansium');
 INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (03, 32, 'Cardio B', 'Alumni Hall');
 
+INSERT INTO MEMBERSHIP (MEMBERSHIP_ID, MEMBERSHIP_TYPE, FEE, ADVANTAGES) VALUES (01, 'ONE WEEK TRIAL', '0.00', 'Fitness coaching\nGroup training\nTwice weekly\nFitness Calculator\nCardio Floor');
+INSERT INTO MEMBERSHIP (MEMBERSHIP_ID, MEMBERSHIP_TYPE, FEE, ADVANTAGES) VALUES (02, '3 MONTHS', '299.00', 'Fitness coaching\nGroup training\nTwice weekly\nFitness Calculator\nCardio Floor');
+INSERT INTO MEMBERSHIP (MEMBERSHIP_ID, MEMBERSHIP_TYPE, FEE, ADVANTAGES) VALUES (03, '6 MONTHS', '450.00', 'Flexible coaching\nSemi-private training\nTimes to suit you\nPilates\nTennis');
+INSERT INTO MEMBERSHIP (MEMBERSHIP_ID, MEMBERSHIP_TYPE, FEE, ADVANTAGES) VALUES (04, '12 MONTHS', '980.00', 'Flexible coaching\nSemi-private training\nTimes to suit you\nPilates\nTennis');
+
