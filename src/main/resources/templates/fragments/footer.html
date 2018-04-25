@@ -45,13 +45,17 @@
                 </ul>
             </div>
 
-            <div class="span4">
+            <div id='login_form' class="span4" sec:authorize="isAnonymous()">
                 <h3>Login to the GXM Fitness Portal</h3>
 
-                <form action="#">
+                <div th:if="${param.error}">
+                    (Invalid username and password.)
+                </div>
+
+                <form action="#" th:action="@{/login}" th:method="post">
                     <fieldset>
-                        <input type="email" placeholder="Email" th:required="required"/>
-                        <input type="password" placeholder="Password" th:required="required"/>
+                        <input id="username_login_element" type="email" name="username" placeholder="Email" th:required="required"/>
+                        <input type="password" name="password" placeholder="Password" th:required="required"/>
                     </fieldset>
 
                     <fieldset>

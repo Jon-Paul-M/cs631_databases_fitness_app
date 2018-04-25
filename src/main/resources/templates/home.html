@@ -17,9 +17,9 @@
         <div class="wrapper">
             <h2>The Ultimate Fitness Application</h2>
 
-            <ul class="breadcrumb">
+            <ul th:replace="fragments/header :: user_logged_in" class="breadcrumb">
                 <li><a href="#">Home</a> <span class="divider">/</span></li>
-                <li class="active">(complete menu)</li>
+                <li class="active">(user log in action)</li>
             </ul>
 
             <div class="row-fluid">

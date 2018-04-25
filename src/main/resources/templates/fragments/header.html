@@ -83,5 +83,37 @@
 <div class="box-hero title">&nbsp;</div>
 </div>
 
+
+<div class="wrapper">
+    <h2>The Ultimate Fitness Application</h2>
+
+    <ul class="breadcrumb" th:fragment="user_logged_in">
+        <li><a href="#">WELCOME</a> <span class="divider">/</span></li>
+        <li sec:authorize="isAuthenticated()" th:inline="text">
+            [[${#httpServletRequest.remoteUser}]]
+            <br/>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="(Log Out)"/>
+            </form>
+        </li>
+
+        <li class="active" sec:authorize="isAnonymous()">
+          <a href="javascript:document.getElementById('username_login_element').focus()">Log In</a>
+        </li>
+
+        <li th:if="${param.logout}">
+            <span class="divider">/</span>You have been logged out.
+        </li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Title</h3>
+            <h5>Sub-Title</h5>
+            <p>Click <a th:href="@{/userdetails}">here</a> for authenticated page.</p>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

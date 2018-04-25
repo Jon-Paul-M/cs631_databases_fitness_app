@@ -13,9 +13,9 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-        <p th:inline="text">User details: [[${#httpServletRequest.remoteUser}]]</p>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </body>
+    <p th:inline="text">User details: [[${#httpServletRequest.remoteUser}]]</p>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</body>
 </html>

@@ -529,13 +529,14 @@ ul.breadcrumb {
 
 ul.breadcrumb li {
 	text-transform: uppercase;
+	color: #ffffff;
 	font-size: 0.923em;
 	text-shadow: none;
 	font-weight: 600;
 }
 
 ul.breadcrumb li a {
-	color: #1b4d03;
+	color: #ffffff;
 	text-transform: uppercase;
 	font-size: 0.923em;
 	text-shadow: none;
@@ -549,6 +550,17 @@ ul.breadcrumb li a:hover {
 
 .breadcrumb > li > .divider {
 	color: #1b4d03;
+}
+
+
+ul.breadcrumb li form input {
+	color: #ffffff;
+	background: none;
+	border: none;
+	text-transform: uppercase;
+	font-size: 0.800em;
+	text-shadow: none;
+	font-weight: 600;
 }
 
 ul.breadcrumb li.active {
