@@ -4,7 +4,7 @@ package edu.njit.cs631.fitness.service.api;
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.dto.UserDto;
-import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;;
 
 public interface UserService {
 

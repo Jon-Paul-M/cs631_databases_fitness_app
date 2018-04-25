@@ -9,13 +9,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 
@@ -32,7 +33,7 @@ public abstract class BaseTest {
     protected UserRepository userRepository;
 
     @Autowired
-    protected MemberCrudRepository memberCrudRepository;
+    protected MemberRepository memberRepository;
 
     @Autowired
     protected PasswordEncoder encoder;
@@ -44,6 +45,9 @@ public abstract class BaseTest {
     protected EntityManager entityManager;
 
     protected MockMvc mockMvc;
+
+	@Autowired
+	protected JdbcTemplate jdbcTemplate;
 
     @Before
     public void setUp() throws Exception {

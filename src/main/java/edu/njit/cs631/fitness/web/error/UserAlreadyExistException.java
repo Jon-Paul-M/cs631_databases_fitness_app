@@ -2,7 +2,9 @@ package edu.njit.cs631.fitness.web.error;
 
 public final class UserAlreadyExistException extends RuntimeException {
 
-    public UserAlreadyExistException() {
+	private static final long serialVersionUID = 1L;
+
+	public UserAlreadyExistException() {
         super();
     }
 

@@ -1,29 +1,24 @@
 package edu.njit.cs631.fitness;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import edu.njit.cs631.fitness.data.entity.Member;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.test.context.jdbc.Sql;
 
-import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.testutils.BaseTest;
 import edu.njit.cs631.fitness.web.dto.UserDto;
-import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 
 public class UserServiceIntegrationTest extends BaseTest {
 
     Random random = new Random();
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenRandomPerson_whenPromoted_thenCorrect() {
         /* TODO: Rework test as default is user<-> member 1:1
@@ -37,7 +32,7 @@ public class UserServiceIntegrationTest extends BaseTest {
 
 
     @Test // (expected = UserAlreadyExistException.class)
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenRandomPerson_whenPromoted_thenThrowsAlreadyExists() {
         /* TODO: Rework test as default is user<-> member 1:1
@@ -53,7 +48,7 @@ public class UserServiceIntegrationTest extends BaseTest {
     }
 
     private Member getRandomPerson() {
-        List<Member> people = Lists.newArrayList(memberCrudRepository.findAll());
+        List<Member> people = Lists.newArrayList(memberRepository.findAll());
         Collections.shuffle(people, random);
         while(people.get(0).getId() == 133) { // one member in the default data is already a user.
             Collections.shuffle(people, random);
