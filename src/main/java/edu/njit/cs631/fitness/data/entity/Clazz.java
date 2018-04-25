@@ -3,13 +3,18 @@ package edu.njit.cs631.fitness.data.entity;
 import edu.njit.cs631.fitness.data.entity.security.User;
 
 import javax.persistence.*;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="CLASS")
-public class Class {
+//weird things happen in java when you name a class 'Class'
+public class Clazz { 
 
+	public static final String TABLE_NAME = "CLASS";
+	
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     @Column(name="CLASS_ID", nullable=false)
@@ -39,22 +44,22 @@ public class Class {
         this.room = room;
     }
 
-    public User getInstructor() {
-        return getUser();
-    }
-    public void setInstructor(User instructor) {
-        setUser(instructor);
-    }
-
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="INSTRUCTOR_ID")
     private User instructor;
-    public User getUser() {
-        return instructor;
+    public User getInstructor() {
+    	return instructor;
     }
-    public void setUser(User instructor) {
-        this.instructor = instructor;
+    public void setInstructor(User instructor) {
+    	this.instructor = instructor;
+    }
+
+    @Transient
+    public User getUser() {
+        return getInstructor();
+    }
+    public void setUser(User user) {
+        setInstructor(user);
     }
 
     // Registered members for the class
@@ -65,7 +70,29 @@ public class Class {
             inverseJoinColumns = @JoinColumn(name = "CLASS_ID")
     )
     private Set<Member> members = new HashSet<>();
-    public Set<Member> getMembers() { return members; }
-    void setMembers(Set<Member> members) { this.members = members; }
+    public Set<Member> getMembers() {
+    	return members;
+    }
+    void setMembers(Set<Member> members) {
+    	this.members = members;
+    }
 
+    @Column(name="START_DATETIME")
+    private Date start;
+	public Date getStart() {
+		return start;
+	}
+	public void setStart(Date start) {
+		this.start = start;
+	}
+    
+	@Column(name="DURATION")
+	private Integer duration;
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	
 }

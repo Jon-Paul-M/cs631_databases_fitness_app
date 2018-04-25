@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 
@@ -33,7 +33,7 @@ public abstract class BaseTest {
     protected UserRepository userRepository;
 
     @Autowired
-    protected MemberCrudRepository memberCrudRepository;
+    protected MemberRepository memberRepository;
 
     @Autowired
     protected PasswordEncoder encoder;

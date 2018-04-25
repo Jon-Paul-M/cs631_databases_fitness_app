@@ -48,7 +48,7 @@ public class UserServiceIntegrationTest extends BaseTest {
     }
 
     private Member getRandomPerson() {
-        List<Member> people = Lists.newArrayList(memberCrudRepository.findAll());
+        List<Member> people = Lists.newArrayList(memberRepository.findAll());
         Collections.shuffle(people, random);
         while(people.get(0).getId() == 133) { // one member in the default data is already a user.
             Collections.shuffle(people, random);
