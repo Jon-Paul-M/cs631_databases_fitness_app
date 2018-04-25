@@ -2,7 +2,7 @@ package edu.njit.cs631.fitness.service.impl;
 
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
+import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private MemberCrudRepository personRepository;
+    private MemberRepository personRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

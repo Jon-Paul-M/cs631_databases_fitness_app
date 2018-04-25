@@ -8,10 +8,11 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="HOURLY_INSTRUCTOR")
+@Table(name = HourlyInstructor.TABLE_NAME)
 public class HourlyInstructor extends User implements Instructor {
 
-
+	public static final String TABLE_NAME = "HOURLY_INSTRUCTOR";
+	
     @Column(name="HOURS", nullable=false)
     private BigDecimal hours;
     public void setHours(BigDecimal hours) {

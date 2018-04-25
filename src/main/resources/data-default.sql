@@ -283,3 +283,27 @@ INSERT INTO PERSONNEL_TYPE (personnel_type_id, type_name) values (4, 'Staff');
 
 SELECT PERSON_ID, TITLE_ID, GENDER, FIRST_NAME, LAST_NAME, MIDDLE_INITIAL, SSN, HOME_PHONE, MOBILE_PHONE, EMAIL, PERSON_ID AS ADDRESS_ID FROM PERSONS
 */
+
+
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (01, 'Circuit Training', 'Burn fat fast with high intensity intervals');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (02, 'Cardio Tone', 'Come join the fun in this high energy, fat burning class, with easy-to-follow routines');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (03, 'Core and More', 'Functional core training allows you to practice movement that provides optimal motion for daily tasks');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (04, 'Zumba', 'This exhilarating, easy-to-follow, Latin-inspired, calorie-burning dance fitness-party will move you');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (05, 'Belly Dancing', 'Shimmy your way to a sculpted body by shaking your hips and moving your abdominal muscles');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (06, 'Pole Dancing', 'Channel your inner exotic dancer and limber up for some fun while getting a serious workout for your arms, back, abs, and legs with this pole routine');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (07, 'Boot Camp', 'You can command Power, Strength and Agility with this military inspired circuit workout that will push you to your limits');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (08, 'Spin', 'Stay in the zone with this intense cycling');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (09, 'Kickboxing', 'Kick, punch, bob and weave your way to a higher fitness level');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (10, 'Mat Pilates', 'Increase your flexibility as you flow through a series of dynamic movements that restore balance to core muscles of the lower back and abdominals');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (11, 'Tai Chi', 'Discover the benefits of this ancient form of martial arts which will improve balance, agility, strength, and coordination');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (12, 'Step Sculpt', 'A great step workout followed by intense muscle conditioning with light weights and challenging core work');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (13, 'Hatha Yoga', 'Focus on flexabilty and strenth on this yoga class');
+INSERT INTO EXERCISE (EXERCISE_ID, NAME, DESCRIPTION) VALUES (14, 'Hot Hatha', 'Come prepared to sweat practicing in a room heated to 105 degrees');
+
+INSERT INTO USER (USER_ID, EMAIL, NAME, ENABLED, TOKEN_EXPIRED, PASSWORD_HASH) VALUES (01, 'oria@njit.edu', 'Vincent Oria', 1, 0, '$2a$10$AIqpc4JhuHuXOdPchYgeZuVfU/vP3FJDUJk/NP8zG8hHqfoa7DWsG');
+INSERT INTO HOURLY_INSTRUCTOR (USER_ID, HOURS, HOURLY_WAGE) VALUES (01, 20, 22.75);
+
+INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (01, 25, 'Bike A', 'Central Gymansium');
+INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (02, 13, 'Studio A', 'Central Gymansium');
+INSERT INTO ROOM (ROOM_ID, CAPACITY, ROOM_NUMBER, BUILDING_NAME) VALUES (03, 32, 'Cardio B', 'Alumni Hall');
+

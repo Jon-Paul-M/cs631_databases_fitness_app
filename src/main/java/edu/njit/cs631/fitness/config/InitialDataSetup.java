@@ -1,35 +1,37 @@
 package edu.njit.cs631.fitness.config;
 
-import edu.njit.cs631.fitness.data.entity.Member;
-import edu.njit.cs631.fitness.data.entity.security.Privilege;
-import edu.njit.cs631.fitness.data.entity.security.Role;
-import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.MemberCrudRepository;
-import edu.njit.cs631.fitness.data.repository.security.PrivilegeRepository;
-import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
-import edu.njit.cs631.fitness.data.repository.security.UserRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import edu.njit.cs631.fitness.data.entity.security.Privilege;
+import edu.njit.cs631.fitness.data.entity.security.Role;
+import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.data.repository.security.PrivilegeRepository;
+import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
+import edu.njit.cs631.fitness.data.repository.security.UserRepository;
+import edu.njit.cs631.fitness.service.impl.FitnessUserDetailsService;
 
 @Component
 public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEvent> {
 
+	Logger logger = LoggerFactory.getLogger(FitnessUserDetailsService.class);
+	
     private boolean alreadySetup = false;
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private MemberCrudRepository personRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -100,7 +102,9 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         user = new User();
         user.setEmail(email);
         user.setName(name);
-        user.setPasswordHash(passwordEncoder.encode(password));
+        String passwordHash = passwordEncoder.encode(password);
+        logger.info("passwordHash: " + passwordHash);
+		user.setPasswordHash(passwordHash);
         user.setEnabled(true);
         user.setTokenExpired(false);
         user.setRoles(roles);

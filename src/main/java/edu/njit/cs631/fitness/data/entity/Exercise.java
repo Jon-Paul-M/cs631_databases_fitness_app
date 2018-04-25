@@ -1,14 +1,19 @@
 package edu.njit.cs631.fitness.data.entity;
 
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="EXERCISE")
+@Table(name=Exercise.TABLE_NAME)
 public class Exercise {
 
+	public static final String TABLE_NAME = "EXERCISE";
+	
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     @Column(name="EXERCISE_ID", nullable=false)
