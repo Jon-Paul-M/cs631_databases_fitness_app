@@ -43,8 +43,8 @@
 				<select	th:field="*{startMM}">
 					<option value="">MM</option>
 					<option th:each="month : ${months}"
-						th:value="${month}"
-						th:utext="${month}" />
+						th:value="${month.index}"
+						th:utext="${month.name}" />
 				</select>
 				<select	th:field="*{startDD}">
 					<option value="">DD</option>
@@ -83,7 +83,14 @@
 				<input type="text" th:field="*{duration}" />
 			</li>
 		</ul>
-		<button type="submit"></button>
+		<button type="submit">Submit</button>
 	</form>
+	
+	<h3>Upcoming Classes</h3>
+	<div th:each="clazz : ${clazzes}">
+		<span th:text="${clazz.start}">Date</span> - <span th:text="${clazz.exercise.name}">Class Name</span> - <span th:text="${clazz.instructor.name}">Instructor Name</span>
+	</div>
+	
+	
 </body>
 </html>

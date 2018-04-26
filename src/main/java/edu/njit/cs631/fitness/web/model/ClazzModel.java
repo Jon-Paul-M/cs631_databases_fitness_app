@@ -81,5 +81,31 @@ public class ClazzModel {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClazzModel [instructor=");
+		builder.append(instructor);
+		builder.append(", exercise=");
+		builder.append(exercise);
+		builder.append(", room=");
+		builder.append(room);
+		builder.append(", startMM=");
+		builder.append(startMM);
+		builder.append(", startDD=");
+		builder.append(startDD);
+		builder.append(", startYYYY=");
+		builder.append(startYYYY);
+		builder.append(", startHH=");
+		builder.append(startHH);
+		builder.append(", startMI=");
+		builder.append(startMI);
+		builder.append(", startMeridiem=");
+		builder.append(startMeridiem);
+		builder.append(", duration=");
+		builder.append(duration);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }
