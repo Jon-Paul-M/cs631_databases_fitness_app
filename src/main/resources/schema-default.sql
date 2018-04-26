@@ -1,7 +1,7 @@
 -- This is where the ddl will go
 
 
---DROP SEQUENCE hibernate_sequence IF EXISTS;
+DROP SEQUENCE hibernate_sequence IF EXISTS;
 
 CREATE SEQUENCE hibernate_sequence START WITH 200 INCREMENT BY 1;
 
