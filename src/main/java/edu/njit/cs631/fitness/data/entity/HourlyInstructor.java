@@ -35,4 +35,10 @@ public class HourlyInstructor extends User implements Instructor {
     public void setRate(BigDecimal rate) {
         setHourlyWage(rate);
     }
+
+	@Override
+	public String toString() {
+		return "HourlyInstructor [getId()=" + getId() + "]";
+	}
+
 }

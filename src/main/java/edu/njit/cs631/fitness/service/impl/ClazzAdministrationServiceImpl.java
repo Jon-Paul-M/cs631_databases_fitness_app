@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 @Service("clazzAdministrationService")
 public class ClazzAdministrationServiceImpl implements ClazzAdministrationService {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private ExerciseRepository exerciseRepository;
 	
@@ -39,6 +43,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 	@Override
 	@Transactional
 	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, Date start, Integer duration) {
+		logger.info("In clazzAdministrationService.createClass");
     	Exercise exercise = exerciseRepository.findOne(exerciseId);
     	HourlyInstructor instructor = hourlyInstructorRepository.findOne(instructorId);
     	Room room = roomRepository.findOne(roomId);

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Create Class</title>
+</head>
+<body>
+	<h1>Create Class</h1>
+
+	<form action="#" th:action="create" th:object="${clazzModel}"
+		method="post">
+		<ul>
+			<li>
+				<label for="instructor">Instructor</label>
+				<select	th:field="*{instructor}">
+					<option value="">--</option>
+					<option th:each="instructor : ${instructors}"
+						th:value="${instructor.id}"
+						th:utext="${instructor.name}" />
+				</select>
+			</li>
+			<li>
+				<label for="exercise">Exercise</label>
+				<select	th:field="*{exercise}">
+					<option value="">--</option>
+					<option th:each="exercise : ${exercises}"
+						th:value="${exercise.id}"
+						th:utext="${exercise.name}" />
+				</select>
+			</li>
+			<li>
+				<label for="room">Room</label>
+				<select	th:field="*{room}">
+					<option value="">--</option>
+					<option th:each="room : ${rooms}"
+						th:value="${room.id}"
+						th:utext="${room.buildingName + ': ' + room.roomNumber}" />
+				</select>
+			</li>
+			<li>
+				<label for="start">Start</label>
+				<select	th:field="*{startMM}">
+					<option value="">MM</option>
+					<option th:each="month : ${months}"
+						th:value="${month.index}"
+						th:utext="${month.name}" />
+				</select>
+				<select	th:field="*{startDD}">
+					<option value="">DD</option>
+					<option th:each="day : ${days}"
+						th:value="${day}"
+						th:utext="${day}" />
+				</select>
+				<select	th:field="*{startYYYY}">
+					<option value="">YYYY</option>
+					<option th:each="year : ${years}"
+						th:value="${year}"
+						th:utext="${year}" />
+				</select>
+				<select	th:field="*{startHH}">
+					<option value="">HH</option>
+					<option th:each="hour : ${hours}"
+						th:value="${hour}"
+						th:utext="${hour}" />
+				</select>
+				<select	th:field="*{startMI}">
+					<option value="">MM</option>
+					<option th:each="minuet : ${minuets}"
+						th:value="${minuet}"
+						th:utext="${minuet}" />
+				</select>
+				<select	th:field="*{startMeridiem}">
+					<option value="">--</option>
+					<option th:each="meridiem : ${meridiems}"
+						th:value="${meridiem}"
+						th:utext="${meridiem}" />
+				</select>
+
+			</li>
+			<li>
+				<label for="duration">Duration</label>
+				<input type="text" th:field="*{duration}" />
+			</li>
+		</ul>
+		<button type="submit">Submit</button>
+	</form>
+	
+	<h3>Upcoming Classes</h3>
+	<div th:each="clazz : ${clazzes}">
+		<span th:text="${clazz.start}">Date</span> - <span th:text="${clazz.exercise.name}">Class Name</span> - <span th:text="${clazz.instructor.name}">Instructor Name</span>
+	</div>
+	
+	
+</body>
+</html>

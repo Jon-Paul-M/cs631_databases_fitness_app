@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +24,7 @@ import edu.njit.cs631.fitness.service.api.UserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest // (classes = {TestIntegrationConfig.class})
 @Transactional
+@TestPropertySource(locations="classpath:test.properties")
 public abstract class BaseTest {
 
 

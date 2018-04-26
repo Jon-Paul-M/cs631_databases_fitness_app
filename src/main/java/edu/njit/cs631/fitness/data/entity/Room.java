@@ -42,4 +42,9 @@ public class Room {
     public void setBuildingName(String buildingName) {
         this.buildingName = buildingName;
     }
+    
+	@Override
+	public String toString() {
+		return "Room [id=" + id + "]";
+	}
 }
