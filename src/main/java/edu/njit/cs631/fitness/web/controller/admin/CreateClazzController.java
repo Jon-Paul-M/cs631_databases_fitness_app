@@ -155,5 +155,5 @@ public class CreateClazzController {
 		// TODO probably call something in the service level 
 		// that throws an exception if invalid
 	}
-} //test
+} 
 
