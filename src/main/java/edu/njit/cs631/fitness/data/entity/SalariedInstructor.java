@@ -21,4 +21,12 @@ public class SalariedInstructor extends User implements Instructor {
         this.salary = salary;
     }
 
+    @Override
+    public void setRate(BigDecimal rate) {
+        setSalary(rate);
+    }
+
+    @Override
+    public void setHours(BigDecimal hours) {// ignore
+    }
 }
