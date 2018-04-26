@@ -1,19 +1,10 @@
 package edu.njit.cs631.fitness.data.entity.security;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="USER")
@@ -25,7 +16,13 @@ public class User {
     }
 
     @Id
+    @Basic(optional=false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    /* TODO: related to #28, members can't be instructors and vice versa
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IdOrGenerated")
+    @GenericGenerator(name="IdOrGenerated",
+                      strategy="edu.njit.cs631.fitness.tools.UseIdOrGenerate")
+                      */
     @Column(name="USER_ID", nullable=false)
     private Integer id;
     public Integer getId() {
