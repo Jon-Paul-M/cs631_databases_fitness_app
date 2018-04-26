@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>CS631 GXM Fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../../static/css/styles.css" th:href="@{/resources/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{/resources/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="js/modernizr-custom.js" th:src="@{/resources/js/modernizr-custom.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{/resources/js/selectivizr-min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="wrapper">
+    <h2>The Ultimate Fitness Application</h2>
+
+    <ul th:replace="fragments/header :: user_logged_in" class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li class="active">(user log in action)</li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Current Classes</h3>
+            <h5><a href="admin/classes/create" th:href="@{/admin/classes/create}">Create a new class.</a></h5> <!-- haha -->
+        </div>
+    </div>
+
+    <div th:replace="fragments/classes_list :: classes_list"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Current Members</h3>
+            <h5>Current Members in the Fitness Application</h5> <!-- haha -->
+        </div>
+    </div>
+
+    <div th:replace="fragments/members_list :: members_list"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Memberships</h3>
+            <h5>Current Membership Types</h5> <!-- haha -->
+        </div>
+    </div>
+
+    <div th:replace="fragments/memberships_list :: memberships_list"></div>
+</div>
+
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

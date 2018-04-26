@@ -4,11 +4,11 @@
     <title>Homepage Medical Sample</title>
     <title>CS631 GXM Fitness</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link href="../../static/css/styles.css" th:href="@{resources/css/styles.css}" rel="stylesheet" media="screen"/>
-    <link href="../../static/css/color/green.css" th:href="@{resources/css/color/green.css}" rel="stylesheet" media="screen"/>
-    <script src="../../static/js/modernizr-custom.js" th:src="@{resources/js/modernizr-custom.js}"></script>
+    <link href="../../static/css/styles.css" th:href="@{/resources/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{/resources/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="../../static/js/modernizr-custom.js" th:src="@{/resources/js/modernizr-custom.js}"></script>
     <!--[if (gte IE 6)&(lte IE 8)]>
-    <script src="../../static/js/selectivizr-min.js" th:src="@{resources/js/selectivizr-min.js}"></script>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{/resources/js/selectivizr-min.js}"></script>
     <![endif]-->
 </head>
 <body>
@@ -42,7 +42,7 @@
                 </ul>
             </li>
             <li sec:authorize="hasAuthority('ADMIN')">
-                <a href="/admin">Administration</a>
+                <a href="/admin" th:href="@{/admin}">Administration</a>
             </li>
         </ul>
     </nav>
@@ -51,7 +51,7 @@
 <!--End Header-->
 
 <div class="slider top">
-    <img src="../../static/img/header/04.jpg" th:src="@{resources/img/header/04.jpg}" alt="Image Page Header"/>
+    <img src="../../static/img/header/04.jpg" th:src="@{/resources/img/header/04.jpg}" alt="Image Page Header"/>
 </div>
 <!-- End Inner Page Header -->
 
