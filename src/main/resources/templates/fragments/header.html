@@ -41,6 +41,9 @@
                     <li><a href="timetable.html">Time Table</a></li>
                 </ul>
             </li>
+            <li sec:authorize="hasAuthority('ADMIN')">
+                <a href="/admin">Administration</a>
+            </li>
         </ul>
     </nav>
 

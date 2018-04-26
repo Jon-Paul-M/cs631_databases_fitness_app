@@ -65,6 +65,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         final Privilege passwordPrivilege = createPrivilegeIfNotFound("CHANGE_ALL_PASSWORD_PRIVILEGE");
         final Privilege passwordSelfPrivilege = createPrivilegeIfNotFound("CHANGE_SELF_PASSWORD_PRIVILEGE");
 
+        final Privilege admin = createPrivilegeIfNotFound("ADMIN");
         final Privilege registerMember = createPrivilegeIfNotFound("REGISTER_MEMBER");
         final Privilege registerInstructor = createPrivilegeIfNotFound("REGISTER_INSTRUCTOR");
         final Privilege registerSelfForClass = createPrivilegeIfNotFound("REGISTER_SELF_FOR_CLASS");
@@ -82,6 +83,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
 
         // == create initial roles
         final List<Privilege> adminPrivileges = new ArrayList<>(Arrays.asList(
+                admin,
                 passwordPrivilege,
                 passwordSelfPrivilege,
                 registerMember,
