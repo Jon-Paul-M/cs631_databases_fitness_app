@@ -4,15 +4,18 @@ package edu.njit.cs631.fitness.service.api;
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.dto.UserDto;
-import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;;
+import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.model.MemberModel;;
 
 public interface UserService {
 
     User findUserByEmail(String email);
 
-    Member findPersonByEmail(String email);
+    Member findMemberByEmail(String email);
 
-    User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException;
+    Member registerNewMemberAccount(MemberModel model) throws UserAlreadyExistException;
+
+    User registerNewUserAccount(UserDto model) throws UserAlreadyExistException;
 
     void saveRegisteredUser(User user);
 

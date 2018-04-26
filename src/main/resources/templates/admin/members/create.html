@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Create Class</title>
+</head>
+<body>
+<h1>Create Class</h1>
+
+<form action="#" th:action="create" th:object="${memberModel}"
+      method="post">
+    <p th:if="${#fields.hasErrors('*')}">Errors:</p>
+    <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+    </ul>
+    <ul>
+        <li>
+            <label for="name">Name</label>
+            <input type="text" th:field="*{name}"/>
+        </li>
+        <li>
+            <label for="email">E-mail</label>
+            <input type="text" th:field="*{email}"/>
+        </li>
+        <li>
+            <label for="membership">Membership Type:</label>
+            <select	th:field="*{membership}">
+                <option value="">--</option>
+                <option th:each="membershipType : ${membershipTypes}"
+                        th:value="${membershipType.id}"
+                        th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />
+            </select>
+        </li>
+    </ul>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

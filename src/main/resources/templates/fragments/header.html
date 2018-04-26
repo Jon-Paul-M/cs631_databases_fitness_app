@@ -23,24 +23,8 @@
     <nav class="visible-desktop">
         <ul>
             <li><a href="/" th:href="@{/home}">Home</a></li>
-            <li><a href="#">Classes</a>
-                <ul class="visible-desktop">
-                    <li><a href="classes.html">All Classes</a></li>
-                    <li><a href="single-class-page.html">Single Class Page</a></li>
-                    <li><a href="single-class-page-cycling.html">Cycling</a></li>
-                    <li><a href="single-class-page-dance.html">Dance</a></li>
-                    <li><a href="single-class-page-kick-boxing.html">Kick Boxing</a></li>
-                    <li><a href="single-class-page-aerobic-steps.html">Aerobic and Step</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Trainers</a>
-                <ul class="visible-desktop">
-                    <li><a href="trainers.html">Trainers Gallery 1</a></li>
-                    <li><a href="trainers-2.html">Trainers Gallery 2</a></li>
-                    <li><a href="single-trainer-page.html">Single Trainer Page</a></li>
-                    <li><a href="timetable.html">Time Table</a></li>
-                </ul>
-            </li>
+            <li><a href="#" th:href="@{/classes}">Classes</a></li>
+            <li><a href="#" th:href="@{/instructors}">Instructors</a></li>
             <li sec:authorize="hasAuthority('ADMIN')">
                 <a href="/admin" th:href="@{/admin}">Administration</a>
             </li>

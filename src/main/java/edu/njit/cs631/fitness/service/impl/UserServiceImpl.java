@@ -1,14 +1,17 @@
 package edu.njit.cs631.fitness.service.impl;
 
 import edu.njit.cs631.fitness.data.entity.Member;
+import edu.njit.cs631.fitness.data.entity.Membership;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.MemberRepository;
+import edu.njit.cs631.fitness.data.repository.MembershipRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.PersonNotFoundException;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private MembershipRepository membershipRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -43,8 +52,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Member findPersonByEmail(String email) {
-        return personRepository.findByEmail(email);
+    public Member registerNewMemberAccount(MemberModel model) throws UserAlreadyExistException {
+        if (model == null) {
+            logger.info("I heard a null member model!");
+            return null;
+        }
+
+        if(findMemberByEmail(model.getEmail()) != null) {
+            throw new UserAlreadyExistException("A member with that e-mail address already exists: " + model.getEmail());
+        }
+
+        Member member = new Member();
+        Membership membership = membershipRepository.findOne(model.getMembership());
+        member.setMembership(membership);
+
+        // TODO: Not done, return to this tonight, out of time.
+        return null;
+
+    }
+
+    @Override
+    public Member findMemberByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 
     @Override
@@ -58,13 +87,6 @@ public class UserServiceImpl implements UserService {
 
         if(findUserByEmail(userDto.getEmail()) != null) {
             throw new UserAlreadyExistException("A user with that e-mail address already exists: " + userDto.getEmail());
-        }
-
-        Member member = findPersonByEmail(userDto.getEmail());
-
-        if (member == null) {
-            String norecord = "No record exists, please create an associated member record first for the e-mail: ";
-            throw new PersonNotFoundException(norecord + userDto.getEmail());
         }
 
         final User user = new User();

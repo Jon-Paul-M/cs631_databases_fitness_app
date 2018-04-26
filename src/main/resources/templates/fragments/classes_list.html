@@ -84,6 +84,9 @@
                     <th>Room</th>
                     <th>Instructor</th>
                     <th>Capacity</th>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
+                        <th>Cancel Class?</th>
+                    </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
                     </div>
@@ -100,6 +103,9 @@
                     <td th:inline="text">(room)</td>
                     <td th:inline="text">[[${clazz.instructor.name}]]</td>
                     <td th:inline="text">0 / (capacity)</td>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
+                        <td><a href="#" th:href="@{class/register(self=true)}">Register?</a></td>
+                    </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
                     </div>
