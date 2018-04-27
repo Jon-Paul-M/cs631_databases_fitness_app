@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         Membership membership = membershipRepository.findOne(model.getMembership());
         member.setMembership(membership);
 
-        // TODO: Not done, return to this tonight, out of time.
+        // TODO: Create remaining member model and then add member via memberRepo
         return null;
 
     }
