@@ -5,6 +5,12 @@ import java.math.BigDecimal;
 public interface Instructor {
     Integer getId();
     String getName();
-    void setRate(BigDecimal rate);
+    void setWage(BigDecimal wage);
     void setHours(BigDecimal hours);
+
+    BigDecimal getWage();
+    BigDecimal getHours();
+
+
+    InstructorTypes getInstructorType();
 }

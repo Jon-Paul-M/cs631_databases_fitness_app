@@ -22,11 +22,26 @@ public class SalariedInstructor extends User implements Instructor {
     }
 
     @Override
-    public void setRate(BigDecimal rate) {
-        setSalary(rate);
+    public void setWage(BigDecimal wage) {
+        setSalary(wage);
     }
 
     @Override
     public void setHours(BigDecimal hours) {// ignore
+    }
+
+    @Override
+    public BigDecimal getWage() {
+        return salary;
+    }
+
+    @Override
+    public BigDecimal getHours() {
+        return BigDecimal.ZERO;
+    }
+
+    @Override
+    public InstructorTypes getInstructorType() {
+        return InstructorTypes.SALARIED;
     }
 }

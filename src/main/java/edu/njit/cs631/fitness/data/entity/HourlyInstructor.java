@@ -18,6 +18,17 @@ public class HourlyInstructor extends User implements Instructor {
     public void setHours(BigDecimal hours) {
         this.hours = hours;
     }
+
+    @Override
+    public BigDecimal getWage() {
+        return wage;
+    }
+
+    @Override
+    public InstructorTypes getInstructorType() {
+        return InstructorTypes.HOURLY;
+    }
+
     public BigDecimal getHours() {
         return this.hours;
     }
@@ -32,8 +43,8 @@ public class HourlyInstructor extends User implements Instructor {
     }
 
     @Override
-    public void setRate(BigDecimal rate) {
-        setHourlyWage(rate);
+    public void setWage(BigDecimal wage) {
+        setHourlyWage(wage);
     }
 
 	@Override

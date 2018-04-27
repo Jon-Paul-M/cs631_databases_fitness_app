@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>CS631 GXM Fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../../static/css/styles.css" th:href="@{/resources/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{/resources/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="js/modernizr-custom.js" th:src="@{/resources/js/modernizr-custom.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{/resources/js/selectivizr-min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="wrapper">
+    <h2>The Ultimate Fitness Application</h2>
+
+    <ul th:replace="fragments/header :: user_logged_in" class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li class="active">(user log in action)</li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Our Instructors</h3>
+            <h5>These are the dream makers! Work with them, and you will be</h5>
+<pre>
+______________$$$$$$$$$$____________________
+_____________$$__$_____$$$$$________________
+_____________$$_$$__$$____$$$$$$$$__________
+____________$$_$$__$$$$$________$$$_________
+___________$$_$$__$$__$$_$$$__$$__$$________
+___________$$_$$__$__$$__$$$$$$$$__$$_______
+____________$$$$$_$$_$$$_$$$$$$$$_$$$_______
+_____________$$$$$$$$$$$$$_$$___$_$$$$______
+________________$$_$$$______$$$$$_$$$$______
+_________________$$$$_______$$$$$___$$$_____
+___________________________$$_$$____$$$$____
+___________________________$$_$$____$$$$$___
+__________________________$$$$$_____$$$$$$__
+_________________________$__$$_______$$$$$__
+________________________$$$_$$________$$$$$_
+________________________$$$___________$$$$$_
+_________________$$$$___$$____________$$$$$$
+__$$$$$$$$____$$$$$$$$$$_$____________$$$_$$
+_$$$$$$$$$$$$$$$______$$$$$$$___$$____$$_$$$
+$$________$$$$__________$_$$$___$$$_____$$$$
+$$______$$$_____________$$$$$$$$$$$$$$$$$_$$
+$$______$$_______________$$_$$$$$$$$$$$$$$$_
+$$_____$_$$$$$__________$$$_$$$$$$$$$$$$$$$_
+$$___$$$__$$$$$$$$$$$$$$$$$__$$$$$$$$$$$$$__
+$$_$$$$_____$$$$$$$$$$$$________$$$$$$__$___
+$$$$$$$$$$$$$$_________$$$$$______$$$$$$$___
+$$$$_$$$$$______________$$$$$$$$$$$$$$$$____
+$$__$$$$_____$$___________$$$$$$$$$$$$$_____
+$$_$$$$$$$$$$$$____________$$$$$$$$$$_______
+$$_$$$$$$$hg$$$____$$$$$$$$__$$$____________
+$$$$__$$$$$$$$$$$$$$$$$$$$$$$$______________
+$$_________$$$$$$$$$$$$$$$__________________
+</pre>
+        </div>
+    </div>
+
+    <div th:replace="fragments/instructors_list :: instructors_list"></div>
+
+</div>
+
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

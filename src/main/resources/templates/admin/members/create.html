@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>CS631 GXM Fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="../../static/css/styles.css" th:href="@{/resources/css/styles.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/color/green.css" th:href="@{/resources/css/color/green.css}" rel="stylesheet" media="screen"/>
+    <script src="js/modernizr-custom.js" th:src="@{/resources/js/modernizr-custom.js}"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="../../static/js/selectivizr-min.js" th:src="@{/resources/js/selectivizr-min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="wrapper">
+    <h2>The Ultimate Fitness Application</h2>
+
+    <ul th:replace="fragments/header :: user_logged_in" class="breadcrumb">
+        <li><a href="#">Home</a> <span class="divider">/</span></li>
+        <li class="active">(user log in action)</li>
+    </ul>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Create a new member</h3>
+
+            <form action="#" th:action="create" th:object="${memberModel}"
+                  method="post">
+                <p th:if="${#fields.hasErrors('*')}">Errors:</p>
+                <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                    <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>
+                </ul>
+                <ul>
+                    <li>
+                        <label for="name" th:required="required">Name</label>
+                        <input type="text" th:field="*{name}"/>
+                    </li>
+                    <li>
+                        <label for="email" th:required="required">E-mail</label>
+                        <input type="text" th:field="*{email}"/>
+                    </li>
+                    <li>
+                        <label for="membership" th:required="required">Membership Type:</label>
+                        <select	th:field="*{membership}">
+                            <option value="">--</option>
+                            <option th:each="membershipType : ${membershipTypes}"
+                                    th:value="${membershipType.id}"
+                                    th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />
+                        </select>
+                    </li>
+                    <li>
+                        <label for="address1" th:required="required">Address 1</label>
+                        <input type="text" th:field="*{address1}"/>
+                    </li>
+                    <li>
+                        <label for="address2" th:required="required">Address 2</label>
+                        <input type="text" th:field="*{address2}"/>
+                    </li>
+                    <li>
+                        <label for="city" th:required="required">City</label>
+                        <input type="text" th:field="*{city}"/>
+                    </li>
+                    <li>
+                        <label for="state" th:required="required">State</label>
+                        <input type="text" th:field="*{state}"/>
+                    </li>
+                    <li>
+                        <label for="county" th:required="required">County</label>
+                        <input type="text" th:field="*{county}"/>
+                    </li>
+                    <li>
+                        <label for="postalCode" th:required="required">Postal Code</label>
+                        <input type="text" th:field="*{postalCode}"/>
+                    </li>
+                </ul>
+                <button type="submit">Submit</button>
+            </form>
+</div>
+</div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
+
