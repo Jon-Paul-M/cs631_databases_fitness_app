@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.njit.cs631.medical</groupId>
-	<artifactId>medical-root</artifactId>
+	<groupId>edu.njit.cs631.fitness</groupId>
+	<artifactId>fitness-root</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>The Medical App for NJIT CS 631</name>
-	<description>This is a web application used to demonstrate database proficiency utilizing the business domain of a medical practice.</description>
+	<name>The Fitness App for NJIT CS 631</name>
+	<description>This is a web application used to demonstrate database proficiency utilizing the business domain of a fitness gym.</description>
 
 	<scm>
 		<url>git@bitbucket.org:cs631_2018_spring/backend.git</url>
@@ -38,8 +38,9 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<encoding>UTF-8</encoding>
+		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -135,5 +136,23 @@
 		</plugins>
 	</build>
 
+
+	<profiles>
+		<profile>
+			<id>demo</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<configuration>
+							<executable>true</executable>
+							<embeddedLaunchScript>src/main/resources/init.sh</embeddedLaunchScript>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
