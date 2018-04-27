@@ -12,19 +12,19 @@
       method="post">
     <p th:if="${#fields.hasErrors('*')}">Errors:</p>
     <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+        <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>
     </ul>
     <ul>
         <li>
-            <label for="name">Name</label>
+            <label for="name" th:required="required">Name</label>
             <input type="text" th:field="*{name}"/>
         </li>
         <li>
-            <label for="email">E-mail</label>
+            <label for="email" th:required="required">E-mail</label>
             <input type="text" th:field="*{email}"/>
         </li>
         <li>
-            <label for="membership">Membership Type:</label>
+            <label for="membership" th:required="required">Membership Type:</label>
             <select	th:field="*{membership}">
                 <option value="">--</option>
                 <option th:each="membershipType : ${membershipTypes}"
@@ -32,7 +32,30 @@
                         th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />
             </select>
         </li>
-        <!-- Todo : Add remaining member model attributes -->
+        <li>
+            <label for="address1" th:required="required">Address 1</label>
+            <input type="text" th:field="*{address1}"/>
+        </li>
+        <li>
+            <label for="address2" th:required="required">Address 2</label>
+            <input type="text" th:field="*{address2}"/>
+        </li>
+        <li>
+            <label for="city" th:required="required">City</label>
+            <input type="text" th:field="*{city}"/>
+        </li>
+        <li>
+            <label for="state" th:required="required">State</label>
+            <input type="text" th:field="*{state}"/>
+        </li>
+        <li>
+            <label for="county" th:required="required">County</label>
+            <input type="text" th:field="*{county}"/>
+        </li>
+        <li>
+            <label for="postalCode" th:required="required">Postal Code</label>
+            <input type="text" th:field="*{postalCode}"/>
+        </li>
     </ul>
     <button type="submit">Submit</button>
 </form>

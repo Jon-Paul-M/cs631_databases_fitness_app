@@ -36,6 +36,10 @@ public class MemberModel {
     @Size(min=1)
     private String state;
 
+    @NotNull
+    @Size(min=1)
+    private String postalCode;
+
     public String getAddress1() {
         return address1;
     }
@@ -84,9 +88,6 @@ public class MemberModel {
         this.postalCode = postalCode;
     }
 
-    @NotNull
-    @Size(min=1)
-    private String postalCode;
 
     public String getEmail() {
         return email;
