@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Member findMemberByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+    @Override
     public Member registerNewMemberAccount(MemberModel memberDto) throws UserAlreadyExistException {
         if (memberDto == null) {
             logger.info("I heard a null member model!");
@@ -83,13 +88,9 @@ public class UserServiceImpl implements UserService {
         member.setState(memberDto.getState());
         member.setCounty(memberDto.getCounty());
         member.setPostalCode(memberDto.getPostalCode());
+        member.setRoles(Arrays.asList(roleRepository.findByName("ROLE_MEMBER")));
 
         return memberRepository.save(member);
-    }
-
-    @Override
-    public Member findMemberByEmail(String email) {
-        return memberRepository.findByEmail(email);
     }
 
     @Override
