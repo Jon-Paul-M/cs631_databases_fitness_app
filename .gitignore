@@ -12,3 +12,4 @@
 *.class
 Thumbs.db
 /bin
+/.springBeans
