@@ -6,9 +6,11 @@ import org.junit.Test;
 
 import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,8 +23,8 @@ public class T_001_CanRegisterNewMember extends BaseTest {
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser() throws Exception {
-        // login
-        loginAs(getAdminUser());
+        Member member = userService.findMemberByEmail("buddy@test.com");
+        Assert.assertNull(member);
         Integer membershipRepoId = membershipRepository.findAll().get(0).getId();
         mockMvc.perform(
                 MockMvcRequestBuilders
@@ -36,14 +38,38 @@ public class T_001_CanRegisterNewMember extends BaseTest {
                         .param("city", "city")
                         .param("state", "state")
                         .param("membership", "" + membershipRepoId)
-                        .param("postalCode", "00000"))
-                .andExpect(model().errorCount(0))
+                        .param("postalCode", "00000")
+                        .with(user(getAdminUser())))
                 .andExpect(status().is3xxRedirection());
-        Member member = userService.findMemberByEmail("buddy@test.com");
+        member = userService.findMemberByEmail("buddy@test.com");
         Assert.assertNotNull(member);
-        logout();
-        loginAs("buddy@test.com");
+    }
 
 
+
+    @Test
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void adminCreatesUser_fails() throws Exception {
+        // login
+        Member member = userService.findMemberByEmail("buddy@test.com");
+        Assert.assertNull(member);
+        Integer membershipRepoId = membershipRepository.findAll().get(0).getId();
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/admin/members/create")
+                        .accept(MediaType.TEXT_HTML)
+                        .param("name", "buddy")
+                        .param("email", "buddy") // invalid e-mail
+                        .param("address1", "") // required address
+                        .param("address2", "")
+                        .param("county", "county")
+                        .param("city", "city")
+                        .param("state", "state")
+                        .param("membership", "" + membershipRepoId)
+                        .param("postalCode", "00000")
+                        .with(user(getAdminUser())))
+                .andExpect(model().errorCount(2))
+                .andExpect(status().isOk());
     }
 }
