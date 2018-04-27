@@ -38,9 +38,11 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<encoding>UTF-8</encoding>
+		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<runtime.profile>development</runtime.profile>
 	</properties>
 
 	<dependencies>
@@ -106,9 +108,21 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<profiles>
+						<profile>${runtime.profile}</profile>
+					</profiles>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
-
+	<profiles>
+		<profile>
+			<id>demo</id>
+			<properties>
+				<runtime.profile>demo</runtime.profile>
+			</properties>
+		</profile>
+	</profiles>
 </project>
