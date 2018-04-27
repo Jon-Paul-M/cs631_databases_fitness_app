@@ -9,7 +9,6 @@ import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.dto.UserDto;
-import edu.njit.cs631.fitness.web.error.PersonNotFoundException;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.slf4j.Logger;
@@ -19,7 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
+import java.sql.Timestamp;
 
 
 @Service("userService")
@@ -52,23 +54,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Member registerNewMemberAccount(MemberModel model) throws UserAlreadyExistException {
-        if (model == null) {
+    public Member registerNewMemberAccount(MemberModel memberDto) throws UserAlreadyExistException {
+        if (memberDto == null) {
             logger.info("I heard a null member model!");
             return null;
         }
 
-        if(findMemberByEmail(model.getEmail()) != null) {
-            throw new UserAlreadyExistException("A member with that e-mail address already exists: " + model.getEmail());
+        if(findMemberByEmail(memberDto.getEmail()) != null) {
+            throw new UserAlreadyExistException("A member with that e-mail address already exists: " + memberDto.getEmail());
         }
 
         Member member = new Member();
-        Membership membership = membershipRepository.findOne(model.getMembership());
+        member.setPasswordHash(passwordEncoder.encode("password"));
+        member.setName(memberDto.getName());
+        member.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
+        member.setEmail(memberDto.getEmail());
+        Membership membership = membershipRepository.findOne(memberDto.getMembership());
         member.setMembership(membership);
 
-        // TODO: Create remaining member model and then add member via memberRepo
-        return null;
+        // this is one reason I like the postfix of "dto" rather than "model"
+        // because it's not clear if this is the UI model or the domain model
+        member.setAddress1(memberDto.getAddress1());
+        if (memberDto.getAddress2() != null) {
+            member.setAddress2(memberDto.getAddress2());
+        }
 
+        member.setCity(memberDto.getCity());
+        member.setState(memberDto.getState());
+        member.setCounty(memberDto.getCounty());
+        member.setPostalCode(memberDto.getPostalCode());
+
+        return memberRepository.save(member);
     }
 
     @Override

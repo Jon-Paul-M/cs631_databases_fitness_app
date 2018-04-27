@@ -2,6 +2,7 @@ package edu.njit.cs631.fitness.web.controller.admin;
 
 import edu.njit.cs631.fitness.data.entity.Membership;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class CreateMemberController {
     @Autowired
     private MembershipRepository membershipRepository;
 
+    @Autowired
+    private UserService userService;
+
 
     @RequestMapping(value="/create", method=RequestMethod.GET)
     public String createMember(Model m) {
@@ -37,6 +41,9 @@ public class CreateMemberController {
             m.addAttribute("membershipTypes", memberships);
             return "admin/members/create";
         }
+
+        userService.registerNewMemberAccount(memberModel);
+
         m.addAttribute("message", "Successfully created member");
         return "redirect:/admin";
     }

@@ -85,7 +85,7 @@
                     <th>Instructor</th>
                     <th>Capacity</th>
                     <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
-                        <th>Cancel Class?</th>
+                        <th>Register for Class?</th>
                     </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
