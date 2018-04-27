@@ -136,4 +136,23 @@
 		</plugins>
 	</build>
 
+
+	<profiles>
+		<profile>
+			<id>demo</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<configuration>
+							<executable>true</executable>
+							<embeddedLaunchScript>src/main/resources/init.sh</embeddedLaunchScript>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
