@@ -1,0 +1,256 @@
+@charset "utf-8";
+
+/* ============================== */
+/*
+    Title: Blue Color
+*/
+/* ============================== */
+
+a:hover {
+	color: #0095fc;
+}
+
+.outside {
+    background: none repeat scroll 0 0 rgba(0, 149, 252, 0.95);
+}
+
+header h1 > a {
+	background-image: url("../../img/logo-blue.png");
+}
+
+.ruler.green {
+	border-top: 4px solid #0095fc;
+}
+
+.row-fluid.featured .item .span4 .row-fluid .span12  a:first-child:hover {
+	background-color: #0095fc;
+}
+
+.row-fluid.control-group .offset2 a:first-child:hover {
+	background-color: #0095fc;
+}
+
+.row-fluid.classes-row .span4:hover {
+	border-bottom: 3px solid #0095fc;
+}
+
+span.name-trainer {
+	background-color: #0095fc;
+}
+
+.news-row h4:hover {
+	background-color: #0095fc;
+}
+
+ul.twitter li .icon-twitter {
+	color: #0095fc;
+}
+
+.follow-twitter:hover {
+	background-color: #0095fc;
+}
+
+ul.tags li a:hover {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+.reply:hover {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+a.like:hover {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+.row-fluid.pricing-table .span3:hover h4, .row-fluid.pricing-table .span3:hover a.suscribe {
+	background-color: #0095fc
+}
+
+.row-fluid.wide-price:hover [class*="span"] a.suscribe {
+	background-color: #0095fc;
+}
+
+form .row-fluid [class*="span"] input[type="submit"]:hover,
+form .row-fluid [class*="span"] input[type="reset"]:hover,
+.widget form input[type="submit"]:hover {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+.ruler.green {
+	border-top: 4px solid #0095fc;
+}
+
+.row-fluid.control-group .offset2 a:first-child:hover {
+	background-color: #0095fc;
+}
+
+.social-contact li a:hover {
+	color: #0095fc;
+}
+
+.social-contact > a:hover {
+	color: #0095fc;
+}
+
+nav > ul > li:hover {
+	border-bottom: 3px solid #0095fc;
+}
+
+nav ul li > ul li:hover {
+	border-left: 3px solid #0095fc;
+}
+
+nav a[data-handler].open, nav a[data-handler]:focus, .responsive-menu.open {
+	color: #0095fc;
+}
+
+.responsive-menu:hover {
+	border-bottom: 3px solid #0095fc;
+}
+
+.box-hero.title {
+	background-color: #0095fc;
+}
+
+.box-hero blockquote p span {
+	color: #0095fc;
+}
+
+.row-fluid.tabs ul.nav-tabs li a:hover {
+	color: #0095fc;
+}
+
+.row-fluid.twitter .span12 .twitter-line a {
+	color: #0095fc;
+}
+
+footer ul li .icon-phone, footer ul li .icon-building, footer ul li .icon-mail {
+	color: #0095fc;
+}
+
+footer .footer-bottom ul li a:hover {
+	color: #0095fc;
+}
+
+.read-more:hover {
+	color: #0095fc;
+}
+
+ul.comment li a:hover {
+	color: #0095fc;
+}
+
+ul.flickr li a:hover img {
+	border: 2px solid #0095fc;
+}
+
+.row-fluid.contact [class*="span"] ul li a {
+	color: #0095fc;
+}
+
+.widget form .legend {
+    color: #0095fc;
+}
+
+.row-fluid.featured .span4 .row-fluid .span12 > a:first-child:hover {
+	border-color: #0095fc;
+}
+
+.row-fluid.tabs + .row-fluid > .span4:last-child a:hover {
+	color:#0095fc;
+}
+
+.row-fluid.featured .span4 .row-fluid [class*="span"] a:hover {
+	color:#0095fc;
+}
+
+input:focus:invalid:focus {
+	border-color: #0095fc;
+	box-shadow: 0 0 6px #0095fc;
+}
+
+textarea:focus, input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+	border-color: #0095fc !important;
+	box-shadow: 0 0 10px -3px #0095fc !important;
+}
+
+.accordion-heading .accordion-toggle.open {
+    background-color: #0095fc;
+}
+
+.img-circle:hover {
+	background-color: #0095fc;
+}
+
+h4 a:hover {
+	color: #0095fc;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+	background-color: #0095fc;
+}
+
+.pagination-large ul > li > a:hover, .pagination-large ul > li > span:hover {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+.pagination-large ul > li > a.active {
+	background-color: #0095fc;
+	border-bottom: 1px solid #0095fc;
+}
+
+.progress .bar {
+	background-color: #0095fc;
+}
+
+.row-fluid [class*="span"] blockquote.right {
+    background-color: #ECECEC;
+    border-left: 2px solid #0095fc;
+
+}
+
+.row-fluid [class*="span"] blockquote {
+    background-color: #ECECEC;
+    border-left: 2px solid #0095fc;
+}
+
+.row-fluid.control-group .offset2 a {
+	background-image: url("../../img/icons/nav-carousel-blue.png");
+}
+
+h4 a[data-slide] {
+	background-image: url("../../img/icons/nav-carousel-blue.png");
+}
+
+.row-fluid.tabs ul.nav-tabs li a span {
+    background-image: url("../../img/icons/icons-tabs-blue.png");
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+/*	Small Desktops
+/* ---------------------------------------------------------------------- */
+
+	nav > ul > li:hover {
+		border-bottom: 1px solid #0095fc;
+	}
