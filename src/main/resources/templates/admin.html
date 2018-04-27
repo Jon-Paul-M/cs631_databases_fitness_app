@@ -32,6 +32,15 @@
 
     <div class="row-fluid">
         <div class="span12">
+            <h3 class="title">Current Instructors</h3>
+            <h5>Current Instructors in the Fitness Application, <a href="#" th:href="@{/admin/instructors/create}">Create a new instructor.</a></h5>
+        </div>
+    </div>
+
+    <div th:replace="fragments/instructors_list :: instructors_list"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
             <h3 class="title">Current Members</h3>
             <h5>Current Members in the Fitness Application, <a href="#" th:href="@{/admin/members/create}">Create a new member.</a></h5>
         </div>

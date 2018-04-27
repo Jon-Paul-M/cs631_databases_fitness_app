@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
@@ -21,6 +22,10 @@ import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.testutils.BaseTest;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
@@ -40,7 +45,19 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
 	@Autowired
 	private ClazzAdministrationService clazzAdministrationService;
 
-	@Test 
+	@Test
+	@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+			executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	public void adminGetClassCreationForm() throws Exception {
+		mockMvc.perform(
+				MockMvcRequestBuilders
+						.get("/admin/classes/create")
+						.accept(MediaType.TEXT_HTML)
+						.with(user(getAdminUser())))
+				.andExpect(status().isOk());
+	}
+
+	@Test
     public void findExercises_ExercisesExist_RepoReturnsExercises() {
     	int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, Exercise.TABLE_NAME);
     	List<Exercise> exercises = (List<Exercise>) exerciseRepository.findAll();

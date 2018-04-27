@@ -184,12 +184,12 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         switch(instructorType) {
             case HOURLY:
                 instructor = new HourlyInstructor();
-                instructor.setRate(rate);
+                instructor.setWage(rate);
                 instructor.setHours(new BigDecimal(0));
                 return (User)instructor;
             case SALARIED:
                 instructor = new SalariedInstructor();
-                instructor.setRate(rate);
+                instructor.setWage(rate);
                 instructor.setHours(new BigDecimal(0));
                 return (User)instructor;
             default:

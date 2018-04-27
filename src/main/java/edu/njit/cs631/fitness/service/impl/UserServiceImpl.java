@@ -1,15 +1,17 @@
 package edu.njit.cs631.fitness.service.impl;
 
-import edu.njit.cs631.fitness.data.entity.Member;
-import edu.njit.cs631.fitness.data.entity.Membership;
+import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import edu.njit.cs631.fitness.data.repository.SalariedInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.sql.Timestamp;
 
@@ -40,6 +42,13 @@ public class UserServiceImpl implements UserService {
     private MembershipRepository membershipRepository;
 
     @Autowired
+    private HourlyInstructorRepository hourlyInstructorRepository;
+
+
+    @Autowired
+    private SalariedInstructorRepository salariedInstructorRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -47,6 +56,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+    private void checkUserEmail(String email) throws UserAlreadyExistException {
+        if(findUserByEmail(email) != null) {
+            throw new UserAlreadyExistException("A user with that e-mail address already exists: " + email);
+        }
+    }
 
     @Override
     public User findUserByEmail(String email) {
@@ -102,9 +118,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        if(findUserByEmail(userDto.getEmail()) != null) {
-            throw new UserAlreadyExistException("A user with that e-mail address already exists: " + userDto.getEmail());
-        }
+        checkUserEmail(userDto.getEmail());
 
         final User user = new User();
         user.setPasswordHash(passwordEncoder.encode(userDto.getPassword()));
@@ -134,6 +148,56 @@ public class UserServiceImpl implements UserService {
     public void changeUserPassword(final User user, final String password) {
         user.setPasswordHash(passwordEncoder.encode(password));
         userRepository.save(user);
+    }
+
+    private User createNewInstructor(InstructorModel instructorModel) {
+        Instructor instructor;
+        BigDecimal rate = new BigDecimal(instructorModel.getWage());
+        InstructorTypes instructorType = InstructorTypes.valueOf(instructorModel.getInstructorType());
+        switch(instructorType) {
+            case HOURLY:
+                instructor = new HourlyInstructor();
+                instructor.setWage(rate);
+                instructor.setHours(new BigDecimal(0));
+                return (User)instructor;
+            case SALARIED:
+                instructor = new SalariedInstructor();
+                instructor.setWage(rate);
+                instructor.setHours(new BigDecimal(0));
+                return (User)instructor;
+            default:
+                throw new IllegalArgumentException("No type for " + instructorType);
+        }
+    }
+
+    @Override
+    public void registerNewInstructorAccount(InstructorModel instructorModel) {
+
+        checkUserEmail(instructorModel.getEmail());
+
+        User user = createNewInstructor(instructorModel);
+        user.setName(instructorModel.getName());
+        user.setEmail(instructorModel.getEmail());
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_INSTRUCTOR")));
+        user.setPasswordHash(passwordEncoder.encode("password"));
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public Instructor findInstructorByEmail(String s) {
+
+        User user = userRepository.findByEmail(s);
+
+        if (user == null) return null;
+
+        Instructor instructor = hourlyInstructorRepository.findOne(user.getId());
+        if (instructor != null) {
+            return instructor;
+        }
+
+        return salariedInstructorRepository.findOne(user.getId());
     }
 
 }

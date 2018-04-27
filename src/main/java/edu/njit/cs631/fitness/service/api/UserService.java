@@ -1,10 +1,12 @@
 package edu.njit.cs631.fitness.service.api;
 
 
+import edu.njit.cs631.fitness.data.entity.Instructor;
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;;
 
 public interface UserService {
@@ -24,6 +26,10 @@ public interface UserService {
     User getUserByID(long id);
 
     void changeUserPassword(User user, String password);
+
+    void registerNewInstructorAccount(InstructorModel instructorModel);
+
+    Instructor findInstructorByEmail(String s);
 
     // TODO: A couple of items to implement on the tail end if there is time.
     // void createPasswordResetTokenForUser(User user, String token);

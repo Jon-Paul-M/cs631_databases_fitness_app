@@ -18,6 +18,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class T_001_CanRegisterNewMember extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
 
+    @Test
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void adminGetMemberCreationForm() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/admin/members/create")
+                        .accept(MediaType.TEXT_HTML)
+                        .with(user(getAdminUser())))
+                .andExpect(status().isOk());
+    }
 
     @Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},

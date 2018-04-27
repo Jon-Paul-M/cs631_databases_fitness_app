@@ -23,9 +23,9 @@
 
     <div class="row-fluid">
         <div class="span12">
-            <h3 class="title">Create a new member</h3>
+            <h3 class="title">Create a new instructor</h3>
 
-            <form action="#" th:action="create" th:object="${memberModel}"
+            <form action="#" th:action="create" th:object="${instructorModel}"
                   method="post">
                 <p th:if="${#fields.hasErrors('*')}">Errors:</p>
                 <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
@@ -41,46 +41,25 @@
                         <input type="text" th:field="*{email}"/>
                     </li>
                     <li>
-                        <label for="membership" th:required="required">Membership Type:</label>
-                        <select	th:field="*{membership}">
-                            <option value="">--</option>
-                            <option th:each="membershipType : ${membershipTypes}"
-                                    th:value="${membershipType.id}"
-                                    th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />
+                        <label for="instructorType" th:required="required">Instructor Type:</label>
+                        <select	th:field="*{instructorType}">
+                            <option th:each="iType : ${instructorTypes}"
+                                    th:value="${iType}"
+                                    th:utext="${iType}"/>
                         </select>
                     </li>
                     <li>
-                        <label for="address1" th:required="required">Address 1</label>
-                        <input type="text" th:field="*{address1}"/>
-                    </li>
-                    <li>
-                        <label for="address2" th:required="required">Address 2</label>
-                        <input type="text" th:field="*{address2}"/>
-                    </li>
-                    <li>
-                        <label for="city" th:required="required">City</label>
-                        <input type="text" th:field="*{city}"/>
-                    </li>
-                    <li>
-                        <label for="state" th:required="required">State</label>
-                        <input type="text" th:field="*{state}"/>
-                    </li>
-                    <li>
-                        <label for="county" th:required="required">County</label>
-                        <input type="text" th:field="*{county}"/>
-                    </li>
-                    <li>
-                        <label for="postalCode" th:required="required">Postal Code</label>
-                        <input type="text" th:field="*{postalCode}"/>
+                        <label for="wage" th:required="required">Wage</label>
+                        <input type="text" th:field="*{wage}"/>
                     </li>
                 </ul>
                 <button type="submit">Submit</button>
             </form>
-</div>
-</div>
+
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-
