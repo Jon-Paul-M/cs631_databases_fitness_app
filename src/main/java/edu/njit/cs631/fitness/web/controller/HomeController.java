@@ -11,24 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
-public class HomeController {
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+public class HomeController extends BaseController {
 
-    @Autowired
-    private InstructorService instructorService;
-
-    @Autowired
-    private MembershipRepository membershipRepository;
 
     @RequestMapping(value = {"/", "/home", "/login", "/logout"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(Model model) {
-        List<Membership> memberships = membershipRepository.findAll();
-        model.addAttribute("memberships", memberships );
+    public ModelAndView home() {
+        return commonModelAndView();
+    }
 
+    @Override
+    protected String getCommonViewName() {
         return "home";
     }
 }

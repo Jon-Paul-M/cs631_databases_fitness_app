@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import edu.njit.cs631.fitness.web.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,26 +28,14 @@ import edu.njit.cs631.fitness.web.model.MonthModel;
 
 @Controller
 @RequestMapping(value="/admin/classes")
-public class CreateClazzController {
+public class CreateClazzController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private ClazzAdministrationService clazzAdministrationService;
 
-	@Autowired
-	private ClazzService clazzService;
-	
-	@Autowired
-	private InstructorService instructorService;
-
-	@Autowired
-	private ExerciseService exerciseService;
-	
-	@Autowired
-	private RoomService roomService;
-	
-	private static final List<MonthModel> MONTHS = Arrays.asList(new MonthModel( 1, "January"), 
+	private static final List<MonthModel> MONTHS = Arrays.asList(new MonthModel( 1, "January"),
 			                                                     new MonthModel( 2, "February"),
 			                                                     new MonthModel( 3, "March"),
 			                                                     new MonthModel( 4, "April"),
@@ -72,6 +61,11 @@ public class CreateClazzController {
 			years.add(year);
 		}
 	}
+
+    @Override
+    protected String getCommonViewName() {
+        return "admin/classes/create";
+    }
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView get() {
@@ -102,11 +96,6 @@ public class CreateClazzController {
 		return modelAndView;
 	}
 
-	private void addClazzes(ModelAndView modelAndView) {
-		List<Clazz> futureActiveClasses = clazzService.listFutureActiveClasses();
-		logger.info("futureActiveClasses.size(): " + futureActiveClasses.size());
-		modelAndView.addObject("clazzes", futureActiveClasses);
-	}
 
 	private Date parseStart(ClazzModel clazzModel) {
 		Calendar calendar = Calendar.getInstance();
@@ -121,19 +110,15 @@ public class CreateClazzController {
 		return start;
 	}
 
-	private ModelAndView commonModelAndView() {
-		ModelAndView modelAndView = new ModelAndView("admin/classes/create");
-		modelAndView.addObject("exercises", exerciseService.listAllExercises());
-		modelAndView.addObject("instructors", instructorService.listAllInstructors());
+	@Override
+	protected ModelAndView commonModelAndView() {
+	    ModelAndView modelAndView = super.commonModelAndView();
 		modelAndView.addObject("months", MONTHS);
 		modelAndView.addObject("days", DAYS);
 		modelAndView.addObject("years", years);
 		modelAndView.addObject("hours", HOURS);
 		modelAndView.addObject("minuets", MINUETS);
 		modelAndView.addObject("meridiems", MERIDIEMS);
-		List<Room> rooms = roomService.listAllRooms();
-		logger.debug("rooms.size: " + rooms.size());
-		modelAndView.addObject("rooms", rooms);
 		return modelAndView;
 	}
 	

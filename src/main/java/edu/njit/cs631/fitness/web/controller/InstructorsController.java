@@ -9,21 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
-public class InstructorsController {
+public class InstructorsController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    @Autowired
-    private InstructorService instructorService;
-
     @RequestMapping(value = {"/instructors"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(Model model) {
-        List<Instructor> instructors = instructorService.listAllInstructors();
-        model.addAttribute("instructors", instructors );
+    public ModelAndView home() {
+        return commonModelAndView();
+    }
 
+    @Override
+    protected String getCommonViewName() {
         return "instructors";
     }
 }
