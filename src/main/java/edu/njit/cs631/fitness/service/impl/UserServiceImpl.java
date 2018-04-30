@@ -10,14 +10,12 @@ import edu.njit.cs631.fitness.data.repository.SalariedInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
-import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,14 +62,19 @@ public class UserServiceImpl implements UserService {
 
 
     private void checkUserEmail(String email) throws UserAlreadyExistException {
-        if(findUserByEmail(email) != null) {
+        if(findUser(email) != null) {
             throw new UserAlreadyExistException("A user with that e-mail address already exists: " + email);
         }
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findUser(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUser(Integer id) {
+        return userRepository.findOne(id);
     }
 
     @Override

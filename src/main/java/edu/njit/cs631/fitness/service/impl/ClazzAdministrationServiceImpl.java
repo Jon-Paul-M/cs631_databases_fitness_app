@@ -1,6 +1,9 @@
 package edu.njit.cs631.fitness.service.impl;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -28,7 +31,6 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
 	@Autowired
     private UserService userService;
-	
 
 	@Autowired
 	private RoomRepository roomRepository;
@@ -42,7 +44,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
 	@Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, Date start, Integer duration) {
+	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
 		logger.info("In clazzAdministrationService.createClass");
     	Exercise exercise = exerciseRepository.findOne(exerciseId);
     	Instructor instructor = userService.findInstructor(instructorId);
@@ -51,9 +53,37 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
     	clazz.setExercise(exercise);
     	clazz.setInstructor((User)instructor);
     	clazz.setRoom(room);
-    	clazz.setStart(start);
+    	clazz.setStart(Timestamp.valueOf(start));
     	clazz.setDuration(duration);
 		return clazzRepository.saveAndFlush(clazz);
 	}
+
+
+	@Override
+    @Transactional
+	public void registerUserForClass(Integer userId, Integer clazzId) {
+		Clazz clazz = clazzRepository.findOne(clazzId);
+		if (clazz.getStart().toLocalDateTime().isBefore(LocalDateTime.now())) {
+		    // can't change a registration in the past
+		    return;
+        }
+
+        User user = userService.findUser(userId);
+
+		if (user == null) {
+		    // no such user, maybe throw exception.
+		    return;
+        }
+
+        Set<User> users = clazz.getMembers();
+
+		if (!users.contains(user)) {
+            users.add(user);
+
+            clazz.setMembers(users);
+            clazzRepository.saveAndFlush(clazz);
+		}
+	}
+
 
 }

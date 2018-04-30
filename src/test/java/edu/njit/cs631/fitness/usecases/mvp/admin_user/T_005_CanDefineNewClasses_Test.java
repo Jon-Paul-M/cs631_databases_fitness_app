@@ -1,5 +1,8 @@
 package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +93,9 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
-    	Date start = Calendar.getInstance().getTime();
+    	LocalDateTime start = LocalDateTime.ofInstant(
+    			Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+				ZoneId.systemDefault());
     	Integer duration = 55;
     	Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
     	Assert.assertNotNull("clazz should not be null", clazz);

@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -82,7 +81,7 @@ public abstract class BaseController {
                 modelAndView.addObject("currentUser", null);
             } else {
                 springUser = (org.springframework.security.core.userdetails.UserDetails)(userAuth);
-                modelAndView.addObject("currentUser", userService.findUserByEmail(springUser.getUsername()));
+                modelAndView.addObject("currentUser", userService.findUser(springUser.getUsername()));
             }
         } else {
             modelAndView.addObject("currentUser", null);
