@@ -21,9 +21,6 @@ public abstract class BaseController {
     protected ClazzService clazzService;
 
     @Autowired
-    protected InstructorService instructorService;
-
-    @Autowired
     protected ExerciseService exerciseService;
 
     @Autowired
@@ -53,7 +50,7 @@ public abstract class BaseController {
     }
 
     protected void addInstructors(ModelAndView modelAndView) {
-        modelAndView.addObject("instructors", instructorService.listAllInstructors());
+        modelAndView.addObject("instructors", userService.listAllInstructors());
     }
 
     protected void addRooms(ModelAndView modelAndView) {

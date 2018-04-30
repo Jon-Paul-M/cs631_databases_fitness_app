@@ -16,13 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.njit.cs631.fitness.data.entity.Clazz;
-import edu.njit.cs631.fitness.data.entity.Room;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
-import edu.njit.cs631.fitness.service.api.ClazzService;
-import edu.njit.cs631.fitness.service.api.ExerciseService;
-import edu.njit.cs631.fitness.service.api.InstructorService;
-import edu.njit.cs631.fitness.service.api.RoomService;
 import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
 

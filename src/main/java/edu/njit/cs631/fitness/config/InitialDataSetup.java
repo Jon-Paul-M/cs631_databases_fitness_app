@@ -1,6 +1,8 @@
 package edu.njit.cs631.fitness.config;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,12 +12,16 @@ import javax.transaction.Transactional;
 
 import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
+import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import edu.njit.cs631.fitness.data.repository.SalariedInstructorRepository;
+import edu.njit.cs631.fitness.service.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +41,6 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
     private boolean alreadySetup = false;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private MembershipRepository membershipRepository;
 
     @Autowired
@@ -47,7 +50,7 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
     private PrivilegeRepository privilegeRepository;
 
     @Autowired
-    private HourlyInstructorRepository hourlyInstructorRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -117,19 +120,19 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         final Role memberRole = createRoleIfNotFound("ROLE_MEMBER", memberPrivileges);
 
         // == create initial user
-        createUserIfNotFound("admin@test.com",
+        userService.createUserIfNotFound("admin@test.com",
                 "Admin",
                 "password",
                 new ArrayList<>(Arrays.asList(adminRole)));
 
-        createInstructorIfNotFound("hourlyinstructor@test.com",
+        userService.createInstructorIfNotFound("hourlyinstructor@test.com",
                 "Hourly Instructor",
                 "password",
                 new BigDecimal("1.00"),
                 new ArrayList<>(Arrays.asList(instructorRole)),
                 InstructorTypes.HOURLY);
 
-        createInstructorIfNotFound("salariedinstructor@test.com",
+        userService.createInstructorIfNotFound("salariedinstructor@test.com",
                 "Salaried Instructor",
                 "password",
                 new BigDecimal("1.00"),
@@ -137,20 +140,21 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
                 InstructorTypes.SALARIED);
 
 
-        createInstructorIfNotFound("instructormember@test.com",
+        userService.createInstructorIfNotFound("instructormember@test.com",
                 "Hourly Instructor & Member",
                 "password",
                 new BigDecimal("1.00"),
                 new ArrayList<>(Arrays.asList(instructorRole, memberRole)),
                 InstructorTypes.HOURLY);
 
-        createMemberIfNotFound("member@test.com",
+        userService.createMemberIfNotFound("member@test.com",
                 "Regular Member",
                 "password",
                 new ArrayList<>(Arrays.asList(memberRole)),
                 "Address 1",
                 "Address 2",
                 "City",
+                "county",
                 "State",
                 "12345");
 
@@ -178,87 +182,5 @@ public class InitialDataSetup  implements ApplicationListener<ContextRefreshedEv
         return role;
     }
 
-    @Transactional
-    private User createInstructor(BigDecimal rate, InstructorTypes instructorType) {
-        Instructor instructor;
-        switch(instructorType) {
-            case HOURLY:
-                instructor = new HourlyInstructor();
-                instructor.setWage(rate);
-                instructor.setHours(new BigDecimal(0));
-                return (User)instructor;
-            case SALARIED:
-                instructor = new SalariedInstructor();
-                instructor.setWage(rate);
-                instructor.setHours(new BigDecimal(0));
-                return (User)instructor;
-            default:
-                throw new IllegalArgumentException("No type for " + instructorType);
-        }
-    }
-
-    @Transactional
-    private User createInstructorIfNotFound(
-            final String email,
-            final String name,
-            final String password,
-            final BigDecimal rate,
-            final Collection<Role> roles,
-            final InstructorTypes instructorType) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) return user;
-
-        return saveUserDetails(createInstructor(rate, instructorType), email, name, password, roles);
-    }
-
-    @Transactional
-    private User createUserIfNotFound(final String email,
-                                      final String name,
-                                      final String password,
-                                      final Collection<Role> roles) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) return user;
-        return saveUserDetails(new User(), email, name, password, roles);
-    }
-
-
-    @Transactional
-    private User createMemberIfNotFound(final String email,
-                                        final String name,
-                                        final String password,
-                                        final Collection<Role> roles,
-                                        final String address1,
-                                        final String address2,
-                                        final String city,
-                                        final String state,
-                                        final String postalCode) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) return user;
-        Member member = new Member();
-        Membership membership = membershipRepository.findAll().get(0);
-        member.setMembership(membership);
-        member.setAddress1(address1);
-        member.setAddress2(address2);
-        member.setCity(city);
-        member.setState(state);
-        member.setPostalCode(postalCode);
-        return saveUserDetails(member, email, name, password, roles);
-    }
-
-    private User saveUserDetails(final User user,
-                                 final String email,
-                                 final String name,
-                                 final String password,
-                                 final Collection<Role> roles) {
-        user.setEmail(email);
-        user.setName(name);
-        String passwordHash = passwordEncoder.encode(password);
-        logger.info("passwordHash: " + passwordHash);
-        user.setPasswordHash(passwordHash);
-        user.setEnabled(true);
-        user.setTokenExpired(false);
-        user.setRoles(roles);
-        return userRepository.save(user);
-    }
 
 }

@@ -20,9 +20,10 @@ import java.util.List;
 @RequestMapping(value="/admin/members")
 public class CreateMemberController extends BaseController{
 
-    @Autowired
-    private MembershipRepository membershipRepository;
-
+    @Override
+    protected String getCommonViewName() {
+        return "admin/members/create";
+    }
 
     @Override
     protected ModelAndView addParams(ModelAndView modelAndView) {
@@ -31,17 +32,17 @@ public class CreateMemberController extends BaseController{
 
 
     @RequestMapping(value="/create", method=RequestMethod.GET)
-    public String createMember(Model m) {
-        List<Membership> memberships = membershipRepository.findAll();
-        m.addAttribute("memberModel", new MemberModel());
-
-        return "admin/members/create";
+    public ModelAndView createMember(Model m) {
+        ModelAndView mv = commonModelAndView();
+        mv.addObject("memberModel", new MemberModel());
+        return mv;
     }
 
     @RequestMapping(value="/create", method=RequestMethod.POST)
     public ModelAndView createMember(@Valid MemberModel memberModel, BindingResult result, ModelAndView mv) {
         if (result.hasErrors()) {
-            // mv.addObject("memberModel", memberModel);
+            mv.addObject("memberModel", memberModel);
+            addParams(mv);
             return mv;
         }
 
@@ -51,9 +52,4 @@ public class CreateMemberController extends BaseController{
                 .addObject("message", "Sucessfully created member");
     }
 
-
-    @Override
-    protected String getCommonViewName() {
-        return "admin/members/create";
-    }
 }
