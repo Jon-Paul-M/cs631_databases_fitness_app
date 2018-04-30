@@ -44,7 +44,7 @@
                         <label for="membership" th:required="required">Membership Type:</label>
                         <select	th:field="*{membership}">
                             <option value="">--</option>
-                            <option th:each="membershipType : ${membershipTypes}"
+                            <option th:each="membershipType : ${memberships}"
                                     th:value="${membershipType.id}"
                                     th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />
                         </select>

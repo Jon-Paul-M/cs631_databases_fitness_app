@@ -37,7 +37,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser() throws Exception {
-        Instructor instructor = userService.findInstructorByEmail("buddy@test.com");
+        Instructor instructor = userService.findInstructor("buddy@test.com");
         Assert.assertNull(instructor);
         mockMvc.perform(
                 MockMvcRequestBuilders
@@ -50,7 +50,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
                         .param("wage", "0")
                         .with(user(getAdminUser())))
                 .andExpect(status().is3xxRedirection());
-        instructor = userService.findInstructorByEmail("buddy@test.com");
+        instructor = userService.findInstructor("buddy@test.com");
         Assert.assertNotNull(instructor);
     }
 
@@ -61,7 +61,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser_fails() throws Exception {
         // login
-        Instructor instructor = userService.findInstructorByEmail("buddy@test.com");
+        Instructor instructor = userService.findInstructor("buddy@test.com");
         Assert.assertNull(instructor);
         mockMvc.perform(
                 MockMvcRequestBuilders
@@ -75,7 +75,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
                         .with(user(getAdminUser())))
                 .andExpect(model().errorCount(2))
                 .andExpect(status().isOk());
-        instructor = userService.findInstructorByEmail("buddy@test.com");
+        instructor = userService.findInstructor("buddy@test.com");
         Assert.assertNull(instructor);
     }
 }
