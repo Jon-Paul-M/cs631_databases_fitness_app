@@ -91,7 +91,7 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
     	Date start = Calendar.getInstance().getTime();
-    	Integer duration = 55;
+    	Integer duration = 7;
     	Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
     	Assert.assertNotNull("clazz should not be null", clazz);
     	Assert.assertNotNull("clazz.getId() should not be null", clazz.getId());
