@@ -1,15 +1,17 @@
 package edu.njit.cs631.fitness.web.controller;
 
 
+import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
 import edu.njit.cs631.fitness.service.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -73,20 +75,39 @@ public abstract class BaseController {
         modelAndView.addObject("memberships", membershipRepository.findAll());
     }
 
-    protected void addCurrentUser(ModelAndView modelAndView) {
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-            org.springframework.security.core.userdetails.UserDetails springUser;
-            log.info(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-            Object userAuth = (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-            if ("anonymousUser".equals(userAuth)) {
-                modelAndView.addObject("currentUser", null);
-            } else {
-                springUser = (org.springframework.security.core.userdetails.UserDetails)(userAuth);
-                modelAndView.addObject("currentUser", userService.findUserByEmail(springUser.getUsername()));
-            }
-        } else {
-            modelAndView.addObject("currentUser", null);
+    protected boolean hasAuthority(String authority) {
+        UserDetails springUser = getCurrentUserDetails();
+
+        if (springUser == null) {
+            return false;
         }
+
+        return springUser.getAuthorities().contains(new SimpleGrantedAuthority(authority));
+    }
+
+    protected UserDetails getCurrentUserDetails() {
+        if (!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            return null;
+        }
+        Object userAuth = (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if ("anonymousUser".equals(userAuth)) {
+            return null;
+        }
+        return (org.springframework.security.core.userdetails.UserDetails)(userAuth);
+    }
+
+    protected User getCurrentUser() {
+        UserDetails springUser = getCurrentUserDetails();
+
+        if (springUser == null) {
+            return null;
+        }
+
+        return userService.findUser(springUser.getUsername());
+    }
+
+    protected void addCurrentUser(ModelAndView modelAndView) {
+        modelAndView.addObject("currentUser", getCurrentUser());
     }
 
 
