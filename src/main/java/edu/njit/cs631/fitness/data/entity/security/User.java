@@ -1,25 +1,17 @@
 package edu.njit.cs631.fitness.data.entity.security;
 
-import java.util.Collection;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Objects;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="USER")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public class User implements Serializable {
 
     public User() {
         super();
@@ -51,7 +43,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     private String name;
     @Column(name="NAME", nullable=false)
@@ -110,5 +101,18 @@ public class User {
     public String toString() {
         return String.format("<User %s %s>",
                 id, getEmail(), getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User that = (User) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail());
     }
 }

@@ -1,5 +1,8 @@
 package edu.njit.cs631.fitness.web.controller.admin;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -22,7 +25,7 @@ import edu.njit.cs631.fitness.web.model.MonthModel;
 
 @Controller
 @RequestMapping(value="/admin/classes")
-public class CreateClazzController extends BaseController {
+public class ClazzController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -47,7 +50,7 @@ public class CreateClazzController extends BaseController {
 	private static final List<String> MERIDIEMS = Arrays.asList("AM","PM");
 	private static List<Integer> years;
 	
-	public CreateClazzController() {
+	public ClazzController() {
 		super();
 		years = new ArrayList<>();
 		Integer currectYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -63,7 +66,7 @@ public class CreateClazzController extends BaseController {
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView get() {
-		logger.info("In CreateClazzController.get");
+		logger.info("In ClazzController.get");
 		ClazzModel clazzModel = defaultClazz();
 		ModelAndView modelAndView = commonModelAndView();
 		modelAndView.addObject("clazzModel", clazzModel);
@@ -73,15 +76,15 @@ public class CreateClazzController extends BaseController {
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ModelAndView post(@ModelAttribute ClazzModel clazzModel) {
-		logger.info("In CreateClazzController.post");
+		logger.info("In ClazzController.post");
 		logger.info(clazzModel.toString());
 		ModelAndView modelAndView = commonModelAndView();
 		if(valid(clazzModel)) {
 			Integer exerciseId = Integer.parseInt(clazzModel.getExercise());
 			Integer instructorId = Integer.parseInt(clazzModel.getInstructor());
 			Integer roomId = Integer.parseInt(clazzModel.getRoom());
-			Date start = parseStart(clazzModel);
-			Integer duration = 90;
+			LocalDateTime start = parseStart(clazzModel);
+			Integer duration = Integer.parseInt(clazzModel.getDuration());
 			clazzAdministrationService.createClass(exerciseId, instructorId, roomId, start, duration);
 			clazzModel = defaultClazz();
 		}
@@ -91,7 +94,7 @@ public class CreateClazzController extends BaseController {
 	}
 
 
-	private Date parseStart(ClazzModel clazzModel) {
+	private LocalDateTime parseStart(ClazzModel clazzModel) {
 		Calendar calendar = Calendar.getInstance();
 		int year = Integer.parseInt(clazzModel.getStartYYYY());
 		int month = Integer.parseInt(clazzModel.getStartMM()) - 1;
@@ -100,7 +103,8 @@ public class CreateClazzController extends BaseController {
 		hourOfDay += clazzModel.getStartMeridiem().equals(MERIDIEMS.get(0)) ? 0 : 12;
 		int minute = Integer.parseInt(clazzModel.getStartMI());
 		calendar.set(year, month, date, hourOfDay, minute, 0);
-		Date start = calendar.getTime();
+		LocalDateTime start = LocalDateTime.ofInstant(
+		        Instant.ofEpochMilli(calendar.getTimeInMillis()), ZoneId.systemDefault());
 		return start;
 	}
 

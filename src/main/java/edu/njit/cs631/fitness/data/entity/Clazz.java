@@ -4,6 +4,8 @@ import edu.njit.cs631.fitness.data.entity.security.User;
 
 import javax.persistence.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,27 +64,42 @@ public class Clazz {
         setInstructor(user);
     }
 
+    public boolean hasUserRegistered(User user) {
+        return this.members.contains(user);
+    }
+
     // Registered members for the class
-    @OneToMany
+    // TODO: See issue #34
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="REGISTER",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "CLASS_ID")
-    )
-    private Set<Member> members = new HashSet<>();
-    public Set<Member> getMembers() {
+            name = "REGISTER",
+            joinColumns = @JoinColumn(
+                    name = "CLASS_ID", referencedColumnName = "CLASS_ID"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "USER_ID", referencedColumnName = "USER_ID"))
+    private Set<User> members = new HashSet<>();
+    public Set<User> getMembers() {
     	return members;
     }
-    void setMembers(Set<Member> members) {
-    	this.members = members;
+    public void setMembers(Set<User> users) {
+    	this.members = users;
+    }
+
+
+    public int getTotalRegistered() {
+        return this.getMembers().size();
+    }
+
+    public int getCapacity() {
+        return room.getCapacity();
     }
 
     @Column(name="START_DATETIME")
-    private Date start;
-	public Date getStart() {
+    private Timestamp start;
+	public Timestamp getStart() {
 		return start;
 	}
-	public void setStart(Date start) {
+	public void setStart(Timestamp start) {
 		this.start = start;
 	}
     

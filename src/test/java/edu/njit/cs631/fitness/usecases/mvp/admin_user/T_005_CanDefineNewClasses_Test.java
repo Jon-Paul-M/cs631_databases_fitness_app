@@ -1,11 +1,13 @@
 package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
 import edu.njit.cs631.fitness.data.entity.Exercise;
@@ -24,6 +25,10 @@ import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.testutils.BaseTest;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
@@ -88,8 +93,10 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
-    	Date start = Calendar.getInstance().getTime();
-    	Integer duration = 7;
+    	LocalDateTime start = LocalDateTime.ofInstant(
+    			Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+				ZoneId.systemDefault());
+    	Integer duration = 8;
     	Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
     	Assert.assertNotNull("clazz should not be null", clazz);
     	Assert.assertNotNull("clazz.getId() should not be null", clazz.getId());

@@ -21,7 +21,8 @@ public interface UserService {
                               String name,
                               String password,
                               Collection<Role> roles);
-    User findUserByEmail(String email);
+    User findUser(String email);
+    User findUser(Integer id);
     // User saveRegisteredUser(User user);
     // User changeUserPassword(User user, String password);
 

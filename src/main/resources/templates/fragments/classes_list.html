@@ -102,9 +102,11 @@
                     <td th:inline="text">[[${clazz.start}]]</td>
                     <td th:inline="text">(room)</td>
                     <td th:inline="text">[[${clazz.instructor?.name}]]</td>
-                    <td th:inline="text">0 / (capacity)</td>
+                    <td th:inline="text">[[${clazz.getTotalRegistered()}]] / [[${clazz.getCapacity()}]]</td>
                     <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
-                        <td><a href="#" th:href="@{class/register(self=true)}">Register?</a></td>
+                        <td th:unless="${clazz.hasUserRegistered(currentUser)}"><a href="#" th:href="@{/classes/register(self=true, class=${clazz.getId()})}">Register?</a></td>
+                        <!-- see https://english.stackexchange.com/questions/25931/unregister-vs-deregister -->
+                        <td th:if="${clazz.hasUserRegistered(currentUser)}">Registered<br/><a href="#" th:href="@{/classes/deregister(self=true, class=${clazz.getId()})}">Revoke?</a></td>
                     </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>

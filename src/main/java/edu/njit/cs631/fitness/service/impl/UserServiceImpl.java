@@ -1,27 +1,6 @@
 package edu.njit.cs631.fitness.service.impl;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import edu.njit.cs631.fitness.data.entity.HourlyInstructor;
-import edu.njit.cs631.fitness.data.entity.Instructor;
-import edu.njit.cs631.fitness.data.entity.InstructorTypes;
-import edu.njit.cs631.fitness.data.entity.Member;
-import edu.njit.cs631.fitness.data.entity.Membership;
-import edu.njit.cs631.fitness.data.entity.SalariedInstructor;
+import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
@@ -34,6 +13,20 @@ import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.List;
 
 
 @Service("userService")
@@ -61,7 +54,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @SuppressWarnings("unused")
     @Autowired
     private MemberRepository personRepository;
 
@@ -70,14 +62,19 @@ public class UserServiceImpl implements UserService {
 
 
     private void checkUserEmail(String email) throws UserAlreadyExistException {
-        if(findUserByEmail(email) != null) {
+        if(findUser(email) != null) {
             throw new UserAlreadyExistException("A user with that e-mail address already exists: " + email);
         }
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findUser(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUser(Integer id) {
+        return userRepository.findOne(id);
     }
 
     @Override
