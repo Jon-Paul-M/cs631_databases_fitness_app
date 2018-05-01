@@ -27,10 +27,11 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
                                        "edu.njit.cs631.fitness.data.repository.security",
                                        "edu.njit.cs631.fitness.service.api",
                                        "edu.njit.cs631.meidcal.service.impl"})
-@ComponentScan({"edu.njit.cs631.fitness.web.controller"})
-@ComponentScan({"edu.njit.cs631.fitness.service",
+@ComponentScan({"edu.njit.cs631.fitness.web.controller",
+	            "edu.njit.cs631.fitness.service",
                 "edu.njit.cs631.fitness.service.api",
-                "edu.njit.cs631.fitness.service.impl"})
+                "edu.njit.cs631.fitness.service.impl",
+                "edu.njit.cs631.fitness.data.manager"})
 public class MainConfig {
 
     public MainConfig() {

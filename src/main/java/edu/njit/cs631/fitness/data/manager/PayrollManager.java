@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.njit.cs631.fitness.data.projection.HourlyInstructorPayroll;
 
-@Service
+@Service("payrollManager")
 public class PayrollManager {
 
 	
