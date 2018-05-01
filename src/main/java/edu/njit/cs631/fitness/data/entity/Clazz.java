@@ -104,11 +104,11 @@ public class Clazz {
 	}
     
 	@Column(name="DURATION")
-	private Integer duration;
-	public Integer getDuration() {
+	private Double duration;
+	public Double getDuration() {
 		return duration;
 	}
-	public void setDuration(Integer duration) {
+	public void setDuration(Double duration) {
 		this.duration = duration;
 	}
 	

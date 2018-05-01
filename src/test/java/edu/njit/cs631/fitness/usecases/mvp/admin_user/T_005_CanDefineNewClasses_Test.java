@@ -96,7 +96,7 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	LocalDateTime start = LocalDateTime.ofInstant(
     			Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
 				ZoneId.systemDefault());
-    	Integer duration = 8;
+    	Double duration = 8.0;
     	Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
     	Assert.assertNotNull("clazz should not be null", clazz);
     	Assert.assertNotNull("clazz.getId() should not be null", clazz.getId());

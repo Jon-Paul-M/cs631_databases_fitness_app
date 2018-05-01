@@ -3,7 +3,7 @@ package edu.njit.cs631.fitness.web.model;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 public class ClazzModel {
 
@@ -15,15 +15,15 @@ public class ClazzModel {
 
 	@NotNull
     @Min(value=1, message=makeSelection)
-	private String instructor;
+	private Integer instructor;
 
 	@NotNull
     @Min(value=1, message=makeSelection)
-	private String exercise;
+	private Integer exercise;
 
 	@NotNull
     @Min(value=1, message=makeSelection)
-	private String room;
+	private Integer room;
 
 	@NotNull
     @Min(value=1, message=makeSelection)
@@ -50,26 +50,29 @@ public class ClazzModel {
     @NotNull(message="Please provide a value between 0 and 9, inclusive.")
     @Min(value = 0)
     @Max(value=9)
-	private Integer duration;
+	private Double duration;
+
+
+    private LocalDateTime startTime;
 	
-	public String getInstructor() {
+	public Integer getInstructor() {
 		return instructor;
 	}
-	public void setInstructor(String instructor) {
+	public void setInstructor(Integer instructor) {
 		this.instructor = instructor;
 	}
 	
-	public String getExercise() {
+	public Integer getExercise() {
 		return exercise;
 	}
-	public void setExercise(String exercise) {
+	public void setExercise(Integer exercise) {
 		this.exercise = exercise;
 	}
 	
-	public String getRoom() {
+	public Integer getRoom() {
 		return room;
 	}
-	public void setRoom(String room) {
+	public void setRoom(Integer room) {
 		this.room = room;
 	}
 	
@@ -110,10 +113,10 @@ public class ClazzModel {
 	public void setStartMeridiem(String startMeridiem) {
 		this.startMeridiem = startMeridiem;
 	}
-	public Integer getDuration() {
+	public Double getDuration() {
 		return duration;
 	}
-	public void setDuration(Integer duration) {
+	public void setDuration(Double duration) {
 		this.duration = duration;
 	}
 	@Override
@@ -142,5 +145,12 @@ public class ClazzModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
 }

@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.service.api.UserService;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
 	@Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
+	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Double duration) {
 		logger.info("In clazzAdministrationService.createClass");
     	Exercise exercise = exerciseRepository.findOne(exerciseId);
     	Instructor instructor = userService.findInstructor(instructorId);
@@ -119,4 +120,18 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
             clazzRepository.saveAndFlush(clazz);
         }
     }
+
+    // TODO: How are we doing this?
+    // See https://stackoverflow.com/questions/17106670/how-to-check-a-timeperiod-is-overlapping-another-time-period-in-java
+    private boolean timePeriodsOverlap(LocalDateTime startA,
+                                       LocalDateTime stopA,
+                                       LocalDateTime startB,
+                                       LocalDateTime stopB) {
+	    return (
+                    ( startA.isBefore( stopB ) )
+                    &&
+                    ( stopA.isAfter( startB ) )
+                ) ;
+    }
+
 }

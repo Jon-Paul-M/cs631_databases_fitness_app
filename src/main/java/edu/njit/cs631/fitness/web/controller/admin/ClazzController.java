@@ -89,13 +89,16 @@ public class ClazzController extends BaseController {
             return mv;
         }
 
+        clazzModel.setStartTime(parseStart(clazzModel));
+
 		if(valid(clazzModel, result)) {
-			Integer exerciseId = Integer.parseInt(clazzModel.getExercise());
-			Integer instructorId = Integer.parseInt(clazzModel.getInstructor());
-			Integer roomId = Integer.parseInt(clazzModel.getRoom());
 			LocalDateTime start = parseStart(clazzModel);
-			Integer duration = clazzModel.getDuration();
-			clazzAdministrationService.createClass(exerciseId, instructorId, roomId, start, duration);
+			Double duration = clazzModel.getDuration();
+			clazzAdministrationService.createClass(clazzModel.getExercise(),
+                                                   clazzModel.getInstructor(),
+                                                   clazzModel.getRoom(),
+                                                   start,
+                                                   duration);
             clazzModel = defaultClazz();
 		}
 
@@ -149,9 +152,16 @@ public class ClazzController extends BaseController {
 	}
 
 	private boolean valid(ClazzModel clazzModel, BindingResult result) {
-		return true;
-		// TODO probably call something in the service level 
+		// TODO probably call something in the service level
 		// that throws an exception if invalid
+
+        if (clazzModel.getStartTime().isBefore(LocalDateTime.now())) {
+            result.addError(new ObjectError("Start Time", "Start time must be in the future"));
+            return false;
+        }
+
+        return true;
+
 	}
 }
 
