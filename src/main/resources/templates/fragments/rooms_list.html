@@ -81,6 +81,10 @@
                 <tr>
                     <th>Building Name</th>
                     <th>Room Number</th>
+                    <th>Capacity</th>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <th>Delete Member?</th>
+                    </div>
                 </tr>
 
                 </thead>
@@ -88,6 +92,10 @@
                 <tr th:each="room : ${rooms}">
                     <td th:inline="text">[[${room.buildingName}]]</td>
                     <td th:inline="text">[[${room.roomNumber}]]</td>
+                    <td th:inline="text">[[${room.capacity}]]</td>
+                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <a href="#" th:href="@{/admin/rooms/delete(id=${room.id})}">Delete Room?</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

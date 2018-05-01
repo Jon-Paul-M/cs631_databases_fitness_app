@@ -36,7 +36,7 @@ public class Clazz {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
     @JoinColumn(name="ROOM_ID")
     private Room room;
     public Room getRoom() {
@@ -91,6 +91,7 @@ public class Clazz {
     }
 
     public int getCapacity() {
+        if (room == null) return 0;
         return room.getCapacity();
     }
 
