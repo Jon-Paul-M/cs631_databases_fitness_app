@@ -47,7 +47,8 @@ public class UserServiceIntegrationTest extends BaseTest {
         */
     }
 
-    private Member getRandomPerson() {
+    @SuppressWarnings("unused")
+	private Member getRandomPerson() {
         List<Member> people = Lists.newArrayList(memberRepository.findAll());
         Collections.shuffle(people, random);
         while(people.get(0).getId() == 133) { // one member in the default data is already a user.
@@ -56,11 +57,13 @@ public class UserServiceIntegrationTest extends BaseTest {
         return people.get(0);
     }
 
+    @SuppressWarnings("unused")
     private UserDto createUserDto(Member member) {
         // TODO: Rework test as default is user<-> member 1:1
         return null; // createUserDto(member.getEmail());
     }
 
+    @SuppressWarnings("unused")
     private UserDto createUserDto(String email) {
         // TODO: Rework test as default is user<-> member 1:1
         final UserDto userDto = new UserDto();

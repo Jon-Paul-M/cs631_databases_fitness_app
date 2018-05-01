@@ -4,19 +4,21 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import edu.njit.cs631.fitness.data.entity.*;
-import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.service.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.entity.Exercise;
+import edu.njit.cs631.fitness.data.entity.Instructor;
+import edu.njit.cs631.fitness.data.entity.Room;
+import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import edu.njit.cs631.fitness.data.repository.ExerciseRepository;
-import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
+import edu.njit.cs631.fitness.service.api.UserService;
 
 @Service("clazzAdministrationService")
 public class ClazzAdministrationServiceImpl implements ClazzAdministrationService {

@@ -1,26 +1,26 @@
 package edu.njit.cs631.fitness.usecases.mvp.unauthenticated_user;
 
-import org.junit.Test;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import edu.njit.cs631.fitness.testutils.BaseTest;
+import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import edu.njit.cs631.fitness.testutils.BaseTest;
 
-
-public class T_002_ForbiddenFromAdmin extends BaseTest{
+public class T_004_VisitClassesPage_Test extends BaseTest {
 
     @Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    public void unauthenticatedUserForbiddenFromAdmin() throws Exception {
+    public void anonGetClazzesPage() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/admin")
+                        .get("/classes")
                         .accept(MediaType.TEXT_HTML))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
+
 }
+

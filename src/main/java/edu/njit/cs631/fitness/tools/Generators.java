@@ -34,6 +34,7 @@ public class Generators {
 	    return encoder.matches(pwd, hash);
     }
 
+    @SuppressWarnings("unused")
 	private static void middleInitals() {
 		for (int i = 0; i < TOTAL; i++) {
 			if (random.nextInt(100) < 33) {
@@ -50,6 +51,7 @@ public class Generators {
 		return "" + b;
 	}
 
+	@SuppressWarnings("unused")
 	private static void ssn() {
 		for (int i = 0; i < TOTAL; i++) {
 			System.out.println(generateNextSnn());

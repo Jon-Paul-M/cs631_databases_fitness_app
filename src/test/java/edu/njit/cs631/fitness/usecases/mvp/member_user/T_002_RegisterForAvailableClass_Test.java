@@ -1,10 +1,10 @@
-package edu.njit.cs631.fitness.usecases.mvp.admin_user;
+package edu.njit.cs631.fitness.usecases.mvp.member_user;
 
 import org.junit.Test;
 
 import edu.njit.cs631.fitness.testutils.BaseTest;
 
-public class T_003_CanCreateExerciseTypes extends BaseTest {
+public class T_002_RegisterForAvailableClass_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
     @Test
     public void testClassesMustHaveAtLeastOneRunnableMethod() {

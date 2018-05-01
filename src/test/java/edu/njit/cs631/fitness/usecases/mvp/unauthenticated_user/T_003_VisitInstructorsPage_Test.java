@@ -1,14 +1,15 @@
 package edu.njit.cs631.fitness.usecases.mvp.unauthenticated_user;
 
-import edu.njit.cs631.fitness.testutils.BaseTest;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import edu.njit.cs631.fitness.testutils.BaseTest;
 
-public class T_003_VisitInstructorsPage extends BaseTest {
+public class T_003_VisitInstructorsPage_Test extends BaseTest {
 
     @Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},

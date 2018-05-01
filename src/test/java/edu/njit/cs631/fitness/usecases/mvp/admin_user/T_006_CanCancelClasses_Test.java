@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import edu.njit.cs631.fitness.testutils.BaseTest;
 
-public class T_006_CanCancelClasses extends BaseTest {
+public class T_006_CanCancelClasses_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
     @Test
     public void testClassesMustHaveAtLeastOneRunnableMethod() {

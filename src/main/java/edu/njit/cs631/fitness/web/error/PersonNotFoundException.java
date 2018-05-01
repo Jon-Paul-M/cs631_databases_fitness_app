@@ -2,7 +2,9 @@ package edu.njit.cs631.fitness.web.error;
 
 public final class PersonNotFoundException extends RuntimeException {
 
-    public PersonNotFoundException() {
+	private static final long serialVersionUID = 1L;
+
+	public PersonNotFoundException() {
         super();
     }
 

@@ -13,8 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ClazzesController extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ClazzesController.class);
+    @SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(ClazzesController.class);
 
+    @SuppressWarnings("unused")
     @Autowired
     private ClazzService clazzService;
 

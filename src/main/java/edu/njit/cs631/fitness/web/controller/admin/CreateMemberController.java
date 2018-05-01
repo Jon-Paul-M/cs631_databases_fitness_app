@@ -1,11 +1,7 @@
 package edu.njit.cs631.fitness.web.controller.admin;
 
-import edu.njit.cs631.fitness.data.entity.Membership;
-import edu.njit.cs631.fitness.data.repository.MembershipRepository;
-import edu.njit.cs631.fitness.service.api.UserService;
-import edu.njit.cs631.fitness.web.controller.BaseController;
-import edu.njit.cs631.fitness.web.model.MemberModel;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import java.util.List;
+import edu.njit.cs631.fitness.web.controller.BaseController;
+import edu.njit.cs631.fitness.web.model.MemberModel;
 
 @Controller
 @RequestMapping(value="/admin/members")

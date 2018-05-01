@@ -1,16 +1,19 @@
 package edu.njit.cs631.fitness.web.controller;
 
 
-import edu.njit.cs631.fitness.data.repository.MemberRepository;
-import edu.njit.cs631.fitness.data.repository.MembershipRepository;
-import edu.njit.cs631.fitness.service.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+
+import edu.njit.cs631.fitness.data.repository.MemberRepository;
+import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import edu.njit.cs631.fitness.service.api.ClazzService;
+import edu.njit.cs631.fitness.service.api.ExerciseService;
+import edu.njit.cs631.fitness.service.api.RoomService;
+import edu.njit.cs631.fitness.service.api.UserService;
 
 @Controller
 public abstract class BaseController {
