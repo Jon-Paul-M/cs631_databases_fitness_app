@@ -63,6 +63,9 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
     @Transactional
 	public void registerUserForClass(Integer userId, Integer clazzId) {
 		Clazz clazz = clazzRepository.findOne(clazzId);
+        if (clazz == null) {
+            return;
+        }
 		if (clazz.getStart().toLocalDateTime().isBefore(LocalDateTime.now())) {
 		    // can't change a registration in the past
 		    return;
@@ -86,4 +89,34 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 	}
 
 
+    @Override
+    @Transactional
+    public void deregisterUserForClass(Integer userId, Integer clazzId) {
+        Clazz clazz = clazzRepository.findOne(clazzId);
+        if (clazz == null) {
+            return;
+        }
+
+
+        if (clazz.getStart().toLocalDateTime().isBefore(LocalDateTime.now())) {
+            // can't change a registration in the past
+            return;
+        }
+
+        User user = userService.findUser(userId);
+
+        if (user == null) {
+            // no such user, maybe throw exception.
+            return;
+        }
+
+        Set<User> users = clazz.getMembers();
+
+        if (users.contains(user)) {
+            users.remove(user);
+
+            clazz.setMembers(users);
+            clazzRepository.saveAndFlush(clazz);
+        }
+    }
 }

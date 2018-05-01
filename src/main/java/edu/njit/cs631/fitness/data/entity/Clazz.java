@@ -70,18 +70,28 @@ public class Clazz {
 
     // Registered members for the class
     // TODO: See issue #34
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="REGISTER",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "CLASS_ID")
-    )
+            name = "REGISTER",
+            joinColumns = @JoinColumn(
+                    name = "CLASS_ID", referencedColumnName = "CLASS_ID"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "USER_ID", referencedColumnName = "USER_ID"))
     private Set<User> members = new HashSet<>();
     public Set<User> getMembers() {
     	return members;
     }
     public void setMembers(Set<User> users) {
     	this.members = users;
+    }
+
+
+    public int getTotalRegistered() {
+        return this.getMembers().size();
+    }
+
+    public int getCapacity() {
+        return room.getCapacity();
     }
 
     @Column(name="START_DATETIME")
