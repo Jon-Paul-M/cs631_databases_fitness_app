@@ -1,21 +1,56 @@
 package edu.njit.cs631.fitness.web.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class ClazzModel {
 
 	public ClazzModel() {
 		super();
 	}
 
+	private final static String makeSelection = "You must make a selection for this field.";
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String instructor;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String exercise;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String room;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startMM;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startDD;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startYYYY;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startHH;
+
+    @NotNull
+    @Min(value=1, message=makeSelection)
 	private String startMI;
+
 	private String startMeridiem;
-	private String duration;
+
+    @NotNull(message="Please provide a value between 0 and 9, inclusive.")
+    @Min(value = 0)
+    @Max(value=9)
+	private Integer duration;
 	
 	public String getInstructor() {
 		return instructor;
@@ -75,10 +110,10 @@ public class ClazzModel {
 	public void setStartMeridiem(String startMeridiem) {
 		this.startMeridiem = startMeridiem;
 	}
-	public String getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	@Override
