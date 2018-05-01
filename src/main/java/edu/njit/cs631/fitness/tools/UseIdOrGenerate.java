@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 public class UseIdOrGenerate extends IdentityGenerator {
+	@SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(UseIdOrGenerate.class.getName());
 
     @Override

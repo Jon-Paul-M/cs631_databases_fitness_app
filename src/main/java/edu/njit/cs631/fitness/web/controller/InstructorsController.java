@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class InstructorsController extends BaseController {
+	
+	@SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @RequestMapping(value = {"/instructors"}, method = {RequestMethod.GET, RequestMethod.POST})

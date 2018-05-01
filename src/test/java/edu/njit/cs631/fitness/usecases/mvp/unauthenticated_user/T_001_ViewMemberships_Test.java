@@ -1,20 +1,20 @@
 package edu.njit.cs631.fitness.usecases.mvp.unauthenticated_user;
 
-import edu.njit.cs631.fitness.data.entity.Membership;
-import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
-import java.util.List;
+import edu.njit.cs631.fitness.data.entity.Membership;
+import edu.njit.cs631.fitness.data.repository.MembershipRepository;
+import edu.njit.cs631.fitness.testutils.BaseTest;
 
-@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class T_001_ViewMemberships extends BaseTest {
+public class T_001_ViewMemberships_Test extends BaseTest {
 
     @Autowired
     private MembershipRepository membershipRepository;

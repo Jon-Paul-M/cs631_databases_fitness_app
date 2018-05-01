@@ -1,19 +1,15 @@
 package edu.njit.cs631.fitness.issues;
 
-import edu.njit.cs631.fitness.testutils.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import edu.njit.cs631.fitness.testutils.BaseTest;
 
-public class T_Issue_0032_Members_Not_Registering extends BaseTest {
+public class T_Issue_0032_Members_Not_Registering_Test extends BaseTest {
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void defaultMemberInMemberRepo() throws Exception {
         Assert.assertNotNull(memberRepository.findByEmail("member@test.com"));

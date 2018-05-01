@@ -1,10 +1,10 @@
-package edu.njit.cs631.fitness.usecases.mvp.member_user;
+package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
 import org.junit.Test;
 
 import edu.njit.cs631.fitness.testutils.BaseTest;
 
-public class T_001_ViewScheduleOfAllClasses extends BaseTest {
+public class T_004_CanDefineRooms_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
     @Test
     public void testClassesMustHaveAtLeastOneRunnableMethod() {

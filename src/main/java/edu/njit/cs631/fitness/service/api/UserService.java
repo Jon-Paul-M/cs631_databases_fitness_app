@@ -1,19 +1,18 @@
 package edu.njit.cs631.fitness.service.api;
 
 
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
+
 import edu.njit.cs631.fitness.data.entity.Instructor;
 import edu.njit.cs631.fitness.data.entity.InstructorTypes;
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.web.dto.UserDto;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
 import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public interface UserService {
 

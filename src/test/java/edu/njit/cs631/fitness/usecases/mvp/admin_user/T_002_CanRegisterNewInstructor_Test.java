@@ -1,20 +1,20 @@
 package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
-import edu.njit.cs631.fitness.data.entity.Instructor;
-import edu.njit.cs631.fitness.data.entity.InstructorTypes;
-import org.junit.Assert;
-import org.junit.Test;
-
-import edu.njit.cs631.fitness.testutils.BaseTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class T_002_CanRegisterNewInstructor extends BaseTest {
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import edu.njit.cs631.fitness.data.entity.Instructor;
+import edu.njit.cs631.fitness.data.entity.InstructorTypes;
+import edu.njit.cs631.fitness.testutils.BaseTest;
+
+public class T_002_CanRegisterNewInstructor_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
     @Test
     public void testClassesMustHaveAtLeastOneRunnableMethod() {
@@ -22,7 +22,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminGetInstructorCreationForm() throws Exception {
         mockMvc.perform(
@@ -34,7 +34,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser() throws Exception {
         Instructor instructor = userService.findInstructor("buddy@test.com");
@@ -57,7 +57,7 @@ public class T_002_CanRegisterNewInstructor extends BaseTest {
 
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser_fails() throws Exception {
         // login
