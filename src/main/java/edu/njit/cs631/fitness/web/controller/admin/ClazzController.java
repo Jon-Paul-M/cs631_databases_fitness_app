@@ -84,7 +84,7 @@ public class ClazzController extends BaseController {
 			Integer instructorId = Integer.parseInt(clazzModel.getInstructor());
 			Integer roomId = Integer.parseInt(clazzModel.getRoom());
 			LocalDateTime start = parseStart(clazzModel);
-			Integer duration = 90;
+			Integer duration = Integer.parseInt(clazzModel.getDuration());
 			clazzAdministrationService.createClass(exerciseId, instructorId, roomId, start, duration);
 			clazzModel = defaultClazz();
 		}
