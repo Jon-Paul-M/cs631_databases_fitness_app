@@ -1,24 +1,28 @@
 package edu.njit.cs631.fitness.usecases.mvp.member_user;
 
-import edu.njit.cs631.fitness.data.entity.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.jdbc.JdbcTestUtils;
+
+import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.entity.Exercise;
+import edu.njit.cs631.fitness.data.entity.Instructor;
+import edu.njit.cs631.fitness.data.entity.Member;
+import edu.njit.cs631.fitness.data.entity.Room;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import edu.njit.cs631.fitness.data.repository.ExerciseRepository;
 import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
-import org.junit.Assert;
-import org.junit.Test;
-
 import edu.njit.cs631.fitness.testutils.BaseTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public class T_002_RegisterForAvailableClass extends BaseTest {
+public class T_002_RegisterForAvailableClass_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
     @Autowired
     private ClazzRepository clazzRepository;
