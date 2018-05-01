@@ -18,7 +18,7 @@ public class UserServiceIntegrationTest extends BaseTest {
     Random random = new Random();
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenRandomPerson_whenPromoted_thenCorrect() {
         /* TODO: Rework test as default is user<-> member 1:1
@@ -32,7 +32,7 @@ public class UserServiceIntegrationTest extends BaseTest {
 
 
     @Test // (expected = UserAlreadyExistException.class)
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void givenRandomPerson_whenPromoted_thenThrowsAlreadyExists() {
         /* TODO: Rework test as default is user<-> member 1:1

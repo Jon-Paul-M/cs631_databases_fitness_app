@@ -22,7 +22,7 @@ public class T_002_CanRegisterNewInstructor_Test extends BaseTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminGetInstructorCreationForm() throws Exception {
         mockMvc.perform(
@@ -34,7 +34,7 @@ public class T_002_CanRegisterNewInstructor_Test extends BaseTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser() throws Exception {
         Instructor instructor = userService.findInstructor("buddy@test.com");
@@ -57,7 +57,7 @@ public class T_002_CanRegisterNewInstructor_Test extends BaseTest {
 
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser_fails() throws Exception {
         // login

@@ -40,7 +40,7 @@ public class T_002_RegisterForAvailableClass_Test extends BaseTest {
     private MemberRepository memberRepository;
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void member_canRegisterForNewClass() {
 

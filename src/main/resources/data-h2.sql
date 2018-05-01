@@ -28,7 +28,7 @@ INSERT INTO MEMBERSHIP (MEMBERSHIP_ID, MEMBERSHIP_TYPE, FEE, ADVANTAGES) VALUES 
 
 
 -- H2 has a command <script into 'mydatafilename.sql'>  Saves a lot of time, neat.
-INSERT INTO USER(USER_ID, EMAIL, NAME, ENABLED, TOKEN_EXPIRED, PASSWORD_HASH) VALUES
+INSERT INTO PERSON(USER_ID, EMAIL, NAME, ENABLED, TOKEN_EXPIRED, PASSWORD_HASH) VALUES
 (1, 'oria@njit.edu', 'Vincent Oria', TRUE, FALSE, '$2a$10$AIqpc4JhuHuXOdPchYgeZuVfU/vP3FJDUJk/NP8zG8hHqfoa7DWsG'),
 (220, 'admin@test.com', 'Admin', TRUE, FALSE, '$2a$10$SqJDQRbHTmusFH3PGXtftOgSrHppGFcddtQcNClzuM2fvxeRZG01e'),
 (221, 'hourlyinstructor@test.com', 'Hourly Instructor', TRUE, FALSE, '$2a$10$TCBgiq3EgTnWmqE7bZse4e8bqJHlaI82kTIf.omY/2fvXUPOBWTse'),

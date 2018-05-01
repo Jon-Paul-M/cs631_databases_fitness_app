@@ -31,7 +31,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
 executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class T_005_CanDefineNewClasses_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
@@ -49,7 +49,7 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
 	private ClazzAdministrationService clazzAdministrationService;
 
 	@Test
-	@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+	@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
 			executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	public void adminGetClassCreationForm() throws Exception {
 		mockMvc.perform(

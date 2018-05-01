@@ -18,7 +18,7 @@ public class T_001_CanRegisterNewMember_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminGetMemberCreationForm() throws Exception {
         mockMvc.perform(
@@ -30,7 +30,7 @@ public class T_001_CanRegisterNewMember_Test extends BaseTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser() throws Exception {
         Member member = userService.findMemberByEmail("buddy@test.com");
@@ -58,7 +58,7 @@ public class T_001_CanRegisterNewMember_Test extends BaseTest {
 
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminCreatesUser_fails() throws Exception {
         // login

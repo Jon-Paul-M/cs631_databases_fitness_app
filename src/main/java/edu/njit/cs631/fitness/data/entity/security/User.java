@@ -1,17 +1,32 @@
 package edu.njit.cs631.fitness.data.entity.security;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="USER")
+@Table(name=User.TABLE_NAME)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	// "USER" is a reserved word in postgres
+	public static final String TABLE_NAME = "PERSON";
 
     public User() {
         super();

@@ -12,7 +12,7 @@ import edu.njit.cs631.fitness.data.entity.Membership;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
 import edu.njit.cs631.fitness.testutils.BaseTest;
 
-@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+@Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class T_001_ViewMemberships_Test extends BaseTest {
 

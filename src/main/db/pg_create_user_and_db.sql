@@ -1,0 +1,17 @@
+
+CREATE USER fitness WITH
+  LOGIN
+  SUPERUSER
+  INHERIT
+  CREATEDB
+  CREATEROLE
+  NOREPLICATION
+  PASSWORD 'fitness';
+  
+ 
+CREATE DATABASE fitness
+    WITH 
+    OWNER = fitness
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+  

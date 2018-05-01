@@ -12,7 +12,7 @@ import edu.njit.cs631.fitness.testutils.BaseTest;
 public class T_004_VisitClassesPage_Test extends BaseTest {
 
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void anonGetClazzesPage() throws Exception {
         mockMvc.perform(

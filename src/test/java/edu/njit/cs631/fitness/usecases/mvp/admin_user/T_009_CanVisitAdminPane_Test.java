@@ -12,7 +12,7 @@ import edu.njit.cs631.fitness.testutils.BaseTest;
 
 public class T_009_CanVisitAdminPane_Test extends BaseTest {
     @Test
-    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void adminUserCanVisitAdminPanel() throws Exception {
         // we expect no exceptions thrown during the render
