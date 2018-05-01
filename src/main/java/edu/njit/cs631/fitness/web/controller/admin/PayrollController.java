@@ -23,8 +23,8 @@ import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
 
 @Controller
-@RequestMapping(value="/admin/classes")
-public class ClazzController extends BaseController {
+@RequestMapping(value="/admin/payroll")
+public class PayrollController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -49,7 +49,7 @@ public class ClazzController extends BaseController {
 	private static final List<String> MERIDIEMS = Arrays.asList("AM","PM");
 	private static List<Integer> years;
 	
-	public ClazzController() {
+	public PayrollController() {
 		super();
 		years = new ArrayList<>();
 		Integer currectYear = Calendar.getInstance().get(Calendar.YEAR);

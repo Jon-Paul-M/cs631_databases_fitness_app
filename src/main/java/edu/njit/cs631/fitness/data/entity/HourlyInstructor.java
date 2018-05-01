@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 @Table(name = HourlyInstructor.TABLE_NAME)
 public class HourlyInstructor extends User implements Instructor {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String TABLE_NAME = "HOURLY_INSTRUCTOR";
 	
     @Column(name="HOURS", nullable=false)

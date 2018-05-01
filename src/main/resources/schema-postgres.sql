@@ -163,6 +163,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
--- These carrots need to be here for spring boot
 ^^^
