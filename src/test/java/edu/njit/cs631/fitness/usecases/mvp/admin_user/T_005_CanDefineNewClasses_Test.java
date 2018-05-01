@@ -1,10 +1,11 @@
 package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.jdbc.JdbcTestUtils;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
 import edu.njit.cs631.fitness.data.entity.Exercise;
@@ -22,10 +24,6 @@ import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.testutils.BaseTest;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-default.sql"},
