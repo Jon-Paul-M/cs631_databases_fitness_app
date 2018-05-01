@@ -10,4 +10,11 @@ public class T_008_CreatePayrollStatement_Test extends BaseTest {
     public void testClassesMustHaveAtLeastOneRunnableMethod() {
         // DELETE ME LATER
     }
+    
+    
+    @Test
+    public void findHoursWorkedByHourlyInstructorOverTimePeriod_HoursExist_DecimalHours() {
+        
+    }
+    
 }
