@@ -50,6 +50,31 @@
 
     <div class="row-fluid">
         <div class="span12">
+            <h3 class="title">Exercises</h3>
+            <h5>Current Exercises.  <a href="#" th:href="@{/admin/exercises/create}">Create a new exercises.</a></h5>
+        </div>
+    </div>
+
+    <div th:replace="fragments/exercises_list :: exercises_list"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Memberships</h3>
+            <h5>Current Membership Types</h5>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="title">Rooms</h3>
+            <h5>Current Rooms.  <a href="#" th:href="@{/admin/rooms/create}">Create a new room.</a></h5>
+        </div>
+    </div>
+
+    <div th:replace="fragments/rooms_list :: rooms_list"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
             <h3 class="title">Memberships</h3>
             <h5>Current Membership Types</h5>
         </div>

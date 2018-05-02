@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import edu.njit.cs631.fitness.data.entity.Clazz;
 
 public interface ClazzAdministrationService {
-	Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration);
+	Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Double duration);
+    void deleteClazz(Integer clazzId);
 	void registerUserForClass(Integer userId, Integer clazzId);
     void deregisterUserForClass(Integer userId, Integer clazzId);
 }

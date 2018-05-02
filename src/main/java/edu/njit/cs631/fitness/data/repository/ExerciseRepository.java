@@ -6,4 +6,5 @@ import edu.njit.cs631.fitness.data.entity.Exercise;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
 
+    Exercise findOneByName(String name);
 }

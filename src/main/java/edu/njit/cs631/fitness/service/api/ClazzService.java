@@ -5,5 +5,5 @@ import java.util.List;
 import edu.njit.cs631.fitness.data.entity.Clazz;
 
 public interface ClazzService {
-	public List<Clazz> listFutureActiveClasses();
+	List<Clazz> listFutureActiveClasses();
 }

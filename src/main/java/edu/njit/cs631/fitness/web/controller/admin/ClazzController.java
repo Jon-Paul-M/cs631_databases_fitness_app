@@ -12,15 +12,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.web.controller.BaseController;
 import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value="/admin/classes")
@@ -63,6 +68,19 @@ public class ClazzController extends BaseController {
         return "admin/classes/create";
     }
 
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.GET)
+    public String deleteGet(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+        if (id == -1) return "redirect:/admin";
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.deleteClazz(id);
+        }
+
+        return "redirect:/admin";
+    }
+
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView get() {
 		logger.info("In ClazzController.get");
@@ -74,22 +92,31 @@ public class ClazzController extends BaseController {
 	}	
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ModelAndView post(@ModelAttribute ClazzModel clazzModel) {
+	public ModelAndView post(@Valid ClazzModel clazzModel, BindingResult result, ModelAndView m) {
 		logger.info("In ClazzController.post");
 		logger.info(clazzModel.toString());
-		ModelAndView modelAndView = commonModelAndView();
-		if(valid(clazzModel)) {
-			Integer exerciseId = Integer.parseInt(clazzModel.getExercise());
-			Integer instructorId = Integer.parseInt(clazzModel.getInstructor());
-			Integer roomId = Integer.parseInt(clazzModel.getRoom());
+
+		if(result.hasErrors()) {
+            ModelAndView mv = commonModelAndView(m);
+            mv.addObject("clazzModel", clazzModel);
+            return mv;
+        }
+
+        clazzModel.setStartTime(parseStart(clazzModel));
+
+		if(valid(clazzModel, result)) {
 			LocalDateTime start = parseStart(clazzModel);
-			Integer duration = Integer.parseInt(clazzModel.getDuration());
-			clazzAdministrationService.createClass(exerciseId, instructorId, roomId, start, duration);
-			clazzModel = defaultClazz();
+			Double duration = clazzModel.getDuration();
+			clazzAdministrationService.createClass(clazzModel.getExercise(),
+                                                   clazzModel.getInstructor(),
+                                                   clazzModel.getRoom(),
+                                                   start,
+                                                   duration);
+            clazzModel = defaultClazz();
 		}
-		modelAndView.addObject("clazzModel", clazzModel);
-		addClazzes(modelAndView);
-		return modelAndView;
+
+		return commonModelAndView().addObject("clazzModel", clazzModel);
+
 	}
 
 
@@ -107,16 +134,21 @@ public class ClazzController extends BaseController {
 		return start;
 	}
 
+    @Override
+    protected ModelAndView commonModelAndView(ModelAndView mv) {
+        ModelAndView modelAndView = super.addParams(super.commonModelAndView(mv));
+        modelAndView.addObject("months", MONTHS);
+        modelAndView.addObject("days", DAYS);
+        modelAndView.addObject("years", years);
+        modelAndView.addObject("hours", HOURS);
+        modelAndView.addObject("minuets", MINUETS);
+        modelAndView.addObject("meridiems", MERIDIEMS);
+        return modelAndView;
+    }
+
 	@Override
 	protected ModelAndView commonModelAndView() {
-	    ModelAndView modelAndView = super.commonModelAndView();
-		modelAndView.addObject("months", MONTHS);
-		modelAndView.addObject("days", DAYS);
-		modelAndView.addObject("years", years);
-		modelAndView.addObject("hours", HOURS);
-		modelAndView.addObject("minuets", MINUETS);
-		modelAndView.addObject("meridiems", MERIDIEMS);
-		return modelAndView;
+	    return commonModelAndView(super.commonModelAndView());
 	}
 	
 	private ClazzModel defaultClazz() {
@@ -132,10 +164,17 @@ public class ClazzController extends BaseController {
 		return clazz;
 	}
 
-	private boolean valid(ClazzModel clazzModel) {
-		return true;
-		// TODO probably call something in the service level 
+	private boolean valid(ClazzModel clazzModel, BindingResult result) {
+		// TODO probably call something in the service level
 		// that throws an exception if invalid
+
+        if (clazzModel.getStartTime().isBefore(LocalDateTime.now())) {
+            result.addError(new ObjectError("Start Time", "Start time must be in the future"));
+            return false;
+        }
+
+        return true;
+
 	}
 }
 
