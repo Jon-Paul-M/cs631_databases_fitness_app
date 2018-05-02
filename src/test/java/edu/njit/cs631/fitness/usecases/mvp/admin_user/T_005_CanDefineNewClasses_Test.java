@@ -102,4 +102,29 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
     	Assert.assertNotNull("clazz.getId() should not be null", clazz.getId());
     	Assert.assertEquals("there should be one row in the table " + Clazz.TABLE_NAME, rowCount + 1, JdbcTestUtils.countRowsInTable(jdbcTemplate, Clazz.TABLE_NAME));
 	}
+
+    @Test
+    public void createClass_ClassIsCreated_CanViewDetail() throws Exception {
+        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, Clazz.TABLE_NAME);
+        Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
+        HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
+        Room room = ((List<Room>) roomRepository.findAll()).get(0);
+        LocalDateTime start = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+                ZoneId.systemDefault());
+        Double duration = 8.0;
+        Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
+        Assert.assertNotNull("clazz should not be null", clazz);
+        Assert.assertNotNull("clazz.getId() should not be null", clazz.getId());
+        Assert.assertEquals("there should be one row in the table " + Clazz.TABLE_NAME, rowCount + 1, JdbcTestUtils.countRowsInTable(jdbcTemplate, Clazz.TABLE_NAME));
+
+
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/admin/classes/detail?id=" + clazz.getId())
+                        .accept(MediaType.TEXT_HTML)
+                        .with(user(getAdminUser())))
+                .andExpect(status().isOk());
+
+    }
 }

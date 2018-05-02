@@ -74,7 +74,7 @@
     </div>
 
     <!--Table-->
-    <div class="row-fluid gallery" th:fragment="members_list">
+    <div class="row-fluid gallery" th:fragment="users_list">
         <div class="span12">
             <table>
                 <thead>
@@ -87,17 +87,9 @@
 
                 </thead>
                 <tbody>
-                <tr th:each="member : ${members}">
-                    <td><strong th:inline="text">[[${member.name}]]</strong></td>
-                    <td th:inline="text">[[${member.email}]]</td>
-                    <td>
-                        <address th:inline="text">
-                            [[${member.address1}]]<br/>
-                            [[${member.address2}]]<br/>
-                            [[${member.city}]], [[${member.state}]] [[${member.postalCode}]]<br/>
-                        </address>
-                    </td>
-                    <td th:inline="text">[[${member.registrationDate}]]</td>
+                <tr th:each="user : ${users}">
+                    <td><strong th:inline="text">[[${user.name}]]</strong></td>
+                    <td th:inline="text">[[${user.email}]]</td>
                 </tr>
                 </tbody>
             </table>
