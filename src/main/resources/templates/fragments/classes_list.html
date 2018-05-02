@@ -112,7 +112,7 @@
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
                     </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
-                        <td><a href="#" th:href="@{class/delete/{id}(id=${clazz.id})}">Delete?</a></td>
+                        <td><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
                     </div>
                 </tr>
                 </tbody>

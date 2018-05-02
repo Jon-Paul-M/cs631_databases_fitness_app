@@ -3,6 +3,7 @@ package edu.njit.cs631.fitness.service.impl;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -63,6 +64,12 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
     @Override
     public void deleteClazz(Integer clazzId) {
         Clazz clazz = clazzRepository.findOne(clazzId);
+
+        if(clazz.getMembers().size() > 0) {
+            clazz.setMembers(new HashSet<>());
+            clazzRepository.saveAndFlush(clazz);
+        }
+
         clazzRepository.delete(clazz);
         clazzRepository.flush();
     }

@@ -19,6 +19,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
@@ -66,6 +67,19 @@ public class ClazzController extends BaseController {
     @Override
     protected String getCommonViewName() {
         return "admin/classes/create";
+    }
+
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.GET)
+    public String deleteGet(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+        if (id == -1) return "redirect:/admin";
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.deleteClazz(id);
+        }
+
+        return "redirect:/admin";
     }
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
