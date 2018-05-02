@@ -1,40 +1,78 @@
 package edu.njit.cs631.fitness.web.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+
 public class ClazzModel {
 
 	public ClazzModel() {
 		super();
 	}
 
-	private String instructor;
-	private String exercise;
-	private String room;
+	private final static String makeSelection = "You must make a selection for this field.";
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
+	private Integer instructor;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
+	private Integer exercise;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
+	private Integer room;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startMM;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startDD;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startYYYY;
+
+	@NotNull
+    @Min(value=1, message=makeSelection)
 	private String startHH;
+
+    @NotNull
+    @Min(value=1, message=makeSelection)
 	private String startMI;
+
 	private String startMeridiem;
-	private String duration;
+
+    @NotNull(message="Please provide a value between 0 and 9, inclusive.")
+    @Min(value = 0)
+    @Max(value=9)
+	private Double duration;
+
+
+    private LocalDateTime startTime;
 	
-	public String getInstructor() {
+	public Integer getInstructor() {
 		return instructor;
 	}
-	public void setInstructor(String instructor) {
+	public void setInstructor(Integer instructor) {
 		this.instructor = instructor;
 	}
 	
-	public String getExercise() {
+	public Integer getExercise() {
 		return exercise;
 	}
-	public void setExercise(String exercise) {
+	public void setExercise(Integer exercise) {
 		this.exercise = exercise;
 	}
 	
-	public String getRoom() {
+	public Integer getRoom() {
 		return room;
 	}
-	public void setRoom(String room) {
+	public void setRoom(Integer room) {
 		this.room = room;
 	}
 	
@@ -75,10 +113,10 @@ public class ClazzModel {
 	public void setStartMeridiem(String startMeridiem) {
 		this.startMeridiem = startMeridiem;
 	}
-	public String getDuration() {
+	public Double getDuration() {
 		return duration;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(Double duration) {
 		this.duration = duration;
 	}
 	@Override
@@ -107,5 +145,12 @@ public class ClazzModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
 }

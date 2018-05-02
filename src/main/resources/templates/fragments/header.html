@@ -28,6 +28,9 @@
             <li sec:authorize="hasAuthority('ADMIN')">
                 <a href="/admin" th:href="@{/admin}">Administration</a>
             </li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="/password" th:href="@{/password}">Password</a>
+            </li>
         </ul>
     </nav>
 
