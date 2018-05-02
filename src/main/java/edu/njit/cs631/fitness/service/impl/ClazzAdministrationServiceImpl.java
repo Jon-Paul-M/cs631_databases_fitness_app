@@ -3,10 +3,13 @@ package edu.njit.cs631.fitness.service.impl;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import edu.njit.cs631.fitness.data.entity.security.User;
+import edu.njit.cs631.fitness.service.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,10 @@ import edu.njit.cs631.fitness.data.entity.Clazz;
 import edu.njit.cs631.fitness.data.entity.Exercise;
 import edu.njit.cs631.fitness.data.entity.Instructor;
 import edu.njit.cs631.fitness.data.entity.Room;
-import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import edu.njit.cs631.fitness.data.repository.ExerciseRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
-import edu.njit.cs631.fitness.service.api.UserService;
 
 @Service("clazzAdministrationService")
 public class ClazzAdministrationServiceImpl implements ClazzAdministrationService {
@@ -46,7 +47,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
 	@Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
+	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Double duration) {
 		logger.info("In clazzAdministrationService.createClass");
     	Exercise exercise = exerciseRepository.findOne(exerciseId);
     	Instructor instructor = userService.findInstructor(instructorId);
@@ -60,8 +61,21 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 		return clazzRepository.saveAndFlush(clazz);
 	}
 
+    @Override
+    public void deleteClazz(Integer clazzId) {
+        Clazz clazz = clazzRepository.findOne(clazzId);
 
-	@Override
+        if(clazz.getMembers().size() > 0) {
+            clazz.setMembers(new HashSet<>());
+            clazzRepository.saveAndFlush(clazz);
+        }
+
+        clazzRepository.delete(clazz);
+        clazzRepository.flush();
+    }
+
+
+    @Override
     @Transactional
 	public void registerUserForClass(Integer userId, Integer clazzId) {
 		Clazz clazz = clazzRepository.findOne(clazzId);
@@ -121,4 +135,18 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
             clazzRepository.saveAndFlush(clazz);
         }
     }
+
+    // TODO: How are we doing this?
+    // See https://stackoverflow.com/questions/17106670/how-to-check-a-timeperiod-is-overlapping-another-time-period-in-java
+    private boolean timePeriodsOverlap(LocalDateTime startA,
+                                       LocalDateTime stopA,
+                                       LocalDateTime startB,
+                                       LocalDateTime stopB) {
+	    return (
+                    ( startA.isBefore( stopB ) )
+                    &&
+                    ( stopA.isAfter( startB ) )
+                ) ;
+    }
+
 }

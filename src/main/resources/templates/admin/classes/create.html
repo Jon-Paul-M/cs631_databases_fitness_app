@@ -27,77 +27,100 @@
 
 			<form action="#" th:action="create" th:object="${clazzModel}"
 				  method="post">
+
+                <p th:if="${#fields.hasErrors('*')}">Errors:</p>
+                <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                    <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>
+                </ul>
 				<ul>
 					<li>
 						<label for="instructor">Instructor</label>
-						<select	th:field="*{instructor}">
+						<select th:field="*{instructor}">
 							<option value="">--</option>
 							<option th:each="instructor : ${instructors}"
 									th:value="${instructor.id}"
-									th:utext="${instructor.name}" />
+									th:utext="${instructor.name}"
+                                    th:selected="(${instructor.id} == *{instructor})"
+                            />
 						</select>
 					</li>
 					<li>
 						<label for="exercise">Exercise</label>
-						<select	th:field="*{exercise}">
-							<option value="">--</option>
+						<select th:field="*{exercise}">
+							<option value="" disabled="disabled">--</option>
 							<option th:each="exercise : ${exercises}"
 									th:value="${exercise.id}"
-									th:utext="${exercise.name}" />
+									th:utext="${exercise.name}"
+                                    th:selected="(${exercise.id} == *{exercise})"
+                            />
 						</select>
 					</li>
 					<li>
 						<label for="room">Room</label>
-						<select	th:field="*{room}">
-							<option value="">--</option>
+						<select th:field="*{room}">
+							<option value="" disabled="disabled">--</option>
 							<option th:each="room : ${rooms}"
 									th:value="${room.id}"
-									th:utext="${room.buildingName + ': ' + room.roomNumber}" />
+									th:utext="${room.buildingName + ': ' + room.roomNumber}"
+                                    th:selected="(${room.id} == *{room})"
+                            />
 						</select>
 					</li>
 					<li>
 						<label for="start">Start</label>
-						<select	th:field="*{startMM}">
-							<option value="">MM</option>
+						<select class="span3"	th:field="*{startMM}">
+							<option value="" disabled="disabled">MM</option>
 							<option th:each="month : ${months}"
 									th:value="${month.index}"
-									th:utext="${month.name}" />
+									th:utext="${month.name}"
+                                    th:selected="(${month.index} == *{startMM})"
+                            />
 						</select>
-						<select	th:field="*{startDD}">
-							<option value="">DD</option>
+						<select class="span1"	th:field="*{startDD}">
+							<option value="" disabled="disabled">DD</option>
 							<option th:each="day : ${days}"
 									th:value="${day}"
-									th:utext="${day}" />
+									th:utext="${day}"
+                                    th:selected="(${day} == *{startDD})"
+                            />
 						</select>
-						<select	th:field="*{startYYYY}">
-							<option value="">YYYY</option>
+						<select class="span2"	th:field="*{startYYYY}">
+							<option value="" disabled="disabled">YYYY</option>
 							<option th:each="year : ${years}"
 									th:value="${year}"
-									th:utext="${year}" />
+									th:utext="${year}"
+                                    th:selected="(${year} == *{startYYYY})"
+                            />
 						</select>
-						<select	th:field="*{startHH}">
-							<option value="">HH</option>
+						<select class="span1"	th:field="*{startHH}">
+							<option value="" disabled="disabled">HH</option>
 							<option th:each="hour : ${hours}"
 									th:value="${hour}"
-									th:utext="${hour}" />
+									th:utext="${hour}"
+                                    th:selected="(${hour} == *{startHH})"
+                            />
 						</select>
-						<select	th:field="*{startMI}">
-							<option value="">MM</option>
+						<select class="span1"	th:field="*{startMI}">
+							<option value="" disabled="disabled">MM</option>
 							<option th:each="minuet : ${minuets}"
 									th:value="${minuet}"
-									th:utext="${minuet}" />
+									th:utext="${minuet}"
+                                    th:selected="(${minuet} == *{startMI})"
+                            />
 						</select>
-						<select	th:field="*{startMeridiem}">
-							<option value="">--</option>
+						<select class="span1"	th:field="*{startMeridiem}">
+							<option value="" disabled="disabled">--</option>
 							<option th:each="meridiem : ${meridiems}"
 									th:value="${meridiem}"
-									th:utext="${meridiem}" />
+									th:utext="${meridiem}"
+                                    th:selected="(${meridiem} == *{startMeridiem})"
+                            />
 						</select>
 
 					</li>
 					<li>
 						<label for="duration">Duration</label>
-						<input type="text" th:field="*{duration}" />
+						<input type="text" th:field="*{duration}" th:value="*{duration}"/>
 					</li>
 				</ul>
 				<button type="submit">Submit</button>
