@@ -106,7 +106,7 @@
                     <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.instructorType.name()}">
                         instructor type
                     </td>
-                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.clazzes.size()}">
                         # of Classes
                     </td>
                     <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.hours}">
