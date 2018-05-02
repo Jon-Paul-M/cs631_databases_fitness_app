@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class T_010_CanDefineNewExercise extends BaseTest {
+public class T_010_CanDefineNewExercise_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
 
     @Autowired
