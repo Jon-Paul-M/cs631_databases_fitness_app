@@ -15,3 +15,8 @@ CREATE DATABASE fitness
     ENCODING = 'UTF8'
     CONNECTION LIMIT = -1;
   
+CREATE DATABASE fitness_test
+    WITH 
+    OWNER = fitness
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;

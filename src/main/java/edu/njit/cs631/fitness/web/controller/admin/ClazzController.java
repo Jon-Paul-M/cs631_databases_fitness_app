@@ -6,10 +6,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import edu.njit.cs631.fitness.web.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
+import edu.njit.cs631.fitness.web.controller.BaseController;
 import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
 

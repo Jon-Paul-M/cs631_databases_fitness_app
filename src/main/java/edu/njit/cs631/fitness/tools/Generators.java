@@ -2,6 +2,8 @@ package edu.njit.cs631.fitness.tools;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Generators {
@@ -15,15 +17,30 @@ public class Generators {
 	}
 
 	public static void main(String[] args) {
-		random = new Random();
+		givenList_whenNumberElementsChosen_shouldReturnRandomElementsRepeat();
+		
+		//random = new Random();
 		// ssn();
 		// middleInitals();
-        String fromPrevious = "$2a$10$yJSLXVodHQtynXWesCHI/.mzaT.07wJbfPsYfPv/Z11qWA2fIqgoG";
+        /*String fromPrevious = "$2a$10$yJSLXVodHQtynXWesCHI/.mzaT.07wJbfPsYfPv/Z11qWA2fIqgoG";
         String hash = encodeTestPassword("password");
         System.out.println(hash);
         System.out.println(decodeTestPassword("password", hash));
-        System.out.println(decodeTestPassword("password", fromPrevious));
+        System.out.println(decodeTestPassword("password", fromPrevious));*/
 
+	}
+	
+	public static void givenList_whenNumberElementsChosen_shouldReturnRandomElementsRepeat() {
+	    Random rand = new Random();
+	    List<Integer> givenList = Arrays.asList(1, 221, 223, 225, 226, 227, 228, 229, 222, 230, 231, 232, 233, 234);
+	 
+	    int numberOfElements = 52;
+	 
+	    for (int i = 0; i < numberOfElements; i++) {
+	        int randomIndex = rand.nextInt(givenList.size());
+	        Integer randomElement = givenList.get(randomIndex);
+	        System.out.println(randomElement);
+	    }
 	}
 
 	private static String encodeTestPassword(String pwd) {
