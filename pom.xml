@@ -42,6 +42,7 @@
 		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<postgresql.version>42.2.2</postgresql.version>
 	</properties>
 
 	<dependencies>

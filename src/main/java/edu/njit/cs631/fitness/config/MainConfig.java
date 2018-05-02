@@ -23,10 +23,12 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 @EnableJpaRepositories(basePackages = {"edu.njit.cs631.fitness.data.entity",
                                        "edu.njit.cs631.fitness.data.entity.security",
+                                       "edu.njit.cs631.fitness.data.projection",
                                        "edu.njit.cs631.fitness.data.repository",
                                        "edu.njit.cs631.fitness.data.repository.security",
                                        "edu.njit.cs631.fitness.service.api",
-                                       "edu.njit.cs631.meidcal.service.impl"})
+                                       "edu.njit.cs631.meidcal.service.impl"
+                                       })
 @ComponentScan({"edu.njit.cs631.fitness.web.controller",
 	            "edu.njit.cs631.fitness.service",
                 "edu.njit.cs631.fitness.service.api",
@@ -34,7 +36,18 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
                 "edu.njit.cs631.fitness.data.manager"})
 public class MainConfig {
 
-    public MainConfig() {
+	// you can use string constants in annotations, but not array constants
+    private static final String[] JPA_PACKAGES = {
+    		"edu.njit.cs631.fitness.data.entity",
+            "edu.njit.cs631.fitness.data.entity.security",
+            "edu.njit.cs631.fitness.data.projection",
+            "edu.njit.cs631.fitness.data.repository",
+            "edu.njit.cs631.fitness.data.repository.security",
+            "edu.njit.cs631.fitness.service.api",
+            "edu.njit.cs631.meidcal.service.impl"
+            };
+
+	public MainConfig() {
         super();
     }
 
@@ -45,12 +58,7 @@ public class MainConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] {"edu.njit.cs631.fitness.data.entity",
-                                       "edu.njit.cs631.fitness.data.entity.security",
-                                       "edu.njit.cs631.fitness.data.repository",
-                                       "edu.njit.cs631.fitness.data.repository.security",
-                                       "edu.njit.cs631.fitness.service.api",
-                                       "edu.njit.cs631.fitness.service.impl"});
+        em.setPackagesToScan(JPA_PACKAGES);
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

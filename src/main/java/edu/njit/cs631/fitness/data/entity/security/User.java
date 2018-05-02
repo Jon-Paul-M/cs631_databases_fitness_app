@@ -16,7 +16,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+
+import edu.njit.cs631.fitness.data.manager.PayrollQueries;
+import edu.njit.cs631.fitness.data.projection.InstructorPayroll;
 
 @Entity
 @Table(name=User.TABLE_NAME)
