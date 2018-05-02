@@ -60,8 +60,15 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 		return clazzRepository.saveAndFlush(clazz);
 	}
 
+    @Override
+    public void deleteClazz(Integer clazzId) {
+        Clazz clazz = clazzRepository.findOne(clazzId);
+        clazzRepository.delete(clazz);
+        clazzRepository.flush();
+    }
 
-	@Override
+
+    @Override
     @Transactional
 	public void registerUserForClass(Integer userId, Integer clazzId) {
 		Clazz clazz = clazzRepository.findOne(clazzId);
