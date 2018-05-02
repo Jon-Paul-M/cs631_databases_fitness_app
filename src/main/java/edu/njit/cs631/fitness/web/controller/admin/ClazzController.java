@@ -81,6 +81,28 @@ public class ClazzController extends BaseController {
         return "redirect:/admin";
     }
 
+    @RequestMapping(value = {"/generate"}, method = RequestMethod.GET)
+    public String generate() {
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.generateRandomClasses();
+        }
+
+        return "redirect:/admin";
+    }
+
+
+    @RequestMapping(value = {"/generateRegistrations"}, method = RequestMethod.GET)
+    public String generateRegistrations() {
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.generateRandomRegistrations();
+        }
+
+        return "redirect:/admin";
+    }
+
+
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView get() {
 		logger.info("In ClazzController.get");

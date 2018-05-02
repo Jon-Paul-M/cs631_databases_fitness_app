@@ -48,4 +48,15 @@ public class CreateMemberController extends BaseController{
                 .addObject("message", "Sucessfully created member");
     }
 
+
+    @RequestMapping(value = {"/generate"}, method = RequestMethod.GET)
+    public String generate() {
+
+        if (hasAuthority("ADMIN")) {
+            userService.generateManyMembers();
+        }
+
+        return "redirect:/admin";
+    }
+
 }

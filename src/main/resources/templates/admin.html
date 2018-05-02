@@ -24,7 +24,13 @@
     <div class="row-fluid">
         <div class="span12">
             <h3 class="title">Current Classes</h3>
-            <h5><a href="admin/classes/create" th:href="@{/admin/classes/create}">Create a new class.</a></h5> <!-- haha -->
+            <h5>Current classes in the Fitness Application</h5> <!-- haha -->
+
+            <ul>
+                <li> <a href="admin/classes/create" th:href="@{/admin/classes/create}">Create a new class.</a></li>
+                <li> <a href="#" th:href="@{/admin/classes/generate}">Generate many classes.</a></li>
+                <li> <a href="#" th:href="@{/admin/classes/generateRegistrations}">Generate many registrations.</a></li>
+            </ul>
         </div>
     </div>
 
@@ -42,7 +48,11 @@
     <div class="row-fluid">
         <div class="span12">
             <h3 class="title">Current Members</h3>
-            <h5>Current Members in the Fitness Application, <a href="#" th:href="@{/admin/members/create}">Create a new member.</a></h5>
+            <h5>Current Members in the Fitness Application</h5>
+            <ul>
+                <li> <a href="#" th:href="@{/admin/members/create}">Create a new member.</a></li>
+                <li> <a href="#" th:href="@{/admin/members/generate}">Generate many members.</a></li>
+            </ul>
         </div>
     </div>
 

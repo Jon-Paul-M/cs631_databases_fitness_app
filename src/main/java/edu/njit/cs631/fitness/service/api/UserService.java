@@ -27,6 +27,7 @@ public interface UserService {
     // User changeUserPassword(User user, String password);
 
     // General members (those who can register for classes)
+    void generateManyMembers();
     User createMemberIfNotFound(String email,
                                 String name,
                                 String password,

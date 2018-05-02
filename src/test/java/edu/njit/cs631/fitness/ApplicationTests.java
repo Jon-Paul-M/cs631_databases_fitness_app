@@ -16,6 +16,8 @@ import edu.njit.cs631.fitness.testutils.BaseTest;
 
 public class ApplicationTests extends BaseTest {
 
+
+
 	@Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	public void contextLoadsWithNewUser() {
