@@ -147,7 +147,7 @@ CREATE FUNCTION one() RETURNS integer AS $$
 $$ LANGUAGE SQL;
 
 
-CREATE OR REPLACE FUNCTION INSTRUCTOR_HOURS_BY_TIME_INTERVAL (INTEGER, TIMESTAMP, TIMESTAMP)
+CREATE OR REPLACE FUNCTION INSTRUCTOR_MINUTES_BY_TIME_INTERVAL (INTEGER, TIMESTAMP, TIMESTAMP)
 RETURNS INTEGER AS $$
 declare
 	IN_INSTRUCTOR_ID ALIAS FOR $1;
@@ -162,5 +162,73 @@ BEGIN
    RETURN total;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION GENERATE_PAYROLL(interval_begin timestamp, 
+                                            interval_end timestamp, 
+                                            fed_rate decimal,
+                                            state_rate decimal,
+                                            other_rate decimal) 
+	RETURNS refcursor AS $$
+DECLARE
+	ref refcursor;       -- Declare a cursor variable
+BEGIN
+	OPEN ref FOR 
+		SELECT 
+		    user_id AS id,
+		    name,
+		    wage,
+		    ROUND(minutes / 60.0, 2) AS hours,
+		    ROUND(wage * (minutes / 60.0), 2) AS gross,
+		    ROUND(wage * (minutes / 60.0) * (fed_rate / 100.0), 2) AS fed_tax,
+		    ROUND(wage * (minutes / 60.0) * (state_rate / 100.0), 2) AS state_tax,
+		    ROUND(wage * (minutes / 60.0) * (other_rate / 100.0), 2) AS other_tax,
+		    'Hourly' as instructor_type
+		FROM
+		    (SELECT 
+		        pp.user_id,
+		            pp.name,
+		            hh.hourly_wage AS wage,
+		            INSTRUCTOR_MINUTES_BY_TIME_INTERVAL(pp.user_id, interval_begin, interval_end) AS minutes
+		    FROM
+		        person pp, hourly_instructor hh
+		    WHERE
+		        pp.user_id = hh.user_id) foo
+		UNION
+		SELECT
+			pp.user_id,
+			pp.name,
+			si.salary AS wage,
+			NULL AS hours,
+			--DATE_PART('day', interval_begin - interval_end) AS days,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC), 2) AS gross,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (10.0 / 100.0), 2) AS fed_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (5.0 / 100.0), 2) AS state_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (3.0 / 100.0), 2) AS other_tax,
+			'Salaried' AS instructor_type 
+		FROM
+			person pp,
+			salaried_instructor si 
+		WHERE
+			pp.user_id = si.user_id
+		ORDER BY name;
+	RETURN ref;             -- Return the cursor to the caller
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- This is a dummy table
+-- delete before submission and 
+-- turn off hibernate schema validation
+CREATE TABLE INSTRUCTOR_PAYROLL (
+	ID               INTEGER,
+	NAME             VARCHAR(512),
+	WAGE             DECIMAL,
+	HOURS            DECIMAL,
+	GROSS            DECIMAL,
+	FED_TAX          DECIMAL,
+	STATE_TAX        DECIMAL,
+	OTHER_TAX        DECIMAL,
+	INSTRUCTOR_TYPE  VARCHAR(512)
+);
 
 ^^^
