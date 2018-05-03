@@ -259,5 +259,6 @@ CREATE TABLE INSTRUCTOR_PAYROLL (
 	INSTRUCTOR_TYPE  VARCHAR(512)
 );
 
+
 -- these carrots are necessary for spring boot data loading
 ^^^
