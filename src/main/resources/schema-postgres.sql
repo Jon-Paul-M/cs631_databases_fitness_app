@@ -201,9 +201,9 @@ BEGIN
 			NULL AS hours,
 			--DATE_PART('day', interval_begin - interval_end) AS days,
 			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC), 2) AS gross,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (10.0 / 100.0), 2) AS fed_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (5.0 / 100.0), 2) AS state_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (3.0 / 100.0), 2) AS other_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (other_rate / 100.0), 2) AS other_tax,
 			'Salaried' AS instructor_type 
 		FROM
 			person pp,
