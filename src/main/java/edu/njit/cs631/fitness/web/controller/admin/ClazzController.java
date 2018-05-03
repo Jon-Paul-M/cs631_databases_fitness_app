@@ -74,7 +74,7 @@ public class ClazzController extends BaseController {
     }
 
 
-    @RequestMapping(value="/detail", method = RequestMethod.GET)
+    @RequestMapping(value="/details", method = RequestMethod.GET)
     public ModelAndView classDetailView(
             @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
 

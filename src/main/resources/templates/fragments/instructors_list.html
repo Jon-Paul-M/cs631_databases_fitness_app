@@ -79,6 +79,9 @@
             <table>
                 <thead>
                 <tr>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <th>View</th>
+                    </div>
                     <th>Name</th>
                     <th>E-mail</th>
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
@@ -93,14 +96,17 @@
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
                         <th>Wage</th>
                     </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
+                    <!--div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
                         <th>Delete Instructor?</th>
-                    </div>
+                    </div-->
                 </tr>
 
                 </thead>
                 <tbody>
                 <tr th:each="instructor : ${instructors}">
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <td><a href="#" th:href="@{/admin/instructors/details(id=${instructor.id})}">(view)</a></td>
+                    </div>
                     <td><strong th:inline="text">[[${instructor.name}]]</strong></td>
                     <td th:inline="text">[[${instructor.email}]]</td>
                     <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.instructorType.name()}">
@@ -116,9 +122,9 @@
                     instructor wage
                     </td>
 
-                    <td sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
+                    <!--td sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
                         delete
-                    </td>
+                    </td-->
                 </tr>
                 </tbody>
             </table>

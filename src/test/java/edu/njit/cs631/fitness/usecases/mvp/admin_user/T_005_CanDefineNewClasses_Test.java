@@ -121,7 +121,7 @@ public class T_005_CanDefineNewClasses_Test extends BaseTest {
 
         mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/admin/classes/detail?id=" + clazz.getId())
+                        .get("/admin/classes/details?id=" + clazz.getId())
                         .accept(MediaType.TEXT_HTML)
                         .with(user(getAdminUser())))
                 .andExpect(status().isOk());

@@ -65,19 +65,26 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
         int daysOffset = 0;
 
         // We need the number of instructors to be greater than the number of
-        while(instructors.size() > rooms.size()) {
-            instructors.remove(0);
-        }
+        List<Instructor> instructorsToUse;
 
         LocalDateTime currentOffset = LocalDateTime.now().plusMinutes(30);
         // we'll create one class for every room with a random instructor
         for(int i = 0; i < 3; i++) {
-            Collections.shuffle(instructors, random);
-            for(Room room : rooms) {
+            instructorsToUse = new ArrayList<>(instructors);
+            Collections.shuffle(instructorsToUse, random);
+
+            while(instructorsToUse.size() > rooms.size()) {
+                instructorsToUse.remove(0);
+            }
+            for(int j = 0; j < rooms.size(); j++) {
                 Exercise exercise = exercises.get(random.nextInt(exercises.size()));
-                for(Instructor instructor : instructors) {
-                    createClass(exercise.getId(), instructor.getId(), room.getId(), currentOffset, random.nextDouble());
-                }
+                Room room = rooms.get(j);
+                Instructor instructor = instructorsToUse.get(j);
+                createClass(exercise.getId(),
+                        instructor.getId(),
+                        room.getId(),
+                        currentOffset,
+                        random.nextDouble());
             }
             currentOffset = currentOffset.plusHours(1);
         }
