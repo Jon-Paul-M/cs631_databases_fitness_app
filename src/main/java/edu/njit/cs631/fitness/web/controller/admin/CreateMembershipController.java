@@ -1,9 +1,12 @@
 package edu.njit.cs631.fitness.web.controller.admin;
 
+import edu.njit.cs631.fitness.service.api.MembershipService;
 import edu.njit.cs631.fitness.web.controller.BaseController;
 import edu.njit.cs631.fitness.web.model.ExerciseModel;
+import edu.njit.cs631.fitness.web.model.MembershipModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,16 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.regex.Pattern;
 
 @Controller
-@RequestMapping(value="/admin/exercises")
-public class CreateExerciseController extends BaseController {
+@RequestMapping(value="/admin/memberships")
+public class CreateMembershipController extends BaseController {
 
-    private final static Logger log = LoggerFactory.getLogger(CreateExerciseController.class);
+    private final static Logger log = LoggerFactory.getLogger(CreateMembershipController.class);
+
+
+    @Autowired
+    private MembershipService membershipService;
 
     @Override
     protected String getCommonViewName() {
-        return "admin/exercises/create";
+        return "admin/memberships/create";
     }
 
     @Override
@@ -37,7 +45,7 @@ public class CreateExerciseController extends BaseController {
         if (id == -1) return "redirect:/admin";
 
         if (hasAuthority("ADMIN")) {
-            exerciseService.deleteExercise(id);
+            //membershipService.deleteExercise(id);
         }
 
         return "redirect:/admin";
@@ -46,21 +54,23 @@ public class CreateExerciseController extends BaseController {
     @RequestMapping(value="/create", method= RequestMethod.GET)
     public ModelAndView createExercise(Model m) {
         ModelAndView mv = commonModelAndView();
-        mv.addObject("exerciseModel", new ExerciseModel());
+        mv.addObject("membershipModel", new MembershipModel());
         return mv;
     }
 
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public ModelAndView createExercise(@Valid ExerciseModel exerciseModel, BindingResult result, ModelAndView mv) {
+    public ModelAndView createExercise(@Valid MembershipModel membershipModel, BindingResult result, ModelAndView mv) {
+        log.info(membershipModel.toString());
         if (result.hasErrors()) {
-            mv.addObject("exerciseModel", exerciseModel);
+            mv.addObject("membershipModel", membershipModel);
             addParams(mv);
             return mv;
         }
 
-        exerciseService.addNewExercise(exerciseModel);
+        membershipService.addNewMembership(membershipModel);
+        log.info("Added membership " + membershipModel);
 
         return commonModelAndView("redirect:/admin")
-                .addObject("message", "Successfully created exercise.");
+                .addObject("message", "Successfully created membership.");
     }
 }

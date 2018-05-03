@@ -74,57 +74,20 @@
     </div>
 
     <!--Table-->
-    <div class="row-fluid gallery" th:fragment="instructors_list">
+    <div class="row-fluid gallery" th:fragment="users_list">
         <div class="span12">
             <table>
                 <thead>
                 <tr>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>View</th>
-                    </div>
                     <th>Name</th>
                     <th>E-mail</th>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>Instructor Type</th>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th># of Classes</th>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>Hours</th>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>Wage</th>
-                    </div>
-                    <!--div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
-                        <th>Delete Instructor?</th>
-                    </div-->
                 </tr>
 
                 </thead>
                 <tbody>
-                <tr th:each="instructor : ${instructors}">
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <td><a href="#" th:href="@{/admin/instructors/details(id=${instructor.id})}">(view)</a></td>
-                    </div>
-                    <td><strong th:inline="text">[[${instructor.name}]]</strong></td>
-                    <td th:inline="text">[[${instructor.email}]]</td>
-                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.instructorType.name()}">
-                        instructor type
-                    </td>
-                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.clazzes.size()}">
-                        # of Classes
-                    </td>
-                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.hours}">
-                        instructor hours
-                    </td>
-                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" th:utext="${instructor.wage}">
-                    instructor wage
-                    </td>
-
-                    <!--td sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
-                        delete
-                    </td-->
+                <tr th:each="user : ${users}">
+                    <td><strong th:inline="text">[[${user.name}]]</strong></td>
+                    <td th:inline="text">[[${user.email}]]</td>
                 </tr>
                 </tbody>
             </table>

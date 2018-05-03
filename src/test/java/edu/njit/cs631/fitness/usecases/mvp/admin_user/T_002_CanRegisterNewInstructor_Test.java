@@ -16,10 +16,6 @@ import edu.njit.cs631.fitness.testutils.BaseTest;
 
 public class T_002_CanRegisterNewInstructor_Test extends BaseTest {
     // UnitOfWork_StateUnderTest_ExpectedBehavior
-    @Test
-    public void testClassesMustHaveAtLeastOneRunnableMethod() {
-        // DELETE ME LATER
-    }
 
     @Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},

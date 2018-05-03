@@ -1,13 +1,10 @@
 package edu.njit.cs631.fitness.data.entity;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import edu.njit.cs631.fitness.data.entity.security.User;
 
@@ -27,6 +24,19 @@ public class Member extends User {
 	public void setRegistrationDate(Timestamp registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "REGISTER",
+            joinColumns = @JoinColumn(
+                    name = "USER_ID", referencedColumnName = "USER_ID", updatable = false),
+            inverseJoinColumns = @JoinColumn(
+                    name = "CLASS_ID", referencedColumnName = "CLASS_ID", updatable = false)
+    )
+    private Set<Clazz> clazzes = new HashSet<>();
+    public Set<Clazz> getClazzes() {
+        return clazzes;
+    }
 
 
     @OneToOne(fetch = FetchType.LAZY)

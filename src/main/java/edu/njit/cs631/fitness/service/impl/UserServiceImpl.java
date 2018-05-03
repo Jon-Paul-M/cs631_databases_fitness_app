@@ -22,11 +22,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.List;
 
 
 @Service("userService")
@@ -60,6 +57,42 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static int lastGenerated = 0;
+    private final Random random = new Random();
+
+    @Override
+    @Transactional
+    public void generateManyMembers() {
+        Role member_role = roleRepository.findByName("ROLE_MEMBER");
+        List<Membership> memberships = membershipRepository.findAll();
+        for(int i = 0; i < 20; i++) {
+            lastGenerated += i;
+            Member member = new Member();
+            member.setMembership(memberships.get(random.nextInt(memberships.size())));
+            member.setEmail("member_" + lastGenerated + "@test.com");
+            member.setName("member_" + lastGenerated);
+            member.setPasswordHash(passwordEncoder.encode("password"));
+            member.setAddress1("add1");
+            member.setAddress2("");
+            member.setCity("city");
+            member.setCounty("county");
+            member.setState("state");
+            member.setPostalCode("postal");
+            member.setRegistrationDate(
+                    Timestamp.valueOf(
+                            LocalDateTime.now()
+                                    .minusHours(random.nextInt(24))
+                                    .minusDays(random.nextInt(30)
+                                    )
+                    )
+            );
+            member.setEnabled(true);
+            member.setRoles(Arrays.asList(member_role));
+            memberRepository.save(member);
+        }
+
+        memberRepository.flush();
+    }
 
     private void checkUserEmail(String email) throws UserAlreadyExistException {
         if(findUser(email) != null) {

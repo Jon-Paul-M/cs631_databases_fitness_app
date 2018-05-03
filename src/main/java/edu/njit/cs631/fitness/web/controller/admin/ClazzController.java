@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ import javax.validation.Valid;
 public class ClazzController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Autowired
+    private ClazzRepository clazzRepository;
 	
 	@Autowired
 	private ClazzAdministrationService clazzAdministrationService;
@@ -68,6 +73,25 @@ public class ClazzController extends BaseController {
         return "admin/classes/create";
     }
 
+
+    @RequestMapping(value="/details", method = RequestMethod.GET)
+    public ModelAndView classDetailView(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+	    ModelAndView err = new ModelAndView("redirect:/admin");
+        if (id == -1) return err;
+	    ModelAndView mv = commonModelAndView("admin/classes/detail");
+
+	    Clazz clazz = clazzRepository.findOne(id);
+
+	    if(clazz == null) return err;
+
+	    mv.addObject("clazzes", Arrays.asList(clazz));
+	    mv.addObject("users", clazz.getMembers());
+
+	    return mv;
+    }
+
     @RequestMapping(value = {"/delete"}, method = RequestMethod.GET)
     public String deleteGet(
             @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
@@ -80,6 +104,28 @@ public class ClazzController extends BaseController {
 
         return "redirect:/admin";
     }
+
+    @RequestMapping(value = {"/generate"}, method = RequestMethod.GET)
+    public String generate() {
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.generateRandomClasses();
+        }
+
+        return "redirect:/admin";
+    }
+
+
+    @RequestMapping(value = {"/generateRegistrations"}, method = RequestMethod.GET)
+    public String generateRegistrations() {
+
+        if (hasAuthority("ADMIN")) {
+            clazzAdministrationService.generateRandomRegistrations();
+        }
+
+        return "redirect:/admin";
+    }
+
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView get() {

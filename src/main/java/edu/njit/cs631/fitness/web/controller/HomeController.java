@@ -46,6 +46,7 @@ public class HomeController extends BaseController {
     @RequestMapping(value="/password", method=RequestMethod.POST)
     public ModelAndView changePassword(@Valid PasswordModel passwordModel, BindingResult result, ModelAndView mv) {
         mv.addObject("passwordModel", passwordModel);
+        mv.setViewName("changepassword");
         addParams(mv);
         if (result.hasErrors()) {
             return mv;
@@ -55,12 +56,12 @@ public class HomeController extends BaseController {
         if (user == null) return commonModelAndView("redirect:/");
         if(!passwordEncoder.matches(passwordModel.getOldPassword(), user.getPasswordHash())) {
             result.addError(new ObjectError("Old password", "Old password does not match"));
-            return commonModelAndView("/password");
+            return mv;
         }
 
         if(!passwordModel.getNewPassword().equals(passwordModel.getConfirmNewPassword())) {
             result.addError(new ObjectError("Password", "New password and confirmation do not match."));
-            return commonModelAndView("/password");
+            return mv;
         }
 
         user.setPasswordHash(passwordEncoder.encode(passwordModel.getNewPassword()));

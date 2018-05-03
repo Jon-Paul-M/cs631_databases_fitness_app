@@ -79,6 +79,9 @@
             <table>
                 <thead>
                 <tr>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <th>View</th>
+                    </div>
                     <th>Exercise</th>
                     <th>Start</th>
                     <th>Room</th>
@@ -87,17 +90,20 @@
                     <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
                         <th>Register for Class?</th>
                     </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
+                    <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
                     </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
                         <th>Delete Class?</th>
-                    </div>
+                    </div-->
                 </tr>
 
                 </thead>
                 <tbody>
                 <tr th:each="clazz : ${clazzes}">
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                        <td><a href="#" th:href="@{/admin/classes/details(id=${clazz.id})}">(view)</a></td>
+                    </div>
                     <td th:inline="text">[[${clazz.exercise.name}]]</td>
                     <td th:inline="text">[[${clazz.start}]]</td>
                     <td th:inline="text">[[${clazz.room?.buildingName}]] / [[${clazz.room?.roomNumber}]]</td>
@@ -108,12 +114,12 @@
                         <!-- see https://english.stackexchange.com/questions/25931/unregister-vs-deregister -->
                         <td th:if="${clazz.hasUserRegistered(currentUser)}">Registered<br/><a href="#" th:href="@{/classes/deregister(self=true, class=${clazz.getId()})}">Revoke?</a></td>
                     </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
+                    <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
                     </div>
                     <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
                         <td><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
-                    </div>
+                    </div-->
                 </tr>
                 </tbody>
             </table>
