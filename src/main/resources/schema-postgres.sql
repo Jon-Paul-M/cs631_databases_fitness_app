@@ -231,4 +231,34 @@ CREATE TABLE INSTRUCTOR_PAYROLL (
 	INSTRUCTOR_TYPE  VARCHAR(512)
 );
 
+CREATE OR REPLACE FUNCTION SPOTS_REMAINING (INTEGER)
+RETURNS INTEGER AS $$
+declare
+	IN_CLASS_ID ALIAS FOR $1;
+	remaining INTEGER;
+	capacity INTEGER;
+	taken INTEGER;
+BEGIN
+	SELECT 
+    	COUNT(r.user_id) into taken
+	FROM
+    	class c,
+    	register r
+	WHERE
+    	c.class_id = r.class_id
+        	AND c.class_id = IN_CLASS_ID;
+    SELECT 
+    	r.capacity INTO capacity
+    FROM
+    	class c,
+    	room r
+	WHERE
+    	c.room_id = r.room_id
+        	AND c.class_id = IN_CLASS_ID; 
+	remaining =  capacity - taken;  	
+	RETURN remaining;
+END;
+$$ LANGUAGE plpgsql;
+
+-- these carrots are necessary for spring boot data loading
 ^^^

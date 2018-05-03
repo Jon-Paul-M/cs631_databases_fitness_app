@@ -1,17 +1,30 @@
 package edu.njit.cs631.fitness.data.entity;
 
-import edu.njit.cs631.fitness.data.entity.security.User;
-
-import javax.persistence.*;
-
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
+
+import edu.njit.cs631.fitness.data.entity.security.User;
+
 @Entity
-@Table(name="CLASS")
+@Table(name=Clazz.TABLE_NAME)
 //weird things happen in java when you name a class 'Class'
 public class Clazz { 
 
@@ -111,6 +124,13 @@ public class Clazz {
 	}
 	public void setDuration(Double duration) {
 		this.duration = duration;
+	}
+	
+	@Basic(fetch=FetchType.LAZY)
+	@Formula(value = "SPOTS_REMAINING(CLASS_ID)")
+	private Integer spotsRemaining;
+	public Integer getSpotsRemaining() {
+		return spotsRemaining;
 	}
 	
 }
