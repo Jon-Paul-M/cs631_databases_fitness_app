@@ -121,7 +121,8 @@ CREATE TABLE CLASS (
     ROOM_ID        INTEGER,
     INSTRUCTOR_ID  INTEGER,
     START_DATETIME TIMESTAMP NOT NULL,
-    DURATION       FLOAT NOT NULL,
+    DURATION       INTEGER NOT NULL,
+    END_DATETIME   TIMESTAMP,
     -- PRIMARY KEY (CLASS_ID, EXERCISE_ID), See #34
     PRIMARY KEY (CLASS_ID),
     FOREIGN KEY (EXERCISE_ID) REFERENCES EXERCISE(EXERCISE_ID),
@@ -239,10 +240,35 @@ BEGIN
 	WHERE
     	c.room_id = r.room_id
         	AND c.class_id = IN_CLASS_ID; 
-	remaining =  capacity - taken;  	
+	remaining :=  capacity - taken;  	
 	RETURN remaining;
 END;
 $$ LANGUAGE plpgsql;
+
+-- demo of how to dynamically uppdate a field during insert/update
+-- a slight de-normalization allows the above OVERLAPS queries to potentially use an index 
+CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
+    BEGIN
+		NEW.END_DATETIME := NEW.START_DATETIME + NEW.DURATION * INTERVAL '1 minutes';
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION check_class_for_conflicts() RETURNS trigger AS $$
+declare
+	class_id INTEGER;
+BEGIN
+	-- Instructor check
+    SELECT c.class_id into class_id FROM class c
+    	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
+   			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
+   		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 
 -- This is a dummy table
 -- delete before submission and 

@@ -80,11 +80,13 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
                 Exercise exercise = exercises.get(random.nextInt(exercises.size()));
                 Room room = rooms.get(j);
                 Instructor instructor = instructorsToUse.get(j);
-                createClass(exercise.getId(),
+                int duration = random.nextInt(59) + 1;
+                logger.info("duration: " + duration);
+				createClass(exercise.getId(),
                         instructor.getId(),
                         room.getId(),
                         currentOffset,
-                        random.nextDouble());
+                        duration);
             }
             currentOffset = currentOffset.plusHours(1);
         }
@@ -141,7 +143,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
     @Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Double duration) {
+	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
 		logger.info("In clazzAdministrationService.createClass");
     	Exercise exercise = exerciseRepository.findOne(exerciseId);
     	Instructor instructor = userService.findInstructor(instructorId);

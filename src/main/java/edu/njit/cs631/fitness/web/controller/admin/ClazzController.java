@@ -152,7 +152,7 @@ public class ClazzController extends BaseController {
 
 		if(valid(clazzModel, result)) {
 			LocalDateTime start = parseStart(clazzModel);
-			Double duration = clazzModel.getDuration();
+			Integer duration = clazzModel.getDuration();
 			clazzAdministrationService.createClass(clazzModel.getExercise(),
                                                    clazzModel.getInstructor(),
                                                    clazzModel.getRoom(),

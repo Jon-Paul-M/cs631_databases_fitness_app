@@ -118,11 +118,11 @@ public class Clazz {
 	}
     
 	@Column(name="DURATION")
-	private Double duration;
-	public Double getDuration() {
+	private Integer duration; // in minutes
+	public Integer getDuration() {
 		return duration;
 	}
-	public void setDuration(Double duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	

@@ -32,7 +32,6 @@ import edu.njit.cs631.fitness.service.api.UserService;
 @TestPropertySource(locations="classpath:test.properties")
 public abstract class BaseTest {
 
-
     @Autowired
     protected WebApplicationContext wac;
 
