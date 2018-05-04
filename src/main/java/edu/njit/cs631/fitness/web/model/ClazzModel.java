@@ -47,10 +47,10 @@ public class ClazzModel {
 
 	private String startMeridiem;
 
-    @NotNull(message="Please provide a value between 0 and 9, inclusive.")
-    @Min(value = 0)
-    @Max(value=9)
-	private Double duration;
+    @NotNull(message="Duration is in minutes. Please provide a value between 1 and 480, inclusive.")
+    @Min(value = 1)
+    @Max(value = 480)
+	private Integer duration;
 
 
     private LocalDateTime startTime;
@@ -113,10 +113,10 @@ public class ClazzModel {
 	public void setStartMeridiem(String startMeridiem) {
 		this.startMeridiem = startMeridiem;
 	}
-	public Double getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
-	public void setDuration(Double duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	@Override

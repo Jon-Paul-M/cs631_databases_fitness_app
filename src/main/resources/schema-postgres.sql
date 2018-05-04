@@ -121,7 +121,8 @@ CREATE TABLE CLASS (
     ROOM_ID        INTEGER,
     INSTRUCTOR_ID  INTEGER,
     START_DATETIME TIMESTAMP NOT NULL,
-    DURATION       FLOAT NOT NULL,
+    DURATION       INTEGER NOT NULL,
+    END_DATETIME   TIMESTAMP,
     -- PRIMARY KEY (CLASS_ID, EXERCISE_ID), See #34
     PRIMARY KEY (CLASS_ID),
     FOREIGN KEY (EXERCISE_ID) REFERENCES EXERCISE(EXERCISE_ID),
@@ -200,10 +201,10 @@ BEGIN
 			si.salary AS wage,
 			NULL AS hours,
 			--DATE_PART('day', interval_begin - interval_end) AS days,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC), 2) AS gross,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (other_rate / 100.0), 2) AS other_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC), 2) AS gross,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (other_rate / 100.0), 2) AS other_tax,
 			'Salaried' AS instructor_type 
 		FROM
 			person pp,
@@ -239,10 +240,56 @@ BEGIN
 	WHERE
     	c.room_id = r.room_id
         	AND c.class_id = IN_CLASS_ID; 
-	remaining =  capacity - taken;  	
+	remaining :=  capacity - taken;  	
 	RETURN remaining;
 END;
 $$ LANGUAGE plpgsql;
+
+-- demo of how to dynamically uppdate a field during insert/update
+-- a slight de-normalization allows the above OVERLAPS queries to potentially use an index 
+CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
+    BEGIN
+		NEW.END_DATETIME := NEW.START_DATETIME + NEW.DURATION * INTERVAL '1 minutes';
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION check_class_for_conflicts() RETURNS trigger AS $$
+declare
+	class_id INTEGER;
+BEGIN
+	-- Instructor check
+	class_id := null;
+    SELECT c.class_id into class_id FROM class c
+    	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
+   			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
+   		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID
+   		LIMIT 1;
+    IF class_id is not null THEN
+        RAISE EXCEPTION 'Instructor overlaps existing class';
+    END IF;
+    -- Room check, assumes only one class at a time in each room
+    SELECT c.class_id into class_id FROM class c
+    	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
+   			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
+   		AND NEW.ROOM_ID = c.ROOM_ID
+   		LIMIT 1;
+	IF found THEN
+        RAISE EXCEPTION 'Room overlaps existing class';
+    END IF;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- In postgres multilple triggers on the same table are executed in lexigraphical order
+-- thus you can enforce a specific order by embedding a sequence in the trigger name
+CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class 
+	FOR EACH ROW EXECUTE PROCEDURE check_class_for_conflicts();
+
+CREATE TRIGGER trigger_class_010_update_end_date BEFORE INSERT OR UPDATE ON class
+	FOR EACH ROW EXECUTE PROCEDURE update_end_date();
 
 -- This is a dummy table
 -- delete before submission and 

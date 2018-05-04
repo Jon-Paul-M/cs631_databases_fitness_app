@@ -50,7 +50,7 @@ public class T_002_RegisterForAvailableClass_Test extends BaseTest {
         Room room = ((List<Room>) roomRepository.findAll()).get(0);
         LocalDateTime start = LocalDateTime.now().plusHours(3);
         Member member = memberRepository.findAll().get(0);
-        Double duration = 8.0;
+        Integer duration = 8 * 60;
         Clazz clazz = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
         clazzRepository.flush();
         Assert.assertNotNull("clazz should not be null", clazz);

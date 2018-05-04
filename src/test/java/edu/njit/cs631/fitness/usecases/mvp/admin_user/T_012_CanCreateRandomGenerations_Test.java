@@ -82,6 +82,7 @@ public class T_012_CanCreateRandomGenerations_Test extends BaseTest {
 
     }
 
+    // TODO: shouldn't put multiple tests in the same method
     @Test
     @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)

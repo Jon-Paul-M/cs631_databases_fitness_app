@@ -118,11 +118,11 @@ public class Clazz {
 	}
     
 	@Column(name="DURATION")
-	private Double duration;
-	public Double getDuration() {
+	private Integer duration; // in minutes
+	public Integer getDuration() {
 		return duration;
 	}
-	public void setDuration(Double duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	
@@ -131,6 +131,28 @@ public class Clazz {
 	private Integer spotsRemaining;
 	public Integer getSpotsRemaining() {
 		return spotsRemaining;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Clazz [id=");
+		builder.append(id);
+		builder.append(", exercise=");
+		builder.append(exercise);
+		builder.append(", room=");
+		builder.append(room);
+		builder.append(", instructor=");
+		builder.append(instructor);
+		builder.append(", members=");
+		builder.append(members);
+		builder.append(", start=");
+		builder.append(start);
+		builder.append(", duration=");
+		builder.append(duration);
+		builder.append(", spotsRemaining=");
+		builder.append(spotsRemaining);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }
