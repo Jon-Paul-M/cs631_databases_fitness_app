@@ -37,7 +37,7 @@
                     <th>Name</th>
                     <th>Instructor Type</th>
                     <th>Wage</th>
-                    <th>Hours</th>
+                    <th>Time</th>
                     <th>Gross</th>
                     <th>Fed. Tax</th>
                     <th>State Tax</th>
@@ -48,14 +48,20 @@
                 <tbody>
                 <tr th:each="payitem : ${payrolls}">
                     <td th:utext="${payitem.id}">Id</td>
-                    <td th:utext="${payitem.name}">Name</td>
+                    <td th:inline="text">
+                        <a href="#" th:href="@{/admin/instructors/details(id=${payitem.id})}">[[${payitem.name}]]</a>
+                    </td>
                     <td th:utext="${payitem.type}">Instructor Type</td>
                     <td>&dollar; <span th:utext="${payitem.wage}">Wage</span></td>
-                    <td th:utext="${payitem.hours}">Hours</td>
-                    <td th:utext="${payitem.gross}">Gross</td>
-                    <td th:utext="${payitem.federalTax}">Fed. Tax</td>
-                    <td th:utext="${payitem.stateTax}">State Tax</td>
-                    <td th:utext="${payitem.otherTax}">Other Tax</td>
+                    <td >
+                        <span th:utext="${payitem.hours}">Time</span>
+                        <span th:if="${#strings.equals(payitem.type,'Hourly')}">hours</span>
+                        <span th:if="${#strings.equals(payitem.type,'Salaried')}">days</span>
+                    </td>
+                    <td>&dollar; <span th:utext="${payitem.gross}">Gross</span></td>
+                    <td>&dollar; <span th:utext="${payitem.federalTax}">Fed Tax</span></td>
+                    <td>&dollar; <span th:utext="${payitem.stateTax}">State Tax</span></td>
+                    <td>&dollar; <span th:utext="${payitem.otherTax}">Other Tax</span></td>
                 </tr>
                 </tbody>
             </table>
