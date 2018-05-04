@@ -39,7 +39,12 @@
     <div class="row-fluid">
         <div class="span12">
             <h3 class="title">Current Instructors</h3>
-            <h5>Current Instructors in the Fitness Application, <a href="#" th:href="@{/admin/instructors/create}">Create a new instructor.</a></h5>
+            <h5>Current Instructors in the Fitness Application, </h5>
+
+            <ul>
+                <li> <a href="#" th:href="@{/admin/instructors/create}">Create a new instructor.</a></li>
+                <li> <a href="#" th:href="@{/admin/payroll/list}">Generate payroll for the last 14 days.</a></li>
+            </ul>
         </div>
     </div>
 

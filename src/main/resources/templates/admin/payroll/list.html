@@ -23,10 +23,50 @@
 
     <div class="row-fluid">
         <div class="span12">
-            <h3 class="title">Payroll Report</h3>
-
+            <h2 class="title">Payroll Report</h2>
+            <h3 class="title">Total Payroll this Period : &dollar;<span th:utext="${total}">$(total)</span></h3>
 		</div>
 	</div>
+
+    <div class="row-fluid gallery">
+        <div class="span12">
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Instructor Type</th>
+                    <th>Wage</th>
+                    <th>Time</th>
+                    <th>Gross</th>
+                    <th>Fed. Tax</th>
+                    <th>State Tax</th>
+                    <th>Other Tax</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr th:each="payitem : ${payrolls}">
+                    <td th:utext="${payitem.id}">Id</td>
+                    <td th:inline="text">
+                        <a href="#" th:href="@{/admin/instructors/details(id=${payitem.id})}">[[${payitem.name}]]</a>
+                    </td>
+                    <td th:utext="${payitem.type}">Instructor Type</td>
+                    <td>&dollar; <span th:utext="${payitem.wage}">Wage</span></td>
+                    <td >
+                        <span th:utext="${payitem.hours}">Time</span>
+                        <span th:if="${#strings.equals(payitem.type,'Hourly')}">hours</span>
+                        <span th:if="${#strings.equals(payitem.type,'Salaried')}">days</span>
+                    </td>
+                    <td>&dollar; <span th:utext="${payitem.gross}">Gross</span></td>
+                    <td>&dollar; <span th:utext="${payitem.federalTax}">Fed Tax</span></td>
+                    <td>&dollar; <span th:utext="${payitem.stateTax}">State Tax</span></td>
+                    <td>&dollar; <span th:utext="${payitem.otherTax}">Other Tax</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

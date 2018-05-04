@@ -199,7 +199,7 @@ BEGIN
 			pp.user_id,
 			pp.name,
 			si.salary AS wage,
-			NULL AS hours,
+			ROUND(CAST((DATE_PART('day', interval_end - interval_begin)) AS NUMERIC), 2) AS hours,
 			--DATE_PART('day', interval_begin - interval_end) AS days,
 			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC), 2) AS gross,
 			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
@@ -278,14 +278,14 @@ BEGIN
 	IF found THEN
         RAISE EXCEPTION 'Room overlaps existing class';
     END IF;
-    
+
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- In postgres multilple triggers on the same table are executed in lexigraphical order
 -- thus you can enforce a specific order by embedding a sequence in the trigger name
-CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class 
+CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class
 	FOR EACH ROW EXECUTE PROCEDURE check_class_for_conflicts();
 
 CREATE TRIGGER trigger_class_010_update_end_date BEFORE INSERT OR UPDATE ON class
