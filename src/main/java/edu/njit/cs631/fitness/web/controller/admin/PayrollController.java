@@ -2,7 +2,10 @@ package edu.njit.cs631.fitness.web.controller.admin;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +40,14 @@ public class PayrollController extends BaseController {
         return "admin/payroll/list";
     }
 
+    private BigDecimal sumInstr(Function<InstructorPayroll, BigDecimal> f, List<InstructorPayroll> bigDecimals) {
+	   return bigDecimals.stream()
+                .filter(Objects::nonNull)
+                .map(f)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal::add).get();
+    }
+
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public ModelAndView list(@RequestParam(defaultValue="10.0") BigDecimal federalRate,
 							 @RequestParam(defaultValue="3.0") BigDecimal otherRate) {
@@ -50,8 +61,15 @@ public class PayrollController extends BaseController {
 		
 		List<InstructorPayroll> payrolls = payrollService.generateHourlyPayroll(beginning, ending, federalRate, stateRate, otherRate);
 		logger.info(payrolls.toString());
-		
-		addClazzes(modelAndView);
+		BigDecimal total =
+                sumInstr(InstructorPayroll::getGross, payrolls)
+                .add(sumInstr(InstructorPayroll::getFederalTax, payrolls))
+                .add(sumInstr(InstructorPayroll::getStateTax, payrolls))
+                .add(sumInstr(InstructorPayroll::getOtherTax, payrolls));
+
+
+		modelAndView.addObject("total", total);
+        modelAndView.addObject("payrolls", payrolls);
 		return modelAndView;
 	}	
 	
