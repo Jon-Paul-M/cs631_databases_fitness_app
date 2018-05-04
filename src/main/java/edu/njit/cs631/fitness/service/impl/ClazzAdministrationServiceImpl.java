@@ -13,6 +13,8 @@ import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.service.api.UserService;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,17 +146,29 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
     @Override
 	@Transactional
 	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
-		logger.info("In clazzAdministrationService.createClass");
-    	Exercise exercise = exerciseRepository.findOne(exerciseId);
-    	Instructor instructor = userService.findInstructor(instructorId);
-    	Room room = roomRepository.findOne(roomId);
-    	Clazz clazz = new Clazz();
-    	clazz.setExercise(exercise);
-    	clazz.setInstructor((User)instructor);
-    	clazz.setRoom(room);
-    	clazz.setStart(Timestamp.valueOf(start));
-    	clazz.setDuration(duration);
-		return clazzRepository.saveAndFlush(clazz);
+    	Clazz clazz = null;
+		try {
+			logger.info("In clazzAdministrationService.createClass");
+			Exercise exercise = exerciseRepository.findOne(exerciseId);
+			Instructor instructor = userService.findInstructor(instructorId);
+			Room room = roomRepository.findOne(roomId);
+			clazz = new Clazz();
+			clazz.setExercise(exercise);
+			clazz.setInstructor((User)instructor);
+			clazz.setRoom(room);
+			clazz.setStart(Timestamp.valueOf(start));
+			clazz.setDuration(duration);
+			clazz = clazzRepository.saveAndFlush(clazz);
+			return clazz;
+		} catch (Throwable t) {
+			Throwable root = ExceptionUtils.getRootCause(t);
+			if (root.getMessage().indexOf("Instructor overlaps existing class") != -1) {
+				
+			} else {
+				ExceptionUtils.rethrow(t);
+			}
+		}
+		return null;
 	}
 
     @Override
