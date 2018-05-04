@@ -40,6 +40,7 @@ public interface UserService {
                                 String postalCode);
     Member findMemberByEmail(String email);
     Member registerNewMemberAccount(MemberModel model) throws UserAlreadyExistException;
+    Member editMemberAccount(MemberModel model) throws UserAlreadyExistException;
     // void saveMember(Member member);
 
 

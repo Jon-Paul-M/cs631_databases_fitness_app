@@ -80,7 +80,7 @@
                 <thead>
                 <tr>
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>View</th>
+                        <th>Admin</th>
                     </div>
                     <th>Name</th>
                     <th>E-mail</th>
@@ -92,13 +92,14 @@
                 <tbody>
                 <tr th:each="member : ${members}">
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <td><a href="#" th:href="@{/admin/members/details(id=${member.id})}">(view)</a></td>
+                        <td><a href="#" th:href="@{/admin/members/details(id=${member.id})}">(view)</a><br/>
+                            <a href="#" th:href="@{/admin/members/edit(id=${member.id})}">(edit)</a></td>
                     </div>
                     <td><strong th:inline="text">[[${member.name}]]</strong></td>
                     <td th:inline="text">[[${member.email}]]</td>
                     <td>
                         <address th:inline="text">
-                            [[${member.address1}]]<br/>
+                            [[${member.address1}]]<br th:unless="${#strings.isEmpty(member.address2)}"/>
                             [[${member.address2}]]<br/>
                             [[${member.city}]], [[${member.state}]] [[${member.postalCode}]]<br/>
                         </address>

@@ -2,11 +2,13 @@ package edu.njit.cs631.fitness.web.controller;
 
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
 import edu.njit.cs631.fitness.service.api.*;
 import edu.njit.cs631.fitness.web.util.ClazzDateComparator;
+import edu.njit.cs631.fitness.web.util.MemberNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -70,7 +73,13 @@ public abstract class BaseController {
     }
 
     protected void addMembers(ModelAndView modelAndView) {
-        modelAndView.addObject("members", memberRepository.findAll());
+        addMembers(modelAndView, memberRepository.findAll());
+    }
+
+
+    protected void addMembers(ModelAndView modelAndView, List<Member> members) {
+        members.sort(new MemberNameComparator());
+        modelAndView.addObject("members", members);
     }
 
     protected void addExercises(ModelAndView modelAndView) {
@@ -79,6 +88,10 @@ public abstract class BaseController {
 
     protected void addMemberships(ModelAndView modelAndView) {
         modelAndView.addObject("memberships", membershipRepository.findAll());
+    }
+
+    protected void addFormAction(ModelAndView modelAndView) {
+        modelAndView.addObject("formAction", "create");
     }
 
     protected boolean hasAuthority(String authority) {
@@ -118,6 +131,7 @@ public abstract class BaseController {
 
 
     protected ModelAndView addParams(ModelAndView modelAndView) {
+        addFormAction(modelAndView);
         addClazzes(modelAndView);
         addCurrentUser(modelAndView);
         addInstructors(modelAndView);
