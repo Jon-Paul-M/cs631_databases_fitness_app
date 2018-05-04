@@ -92,10 +92,10 @@
                     </div>
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
-                        <th>Delete Class?</th>
                     </div-->
+                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
+                        <th>Delete Class?</th>
+                    </div>
                 </tr>
 
                 </thead>
@@ -117,10 +117,11 @@
                     </div>
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
-                        <td><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
                     </div-->
+                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
+                        <td th:if="${clazz.isInFuture()}"><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
+                        <td th:unless="${clazz.isInFuture()}">&nbsp;</td>
+                    </div>
                 </tr>
                 </tbody>
             </table>

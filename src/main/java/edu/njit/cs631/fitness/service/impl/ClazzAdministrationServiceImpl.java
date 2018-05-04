@@ -194,7 +194,9 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
         if(clazz.getMembers().size() > 0) {
             clazz.setMembers(new HashSet<>());
-            clazzRepository.saveAndFlush(clazz);
+            clazz.setRoom(null);
+            clazz.setExercise(null);
+            clazzRepository.save(clazz);
         }
 
         clazzRepository.delete(clazz);

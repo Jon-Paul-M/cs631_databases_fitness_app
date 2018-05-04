@@ -50,7 +50,7 @@ public class Clazz {
     }
 
 
-    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ROOM_ID")
     private Room room;
     public Room getRoom() {
