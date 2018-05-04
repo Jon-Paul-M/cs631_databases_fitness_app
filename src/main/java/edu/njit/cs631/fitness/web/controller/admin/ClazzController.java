@@ -10,6 +10,9 @@ import java.util.List;
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
+import edu.njit.cs631.fitness.web.error.ClassConflictException;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,11 +156,23 @@ public class ClazzController extends BaseController {
 		if(valid(clazzModel, result)) {
 			LocalDateTime start = parseStart(clazzModel);
 			Integer duration = clazzModel.getDuration();
-			clazzAdministrationService.createClass(clazzModel.getExercise(),
-                                                   clazzModel.getInstructor(),
-                                                   clazzModel.getRoom(),
-                                                   start,
-                                                   duration);
+			try {
+                clazzAdministrationService.createClass(clazzModel.getExercise(),
+                        clazzModel.getInstructor(),
+                        clazzModel.getRoom(),
+                        start,
+                        duration);
+            } catch (InstructorConflictException ice) {
+                ModelAndView mv = commonModelAndView(m);
+                mv.addObject("clazzModel", clazzModel);
+                result.addError(new ObjectError("instructor", ice.getMessage()));
+                return mv;
+            } catch (RoomConflictException rce) {
+                ModelAndView mv = commonModelAndView(m);
+                mv.addObject("clazzModel", clazzModel);
+                result.addError(new ObjectError("room", rce.getMessage()));
+                return mv;
+            }
             clazzModel = defaultClazz();
 		}
 

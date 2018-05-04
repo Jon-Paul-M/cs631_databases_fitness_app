@@ -1,10 +1,6 @@
 package edu.njit.cs631.fitness.usecases.mvp.admin_user;
 
-import edu.njit.cs631.fitness.data.entity.Clazz;
-import edu.njit.cs631.fitness.data.entity.Exercise;
-import edu.njit.cs631.fitness.data.entity.HourlyInstructor;
-import edu.njit.cs631.fitness.data.entity.Member;
-import edu.njit.cs631.fitness.data.entity.Room;
+import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.repository.ExerciseRepository;
 import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
@@ -21,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.Instant;
@@ -37,12 +34,12 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
 	
 	@Autowired
 	private ExerciseRepository exerciseRepository;
-	
-	@Autowired
-	private HourlyInstructorRepository hourlyInstructorRepository;
-	
+
 	@Autowired
 	private RoomRepository roomRepository;
+
+	@Autowired
+    private HourlyInstructorRepository hourlyInstructorRepository;
 
     @Autowired
     private ClazzAdministrationService clazzAdministrationService;
@@ -51,7 +48,7 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     private ClazzService clazzService;
 
     @Test
-    public void createClass_OverlappingInstructor_ServiceThrowsDbExcepttion() throws Exception {
+    public void createClass_OverlappingInstructor_ServiceThrowsDbException() throws Exception {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
@@ -76,14 +73,109 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     }
 
     @Test
-    public void reviewDetail_Member_CanViewDetail() throws Exception {
-        Member member = userService.findMemberByEmail("member@test.com");
+    public void createClass_OverlappingInstructor_ControllerMakesInvalid() throws Exception {
+		Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
+		HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
+		List<Room> rooms = roomRepository.findAll();
+		Room room = rooms.get(0);
+		LocalDateTime start = LocalDateTime.ofInstant(
+				Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+				ZoneId.systemDefault());
+		Integer duration = 60;
 
         mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/admin/members/details?id=" + member.getId())
+                        .post("/admin/classes/create")
                         .accept(MediaType.TEXT_HTML)
+                        .param("instructor", "" + instructor.getId())
+						.param("exercise", "" + exercise.getId())
+						.param("room", "" + room.getId())
+						.param("startMM", "" + start.getMonthValue())
+                        .param("startDD", "" + start.getDayOfMonth())
+						.param("startYYY", "" + start.getYear())
+						.param("startHH", "" +
+										(start.getHour() > 12 ? "" + (start.getHour() - 12) : "" + start.getHour()))
+						.param("startMI", "" + start.getMinute())
+						.param("startMeridiem", "" + (start.getHour() > 12 ? "PM" : "AM"))
+						.param("duration", "" + duration)
                         .with(user(getAdminUser())))
+                .andExpect(status().isOk());
+
+        start = start.plusMinutes(15);
+        room = rooms.get(1);
+
+		mockMvc.perform(
+				MockMvcRequestBuilders
+						.post("/admin/classes/create")
+						.accept(MediaType.TEXT_HTML)
+						.param("instructor", "" + instructor.getId())
+						.param("exercise", "" + exercise.getId())
+						.param("room", "" + room.getId())
+						.param("startMM", "" + start.getMonthValue())
+						.param("startDD", "" + start.getDayOfMonth())
+						.param("startYYY", "" + start.getYear())
+						.param("startHH", "" +
+								(start.getHour() > 12 ? "" + (start.getHour() - 12) : "" + start.getHour()))
+						.param("startMI", "" + start.getMinute())
+						.param("startMeridiem", "" + (start.getHour() > 12 ? "PM" : "AM"))
+						.param("duration", "" + duration)
+						.with(user(getAdminUser())))
+                .andExpect(model().errorCount(1)) // attributeHasErrors("instructor")) // TODO: this doesn't work
+				.andExpect(status().isOk());
+    }
+
+
+
+    @Test
+    public void createClass_OverlappingRoom_ControllerMakesInvalid() throws Exception {
+        Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
+        List<HourlyInstructor> hourlyInstructors = hourlyInstructorRepository.findAll();
+        HourlyInstructor instructor = hourlyInstructors.get(0);
+        List<Room> rooms = roomRepository.findAll();
+        Room room = rooms.get(0);
+        LocalDateTime start = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+                ZoneId.systemDefault());
+        Integer duration = 60;
+
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/admin/classes/create")
+                        .accept(MediaType.TEXT_HTML)
+                        .param("instructor", "" + instructor.getId())
+                        .param("exercise", "" + exercise.getId())
+                        .param("room", "" + room.getId())
+                        .param("startMM", "" + start.getMonthValue())
+                        .param("startDD", "" + start.getDayOfMonth())
+                        .param("startYYY", "" + start.getYear())
+                        .param("startHH", "" +
+                                (start.getHour() > 12 ? "" + (start.getHour() - 12) : "" + start.getHour()))
+                        .param("startMI", "" + start.getMinute())
+                        .param("startMeridiem", "" + (start.getHour() > 12 ? "PM" : "AM"))
+                        .param("duration", "" + duration)
+                        .with(user(getAdminUser())))
+                .andExpect(status().isOk());
+
+        start = start.plusMinutes(15);
+        instructor = hourlyInstructors.get(1);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/admin/classes/create")
+                        .accept(MediaType.TEXT_HTML)
+                        .param("instructor", "" + instructor.getId())
+                        .param("exercise", "" + exercise.getId())
+                        .param("room", "" + room.getId())
+                        .param("startMM", "" + start.getMonthValue())
+                        .param("startDD", "" + start.getDayOfMonth())
+                        .param("startYYY", "" + start.getYear())
+                        .param("startHH", "" +
+                                (start.getHour() > 12 ? "" + (start.getHour() - 12) : "" + start.getHour()))
+                        .param("startMI", "" + start.getMinute())
+                        .param("startMeridiem", "" + (start.getHour() > 12 ? "PM" : "AM"))
+                        .param("duration", "" + duration)
+                        .with(user(getAdminUser())))
+                .andExpect(model().errorCount(1)) // attributeHasErrors("room")) // TODO: this doesn't work
                 .andExpect(status().isOk());
     }
 }

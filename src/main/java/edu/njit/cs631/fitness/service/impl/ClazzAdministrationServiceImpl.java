@@ -14,6 +14,9 @@ import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.service.api.UserService;
 
+import edu.njit.cs631.fitness.web.error.ClassConflictException;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,13 +148,20 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
     @Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
+	public Clazz createClass(
+	        Integer exerciseId,
+            Integer instructorId,
+            Integer roomId,
+            LocalDateTime start,
+            Integer duration)
+            throws ClassConflictException
+    {
     	Clazz clazz = null;
+        Exercise exercise = exerciseRepository.findOne(exerciseId);
+        Instructor instructor = userService.findInstructor(instructorId);
+        Room room = roomRepository.findOne(roomId);
 		try {
 			logger.info("In clazzAdministrationService.createClass");
-			Exercise exercise = exerciseRepository.findOne(exerciseId);
-			Instructor instructor = userService.findInstructor(instructorId);
-			Room room = roomRepository.findOne(roomId);
 			clazz = new Clazz();
 			clazz.setExercise(exercise);
 			clazz.setInstructor((User)instructor);
@@ -162,8 +172,15 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 			return clazz;
 		} catch (Throwable t) {
 			Throwable root = ExceptionUtils.getRootCause(t);
-			if (root.getMessage().indexOf("Instructor overlaps existing class") != -1) {
-				
+			if (root.getMessage().contains("Instructor overlaps existing class")) {
+                throw new InstructorConflictException(
+                        String.format("Instructor %s (%s) conflicts in another time slot.",
+                                instructor.getName(), instructor.getEmail()));
+            } else if (root.getMessage().contains("Room overlaps existing class")) {
+                throw new RoomConflictException(
+                        String.format("Room %s %s conflicts in another time slot.",
+                                room.getBuildingName(), room.getRoomNumber()));
+
 			} else {
 				ExceptionUtils.rethrow(t);
 			}

@@ -6,6 +6,7 @@ import java.util.Set;
 public interface Instructor {
     Integer getId();
     String getName();
+    String getEmail();
     void setWage(BigDecimal wage);
     void setHours(BigDecimal hours);
     Set<Clazz> getClazzes();
