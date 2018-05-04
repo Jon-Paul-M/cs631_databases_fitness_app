@@ -200,7 +200,7 @@ BEGIN
 			pp.name,
 			si.salary AS wage,
 			NULL AS hours,
-			--DATE_PART('day', interval_begin - interval_end) AS days,
+			--DATE_PART('day', interval_end - interval_begin) AS days,
 			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC), 2) AS gross,
 			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
 			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
@@ -246,7 +246,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- demo of how to dynamically uppdate a field during insert/update
--- a slight de-normalization allows the above OVERLAPS queries to potentially use an index 
+-- a slight de-normalization allows the above OVERLAPS queries to use an index 
 CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
     BEGIN
 		NEW.END_DATETIME := NEW.START_DATETIME + NEW.DURATION * INTERVAL '1 minutes';
@@ -254,6 +254,9 @@ CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
     END;
 $$ LANGUAGE plpgsql;
 
+CREATE INDEX ix_class_start     ON class (START_DATETIME);
+CREATE INDEX ix_class_end       ON class (END_DATETIME);
+CREATE INDEX ix_class_start_end ON class (START_DATETIME, END_DATETIME);
 
 CREATE OR REPLACE FUNCTION check_class_for_conflicts() RETURNS trigger AS $$
 declare
@@ -267,7 +270,7 @@ BEGIN
    		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID
    		LIMIT 1;
     IF class_id is not null THEN
-        RAISE EXCEPTION 'Instructor overlaps existing class';
+        RAISE EXCEPTION 'Instructor overlaps existing class >>%<<', class_id;
     END IF;
     -- Room check, assumes only one class at a time in each room
     SELECT c.class_id into class_id FROM class c
@@ -276,7 +279,7 @@ BEGIN
    		AND NEW.ROOM_ID = c.ROOM_ID
    		LIMIT 1;
 	IF found THEN
-        RAISE EXCEPTION 'Room overlaps existing class';
+        RAISE EXCEPTION 'Room overlaps existing class >>%<<', class_id;
     END IF;
     
     RETURN NEW;
