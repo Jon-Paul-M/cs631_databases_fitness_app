@@ -1,6 +1,7 @@
 package edu.njit.cs631.fitness.data.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -106,6 +107,10 @@ public class Clazz {
     public int getCapacity() {
         if (room == null) return 0;
         return room.getCapacity();
+    }
+
+    public boolean isInFuture() {
+        return this.start.after(Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Column(name="START_DATETIME")

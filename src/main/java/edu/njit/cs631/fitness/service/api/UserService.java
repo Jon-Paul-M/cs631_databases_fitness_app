@@ -11,6 +11,7 @@ import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.error.UserNotFoundException;
 import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 
@@ -40,7 +41,8 @@ public interface UserService {
                                 String postalCode);
     Member findMemberByEmail(String email);
     Member registerNewMemberAccount(MemberModel model) throws UserAlreadyExistException;
-    Member editMemberAccount(MemberModel model) throws UserAlreadyExistException;
+    Member editMemberAccount(MemberModel model) throws UserAlreadyExistException, UserNotFoundException;
+    void deleteMemberAccount(Integer id) throws UserNotFoundException;
     // void saveMember(Member member);
 
 

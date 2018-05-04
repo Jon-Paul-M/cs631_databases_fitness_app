@@ -165,4 +165,21 @@ public class T_001_CanRegisterNewMember_Test extends BaseTest {
                 );
     }
 
+
+
+    @Test
+    @Sql(scripts = {"classpath:/truncate_all.sql", "classpath:/data-h2.sql"},
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void adminDeleteUser() throws Exception {
+        // login
+        Member member = userService.findMemberByEmail("member@test.com");
+        Assert.assertNotNull(member);
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/admin/members/delete?id=" + member.getId())
+                        .accept(MediaType.TEXT_HTML)
+                        .with(user(getAdminUser())))
+                .andExpect(status().is3xxRedirection());
+    }
+
 }

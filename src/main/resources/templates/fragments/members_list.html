@@ -93,7 +93,9 @@
                 <tr th:each="member : ${members}">
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
                         <td><a href="#" th:href="@{/admin/members/details(id=${member.id})}">(view)</a><br/>
-                            <a href="#" th:href="@{/admin/members/edit(id=${member.id})}">(edit)</a></td>
+                            <a href="#" th:href="@{/admin/members/edit(id=${member.id})}">(edit)</a><br/>
+                            <a href="#" th:href="@{/admin/members/delete(id=${member.id})}">(delete)</a>
+                        </td>
                     </div>
                     <td><strong th:inline="text">[[${member.name}]]</strong></td>
                     <td th:inline="text">[[${member.email}]]</td>

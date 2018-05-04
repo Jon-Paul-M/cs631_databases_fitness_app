@@ -90,6 +90,17 @@ public class CreateMemberController extends BaseController{
         return mv;
     }
 
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.GET)
+    public String deleteGet(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+        if (id == -1) return "redirect:/admin";
+
+        userService.deleteMemberAccount(id); // let the error template render it
+
+        return "redirect:/admin";
+    }
+
     @RequestMapping(value="/edit", method = RequestMethod.GET)
     public ModelAndView memberEdit(
             @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {

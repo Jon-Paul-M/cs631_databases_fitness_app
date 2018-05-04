@@ -3,10 +3,7 @@ package edu.njit.cs631.fitness.service.impl;
 import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
-import edu.njit.cs631.fitness.data.repository.MemberRepository;
-import edu.njit.cs631.fitness.data.repository.MembershipRepository;
-import edu.njit.cs631.fitness.data.repository.SalariedInstructorRepository;
+import edu.njit.cs631.fitness.data.repository.*;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
@@ -57,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ClazzRepository clazzRepository;
 
     private static int lastGenerated = 0;
     private final Random random = new Random();
@@ -197,6 +197,28 @@ public class UserServiceImpl implements UserService {
         member.setPostalCode(memberDto.getPostalCode());
 
         return memberRepository.save(member);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMemberAccount(Integer id) throws UserNotFoundException {
+        Member member = memberRepository.findOne(id);
+
+        if (member == null) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        }
+
+        Set<Clazz> registrations = member.getClazzes();
+
+        for(Clazz clazz : registrations) {
+            clazz.getMembers().remove(member);
+            clazzRepository.save(clazz);
+        }
+
+
+        clazzRepository.flush();
+        memberRepository.delete(member);
+        memberRepository.flush();
     }
 
     /*
