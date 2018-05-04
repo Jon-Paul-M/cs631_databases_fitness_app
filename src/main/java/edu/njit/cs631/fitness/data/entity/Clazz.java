@@ -132,5 +132,27 @@ public class Clazz {
 	public Integer getSpotsRemaining() {
 		return spotsRemaining;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Clazz [id=");
+		builder.append(id);
+		builder.append(", exercise=");
+		builder.append(exercise);
+		builder.append(", room=");
+		builder.append(room);
+		builder.append(", instructor=");
+		builder.append(instructor);
+		builder.append(", members=");
+		builder.append(members);
+		builder.append(", start=");
+		builder.append(start);
+		builder.append(", duration=");
+		builder.append(duration);
+		builder.append(", spotsRemaining=");
+		builder.append(spotsRemaining);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }

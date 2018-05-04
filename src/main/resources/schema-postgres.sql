@@ -201,10 +201,10 @@ BEGIN
 			si.salary AS wage,
 			NULL AS hours,
 			--DATE_PART('day', interval_begin - interval_end) AS days,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC), 2) AS gross,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
-			ROUND(CAST(salary * (DATE_PART('day', interval_begin - interval_end) / 365.0) AS NUMERIC) * (other_rate / 100.0), 2) AS other_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC), 2) AS gross,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (fed_rate / 100.0), 2) AS fed_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (state_rate / 100.0), 2) AS state_tax,
+			ROUND(CAST(salary * (DATE_PART('day', interval_end - interval_begin) / 365.0) AS NUMERIC) * (other_rate / 100.0), 2) AS other_tax,
 			'Salaried' AS instructor_type 
 		FROM
 			person pp,
@@ -260,15 +260,36 @@ declare
 	class_id INTEGER;
 BEGIN
 	-- Instructor check
+	class_id := null;
     SELECT c.class_id into class_id FROM class c
     	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
    			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
-   		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID;
-
+   		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID
+   		LIMIT 1;
+    IF class_id is not null THEN
+        RAISE EXCEPTION 'Instructor overlaps existing class';
+    END IF;
+    -- Room check, assumes only one class at a time in each room
+    SELECT c.class_id into class_id FROM class c
+    	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
+   			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
+   		AND NEW.ROOM_ID = c.ROOM_ID
+   		LIMIT 1;
+	IF found THEN
+        RAISE EXCEPTION 'Room overlaps existing class';
+    END IF;
+    
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+-- In postgres multilple triggers on the same table are executed in lexigraphical order
+-- thus you can enforce a specific order by embedding a sequence in the trigger name
+CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class 
+	FOR EACH ROW EXECUTE PROCEDURE check_class_for_conflicts();
+
+CREATE TRIGGER trigger_class_010_update_end_date BEFORE INSERT OR UPDATE ON class
+	FOR EACH ROW EXECUTE PROCEDURE update_end_date();
 
 -- This is a dummy table
 -- delete before submission and 
