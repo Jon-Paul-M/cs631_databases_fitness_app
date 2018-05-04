@@ -246,7 +246,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- demo of how to dynamically uppdate a field during insert/update
--- a slight de-normalization allows the above OVERLAPS queries to potentially use an index 
+-- a slight de-normalization allows the above OVERLAPS queries to use an index 
 CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
     BEGIN
 		NEW.END_DATETIME := NEW.START_DATETIME + NEW.DURATION * INTERVAL '1 minutes';
@@ -254,6 +254,9 @@ CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
     END;
 $$ LANGUAGE plpgsql;
 
+CREATE INDEX ix_class_start     ON class (START_DATETIME);
+CREATE INDEX ix_class_end       ON class (END_DATETIME);
+CREATE INDEX ix_class_start_end ON class (START_DATETIME, END_DATETIME);
 
 CREATE OR REPLACE FUNCTION check_class_for_conflicts() RETURNS trigger AS $$
 declare
@@ -267,7 +270,7 @@ BEGIN
    		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID
    		LIMIT 1;
     IF class_id is not null THEN
-        RAISE EXCEPTION 'Instructor overlaps existing class';
+        RAISE EXCEPTION 'Instructor overlaps existing class >>%<<', class_id;
     END IF;
     -- Room check, assumes only one class at a time in each room
     SELECT c.class_id into class_id FROM class c
@@ -276,16 +279,16 @@ BEGIN
    		AND NEW.ROOM_ID = c.ROOM_ID
    		LIMIT 1;
 	IF found THEN
-        RAISE EXCEPTION 'Room overlaps existing class';
+        RAISE EXCEPTION 'Room overlaps existing class >>%<<', class_id;
     END IF;
-
+    
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- In postgres multilple triggers on the same table are executed in lexigraphical order
 -- thus you can enforce a specific order by embedding a sequence in the trigger name
-CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class
+CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class 
 	FOR EACH ROW EXECUTE PROCEDURE check_class_for_conflicts();
 
 CREATE TRIGGER trigger_class_010_update_end_date BEFORE INSERT OR UPDATE ON class

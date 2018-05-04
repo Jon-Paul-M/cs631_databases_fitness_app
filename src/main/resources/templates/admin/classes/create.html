@@ -28,6 +28,7 @@
 			<form action="#" th:action="create" th:object="${clazzModel}"
 				  method="post">
 
+				<p th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger">Error message</p>
                 <p th:if="${#fields.hasErrors('*')}">Errors:</p>
                 <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                     <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>

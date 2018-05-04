@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.web.controller.BaseController;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
 
@@ -153,15 +155,20 @@ public class ClazzController extends BaseController {
 		if(valid(clazzModel, result)) {
 			LocalDateTime start = parseStart(clazzModel);
 			Integer duration = clazzModel.getDuration();
-			clazzAdministrationService.createClass(clazzModel.getExercise(),
-                                                   clazzModel.getInstructor(),
-                                                   clazzModel.getRoom(),
-                                                   start,
-                                                   duration);
-            clazzModel = defaultClazz();
+			try {
+				clazzAdministrationService.createClass(clazzModel.getExercise(),
+	                                                   clazzModel.getInstructor(),
+	                                                   clazzModel.getRoom(),
+	                                                   start,
+	                                                   duration);
+			} catch (InstructorConflictException | RoomConflictException e) {
+				ModelAndView mv = commonModelAndView(m);
+				mv.addObject("errorMessage", e.getMessage());
+	            mv.addObject("clazzModel", clazzModel);
+	            return mv;
+			}
 		}
-
-		return commonModelAndView().addObject("clazzModel", clazzModel);
+		return commonModelAndView().addObject("clazzModel", defaultClazz());
 
 	}
 

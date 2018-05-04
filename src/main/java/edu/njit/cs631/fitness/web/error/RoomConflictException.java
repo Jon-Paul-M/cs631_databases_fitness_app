@@ -1,26 +1,26 @@
 package edu.njit.cs631.fitness.web.error;
 
-public class InstructorConflictException extends RuntimeException {
+public class RoomConflictException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	
-	public InstructorConflictException() {
+
+	public RoomConflictException() {
 		super();
 	}
 
-	public InstructorConflictException(String message) {
+	public RoomConflictException(String message) {
 		super(message);
 	}
 
-	public InstructorConflictException(Throwable cause) {
+	public RoomConflictException(Throwable cause) {
 		super(cause);
 	}
 
-	public InstructorConflictException(String message, Throwable cause) {
+	public RoomConflictException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public InstructorConflictException(String message, Throwable cause, boolean enableSuppression,
+	public RoomConflictException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}

@@ -13,7 +13,10 @@ import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.service.api.UserService;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,10 @@ import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 
 @Service("clazzAdministrationService")
 public class ClazzAdministrationServiceImpl implements ClazzAdministrationService {
+
+	private static final String INSTRUCTOR_OVERLAPS_MESSAGE = "Instructor overlaps existing class";
+
+	private static final String ROOM_OVERLAPS_MESSAGE = "Room overlaps existing class";
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -162,8 +169,16 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 			return clazz;
 		} catch (Throwable t) {
 			Throwable root = ExceptionUtils.getRootCause(t);
-			if (root.getMessage().indexOf("Instructor overlaps existing class") != -1) {
-				
+			if (root.getMessage().indexOf(INSTRUCTOR_OVERLAPS_MESSAGE) != -1) {
+				InstructorConflictException e = new InstructorConflictException(INSTRUCTOR_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else if (root.getMessage().indexOf(ROOM_OVERLAPS_MESSAGE) != -1) {
+				RoomConflictException e = new RoomConflictException(ROOM_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
 			} else {
 				ExceptionUtils.rethrow(t);
 			}

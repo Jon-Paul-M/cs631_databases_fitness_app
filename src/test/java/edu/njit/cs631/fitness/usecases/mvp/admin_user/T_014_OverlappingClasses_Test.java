@@ -11,6 +11,8 @@ import edu.njit.cs631.fitness.data.repository.RoomRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.testutils.BaseTest;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -50,8 +52,8 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     @Autowired
     private ClazzService clazzService;
 
-    @Test
-    public void createClass_OverlappingInstructor_ServiceThrowsDbExcepttion() throws Exception {
+    @Test(expected = InstructorConflictException.class)
+    public void createClass_OverlappingInstructor_ServiceThrowsException() throws Exception {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
@@ -62,17 +64,28 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     	Clazz clazz1 = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start, duration);
     	logger.info("jpm: " + clazz1.toString());
     	LocalDateTime start2 = start.plusMinutes(1);
-    	try {
-    		Clazz clazz2 = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start2, duration);
-    		logger.info("jpm2: " + clazz2.toString());
-    	} catch (Exception e) {
-			while (e.getCause() != null) {
-				e = (Exception) e.getCause();
-			}
-    		logger.info(e.getClass().getCanonicalName());
-    		logger.info(e.getMessage());
-    		logger.info("stacktrace: ", e);
-    	}
+    	Clazz clazz2 = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start2, duration);
+    	logger.info("jpm2: " + clazz2.toString());
+    }
+    
+    
+    @Test(expected = RoomConflictException.class)
+    public void createClass_OverlappingRoom_ServiceThrowsException() throws Exception {
+    	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
+    	List<HourlyInstructor> instructors = (List<HourlyInstructor>) hourlyInstructorRepository.findAll();
+		HourlyInstructor instructor1 = instructors.get(0);
+    	HourlyInstructor instructor2 = instructors.get(1);
+    	Room room = ((List<Room>) roomRepository.findAll()).get(0);
+    	LocalDateTime start = LocalDateTime.ofInstant(
+    			Instant.ofEpochMilli(Calendar.getInstance().getTimeInMillis()),
+				ZoneId.systemDefault());
+    	start = start.plusDays(1);
+    	Integer duration = 60;
+    	Clazz clazz1 = clazzAdministrationService.createClass(exercise.getId(), instructor1.getId(), room.getId(), start, duration);
+    	logger.info("jpm3: " + clazz1.toString());
+    	LocalDateTime start2 = start.plusMinutes(1);
+    	Clazz clazz2 = clazzAdministrationService.createClass(exercise.getId(), instructor2.getId(), room.getId(), start2, duration);
+    	logger.info("jpm4: " + clazz2.toString());
     }
 
     @Test
