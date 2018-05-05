@@ -17,7 +17,10 @@ import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.error.ClassConflictException;
 import edu.njit.cs631.fitness.web.error.InstructorConflictException;
 import edu.njit.cs631.fitness.web.error.RoomConflictException;
+import edu.njit.cs631.fitness.web.model.ClazzModel;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.postgresql.util.PSQLException;
+import org.postgresql.util.PSQLState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +173,8 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 			clazz.setDuration(duration);
 			clazz = clazzRepository.saveAndFlush(clazz);
 			return clazz;
-		} catch (Throwable t) {
+
+        } catch (Throwable t) {
 			Throwable root = ExceptionUtils.getRootCause(t);
 			if (root.getMessage().contains("Instructor overlaps existing class")) {
                 throw new InstructorConflictException(
@@ -187,6 +191,42 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 		}
 		return null;
 	}
+
+
+
+    @Override
+    @Transactional
+    public void editClass(ClazzModel clazzModel) {
+        Clazz clazz = clazzRepository.findOne(clazzModel.getId());
+        Exercise exercise = exerciseRepository.findOne(clazzModel.getExercise());
+        Instructor instructor = userService.findInstructor(clazzModel.getInstructor());
+        Room room = roomRepository.findOne(clazzModel.getRoom());
+        try {
+            logger.info("In clazzAdministrationService.editClass");
+            clazz.setExercise(exercise);
+            clazz.setInstructor((User)instructor);
+            clazz.setRoom(room);
+            clazz.setStart(Timestamp.valueOf(clazzModel.getStartTime()));
+            clazz.setDuration(clazzModel.getDuration());
+            clazzRepository.saveAndFlush(clazz);
+        } catch (Throwable t) {
+            Throwable root = ExceptionUtils.getRootCause(t);
+            if (root == null) ExceptionUtils.rethrow(t);
+            if (root.getMessage() != null && root.getMessage().contains("Instructor overlaps existing class")) {
+                throw new InstructorConflictException(
+                        String.format("Instructor %s (%s) conflicts in another time slot.",
+                                instructor.getName(), instructor.getEmail()));
+            } else if (root.getMessage().contains("Room overlaps existing class")) {
+                throw new RoomConflictException(
+                        String.format("Room %s %s conflicts in another time slot.",
+                                room.getBuildingName(), room.getRoomNumber()));
+
+            } else {
+                ExceptionUtils.rethrow(t);
+            }
+        }
+    }
+
 
     @Override
     public void deleteClazz(Integer clazzId) {
@@ -264,6 +304,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
             clazzRepository.saveAndFlush(clazz);
         }
     }
+
 
     // TODO: How are we doing this?
     // See https://stackoverflow.com/questions/17106670/how-to-check-a-timeperiod-is-overlapping-another-time-period-in-java

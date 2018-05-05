@@ -1,9 +1,13 @@
 package edu.njit.cs631.fitness.web.model;
 
+import edu.njit.cs631.fitness.data.entity.Clazz;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class ClazzModel {
 
@@ -12,6 +16,8 @@ public class ClazzModel {
 	}
 
 	private final static String makeSelection = "You must make a selection for this field.";
+
+	private Integer id;
 
 	@NotNull
     @Min(value=1, message=makeSelection)
@@ -146,11 +152,33 @@ public class ClazzModel {
 		return builder.toString();
 	}
 
+	public void copyFromClazz(Clazz clazz) {
+	    setInstructor(clazz.getInstructor().getId());
+	    setExercise(clazz.getExercise().getId());
+	    setRoom(clazz.getRoom().getId());
+        LocalDateTime start = clazz.getStart().toLocalDateTime();
+        setStartMM("" + start.getMonthValue());
+        setStartDD("" + start.getDayOfMonth());
+        setStartYYYY("" + start.getYear());
+        setStartHH("" + (start.getHour() > 12 ? "" + (start.getHour() - 12) : "" + start.getHour()));
+        setStartMI("" + start.getMinute());
+        setStartMeridiem("" + (start.getHour() > 12 ? "PM" : "AM"));
+        setDuration(clazz.getDuration());
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

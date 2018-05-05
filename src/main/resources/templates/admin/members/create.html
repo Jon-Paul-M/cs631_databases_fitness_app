@@ -23,7 +23,11 @@
 
     <div class="row-fluid">
         <div class="span12">
-            <h3 class="title">Create a new member</h3>
+            <h3 class="title">
+                <span th:if="${#strings.equals(formAction, 'create')}">Create</span>
+                <span th:unless="${#strings.equals(formAction, 'create')}">Edit</span>
+
+                a new member</h3>
 
             <form action="#" th:action="${formAction}" th:object="${memberModel}" method="post">
                 <input type="hidden" th:field="*{id}"/>
@@ -43,7 +47,7 @@
                     <li>
                         <label for="membership" th:required="required">Membership Type:</label>
                         <select	th:field="*{membership}">
-                            <option value="">--</option>
+                            <option value="" disabled="disabled">--</option>
                             <option th:each="membershipType : ${memberships}"
                                     th:value="${membershipType.id}"
                                     th:utext="${membershipType.membershipType + ': &dollar;' + membershipType.fee}" />

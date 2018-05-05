@@ -80,7 +80,7 @@
                 <thead>
                 <tr>
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>View</th>
+                        <th>Details</th>
                     </div>
                     <th>Exercise</th>
                     <th>Start</th>
@@ -93,16 +93,17 @@
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
                     </div-->
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
-                        <th>Delete Class?</th>
-                    </div>
                 </tr>
 
                 </thead>
                 <tbody>
                 <tr th:each="clazz : ${clazzes}">
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <td><a href="#" th:href="@{/admin/classes/details(id=${clazz.id})}">(view)</a></td>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
+                        <td>
+                        <a href="#" th:href="@{/admin/classes/details(id=${clazz.id})}">(view)</a><br/>
+                        <a href="#" th:href="@{/admin/classes/edit(id=${clazz.id})}">(edit)</a><br/>
+                        <a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}" th:if="${clazz.isInFuture()}">(delete)</a>
+                        </td>
                     </div>
                     <td th:inline="text">[[${clazz.exercise.name}]]</td>
                     <td th:inline="text">[[${clazz.start}]]</td>
@@ -118,10 +119,6 @@
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
                     </div-->
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
-                        <td th:if="${clazz.isInFuture()}"><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
-                        <td th:unless="${clazz.isInFuture()}">&nbsp;</td>
-                    </div>
                 </tr>
                 </tbody>
             </table>

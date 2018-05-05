@@ -181,6 +181,65 @@ public class ClazzController extends BaseController {
 	}
 
 
+    @RequestMapping(value="/edit", method = RequestMethod.GET)
+    public ModelAndView clazzEdit(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+        ModelAndView err = new ModelAndView("redirect:/admin");
+        if (id == -1) return err;
+        Clazz clazz = clazzRepository.findOne(id);
+        if(clazz == null) return err;
+
+        ModelAndView mv = commonModelAndView();
+        ClazzModel clazzModel = new ClazzModel();
+        clazzModel.copyFromClazz(clazz);
+        mv.addObject("formAction", "edit");
+        mv.addObject("clazzModel", clazzModel);
+        return mv;
+
+    }
+
+    @RequestMapping(value="/edit", method = RequestMethod.POST)
+    public ModelAndView clazzEditPost(
+            @Valid ClazzModel clazzModel, BindingResult result, ModelAndView mv) {
+
+        ModelAndView err = new ModelAndView("redirect:/admin");
+        if(clazzModel.getId() == null) {
+            return err;
+        }
+
+        Clazz clazz = clazzRepository.findOne(clazzModel.getId());
+        if(clazz == null) return err;
+
+        if (result.hasErrors()) {
+            mv = commonModelAndView();
+            mv.addObject("formAction", "edit");
+            mv.addObject("clazzModel", clazzModel);
+            return mv;
+        }
+
+        clazzModel.setStartTime(parseStart(clazzModel));
+
+        try {
+            clazzAdministrationService.editClass(clazzModel);
+        } catch (InstructorConflictException ice) {
+            mv = commonModelAndView();
+            mv.addObject("clazzModel", clazzModel);
+            mv.addObject("formAction", "edit");
+            result.addError(new ObjectError("instructor", ice.getMessage()));
+            return mv;
+        } catch (RoomConflictException rce) {
+            mv = commonModelAndView();
+            mv.addObject("clazzModel", clazzModel);
+            mv.addObject("formAction", "edit");
+            result.addError(new ObjectError("room", rce.getMessage()));
+            return mv;
+        }
+        return new ModelAndView("redirect:/admin/members/details?id=" + clazz.getId());
+    }
+
+
+
 	private LocalDateTime parseStart(ClazzModel clazzModel) {
 		Calendar calendar = Calendar.getInstance();
 		int year = Integer.parseInt(clazzModel.getStartYYYY());

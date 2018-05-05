@@ -23,11 +23,14 @@
 
 	<div class="row-fluid">
 		<div class="span12">
-			<h3 class="title">Create a new class</h3>
+			<h3 class="title">
+                <span th:if="${#strings.equals(formAction, 'create')}">Create</span>
+                <span th:unless="${#strings.equals(formAction, 'create')}">Edit</span>
 
-			<form action="#" th:action="create" th:object="${clazzModel}"
-				  method="post">
+                a new class</h3>
 
+			<form action="#" th:action="${formActin}" th:object="${clazzModel}" method="post">
+                <input type="hidden" th:field="*{id}"/>
                 <p th:if="${#fields.hasErrors('*')}">Errors:</p>
                 <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                     <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>
@@ -36,7 +39,7 @@
 					<li>
 						<label for="instructor">Instructor</label>
 						<select th:field="*{instructor}">
-							<option value="">--</option>
+							<option value="" disabled="disabled">--</option>
 							<option th:each="instructor : ${instructors}"
 									th:value="${instructor.id}"
 									th:utext="${instructor.name}"
