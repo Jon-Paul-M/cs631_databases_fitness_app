@@ -81,9 +81,9 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <!-- div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
                         <th>Delete Exercise?</th>
-                    </div-->
+                    </div>
                 </tr>
 
                 </thead>
@@ -91,9 +91,9 @@
                 <tr th:each="exercise : ${exercises}">
                     <td th:inline="text">[[${exercise.name}]]</td>
                     <td th:inline="text">[[${exercise.description}]]</td>
-                    <!--td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
+                    <td sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
                         <a href="#" th:href="@{/admin/exercises/delete(id=${exercise.id})}">Delete Exercise?</a>
-                    </td-->
+                    </td>
                 </tr>
                 </tbody>
             </table>
