@@ -63,4 +63,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 	    exerciseRepository.saveAndFlush(exercise);
     }
 
+    @Override
+    public void editExercise(ExerciseModel exerciseModel) {
+        Exercise exercise = exerciseRepository.findOne(exerciseModel.getId());
+        exercise.setDescription(exerciseModel.getDescription());
+        exercise.setName(exerciseModel.getExerciseName());
+    }
+
 }

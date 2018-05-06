@@ -25,8 +25,8 @@
         <div class="span12">
             <h3 class="title">Create a new exercise</h3>
 
-            <form action="#" th:action="create" th:object="${exerciseModel}"
-                  method="post">
+            <form action="#" th:action="${formAction}" th:object="${exerciseModel}" method="post">
+                <input type="hidden" th:field="*{id}"/>
                 <p th:if="${#fields.hasErrors('*')}">Errors:</p>
                 <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                     <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>

@@ -118,7 +118,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
                     .stream()
                     .map(User::getId)
                     .collect(Collectors.toSet());
-            if(clazz.getCapacity() > registered_users.size()) {
+            if(clazz.getCapacity() >= registered_users.size()) {
                 int remainingCapacity = clazz.getCapacity() - registered_users.size();
                 Set<Integer> all_unregistered_members = new HashSet<>(all_members);
                 all_unregistered_members.removeAll(registered_users);
