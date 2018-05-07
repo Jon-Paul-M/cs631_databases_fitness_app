@@ -1,6 +1,8 @@
 package edu.njit.cs631.fitness.web.controller;
 
 
+import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import org.slf4j.Logger;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 public class ClazzesController extends BaseController {
 
@@ -22,11 +27,38 @@ public class ClazzesController extends BaseController {
     @Autowired
     private ClazzAdministrationService clazzAdministrationService;
 
+    @Autowired
+    private ClazzRepository clazzRepository;
+
 
     @RequestMapping(value = {"/classes"}, method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView clazzes() {
         return commonModelAndView();
     }
+
+
+    @RequestMapping(value="/classes/recommend", method = RequestMethod.GET)
+    public ModelAndView clazzRecommendation(
+            @RequestParam(value="id", required=false, defaultValue="-1") Integer id) {
+
+        ModelAndView err = new ModelAndView("redirect:/classes");
+        if (id == -1) return err;
+        Clazz clazz = clazzRepository.findOne(id);
+        if(clazz == null) return err;
+
+        List<Clazz> sameExercisesClazzes = clazzService.listSameExerciseClazzes(id);
+        List<Clazz> sameTimeWindowClazzes = clazzService.listSameTimeWindowClazzes(id);
+        List<Clazz> sameInstructorClazzes = clazzService.listSameInstructorClazzes(id);
+
+        ModelAndView mv = commonModelAndView("recommendations");
+        mv.addObject("currentClazz", Arrays.asList(clazz));
+        mv.addObject("sameExercisesClazzes", sameExercisesClazzes);
+        mv.addObject("sameTimeWindowClazzes", sameTimeWindowClazzes);
+        mv.addObject("sameInstructorClazzes", sameInstructorClazzes);
+        return mv;
+
+    }
+
 
     @RequestMapping(value = {"/classes/register"}, method = RequestMethod.GET)
     public String registerGet(

@@ -66,12 +66,13 @@ public class UserServiceImpl implements UserService {
     public void generateManyMembers() {
         Role member_role = roleRepository.findByName("ROLE_MEMBER");
         List<Membership> memberships = membershipRepository.findAll();
+        int lastGeneratedId = lastGenerated;
         for(int i = 0; i < 20; i++) {
-            lastGenerated += i;
+            lastGeneratedId += 1;
             Member member = new Member();
             member.setMembership(memberships.get(random.nextInt(memberships.size())));
-            member.setEmail("member_" + lastGenerated + "@test.com");
-            member.setName("member_" + lastGenerated);
+            member.setEmail(String.format("member_%03d@test.com", lastGeneratedId));
+            member.setName(String.format("member_%03d", lastGeneratedId));
             member.setPasswordHash(passwordEncoder.encode("password"));
             member.setAddress1("add1");
             member.setAddress2("");
@@ -93,6 +94,7 @@ public class UserServiceImpl implements UserService {
         }
 
         memberRepository.flush();
+        lastGenerated = lastGeneratedId;
     }
 
     private void checkUserEmail(String email) throws UserAlreadyExistException {

@@ -114,6 +114,7 @@
                         <td>
                                 <a th:if="${clazz.canRegister(currentUser)}" href="#" th:href="@{/classes/register(self=true, class=${clazz.getId()})}">Register?</a>
                                 <a th:if="${clazz.hasUserRegistered(currentUser)}" th:href="@{/classes/deregister(self=true, class=${clazz.getId()})}">Revoke registration?</a>
+                                <a th:if="${clazz.canNotRegister(currentUser)}" th:href="@{/classes/recommend(id=${clazz.getId()})}">Full.<br/>Recommendations?</a>
                             &nbsp;
                         </td>
 
