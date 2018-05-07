@@ -23,31 +23,15 @@
 
     <div class="row-fluid">
         <div class="span12">
-            <h3 class="title">Create a new exercise</h3>
+            <h3 class="title"><a href="https://www.youtube.com/watch?v=A4iyEU8WKIE">Uh-oh, Status-Code</a>, <span th:text="${status}"> Status Code</span></h3>
+            <h5 th:text="${error}">Error</h5>
+        </div>
+    </div>
 
-            <form action="#" th:action="${formAction}" th:object="${exerciseModel}" method="post">
-                <input type="hidden" th:field="*{id}"/>
-                <p th:if="${#fields.hasErrors('*')}">Errors:</p>
-                <ul class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                    <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.fieldName} + ' : ' + ${err.message}"></li>
-                </ul>
-                <ul>
-                    <li>
-                        <label for="exerciseName" th:required="required">Exercise Name</label>
-                        <input type="text" th:field="*{exerciseName}"/>
-                    </li>
-                    <li>
-                        <label for="description" th:required="required">Description</label>
-                        <textarea class="span4" rows="3" th:field="*{description}"/>
-                    </li>
-                </ul>
-                <button type="submit">Submit</button>
-            </form>
 </div>
-</div>
-</div>
+
+
 
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
-

@@ -1,6 +1,7 @@
 package edu.njit.cs631.fitness.web.error;
 
-public class RoomConflictException extends RuntimeException {
+public class RoomConflictException extends ClassConflictException {
+
 
 	private static final long serialVersionUID = 1L;
 

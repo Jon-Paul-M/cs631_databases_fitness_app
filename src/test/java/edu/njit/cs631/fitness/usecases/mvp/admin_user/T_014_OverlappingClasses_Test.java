@@ -5,6 +5,7 @@ import edu.njit.cs631.fitness.data.entity.Exercise;
 import edu.njit.cs631.fitness.data.entity.HourlyInstructor;
 import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.data.entity.Room;
+import edu.njit.cs631.fitness.data.repository.ClazzRepository;
 import edu.njit.cs631.fitness.data.repository.ExerciseRepository;
 import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
 import edu.njit.cs631.fitness.data.repository.RoomRepository;
@@ -52,8 +53,11 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     @Autowired
     private ClazzService clazzService;
 
+    @Autowired
+    private ClazzRepository clazzRepository;
+
     @Test(expected = InstructorConflictException.class)
-    public void createClass_OverlappingInstructor_ServiceThrowsException() throws Exception {
+    public void createClass_OverlappingInstructor_ServiceThrowsDbException() throws Exception {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);
     	HourlyInstructor instructor = ((List<HourlyInstructor>) hourlyInstructorRepository.findAll()).get(0);
     	Room room = ((List<Room>) roomRepository.findAll()).get(0);
@@ -67,8 +71,8 @@ public class T_014_OverlappingClasses_Test extends BaseTest {
     	Clazz clazz2 = clazzAdministrationService.createClass(exercise.getId(), instructor.getId(), room.getId(), start2, duration);
     	logger.info("jpm2: " + clazz2.toString());
     }
-    
-    
+
+
     @Test(expected = RoomConflictException.class)
     public void createClass_OverlappingRoom_ServiceThrowsException() throws Exception {
     	Exercise exercise = ((List<Exercise>) exerciseRepository.findAll()).get(0);

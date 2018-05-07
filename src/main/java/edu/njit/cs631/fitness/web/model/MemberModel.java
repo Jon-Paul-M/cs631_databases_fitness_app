@@ -1,11 +1,14 @@
 package edu.njit.cs631.fitness.web.model;
 
+import edu.njit.cs631.fitness.data.entity.Member;
 import edu.njit.cs631.fitness.validation.ValidEmail;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class MemberModel {
+
+    private Integer id;
 
     @NotNull
     @Size(min = 1)
@@ -122,5 +125,30 @@ public class MemberModel {
 
     public Integer getMembership() {
         return this.membership;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void copyFromMember(Member member) {
+        setId(member.getId());
+
+        // member details
+        setName(member.getName());
+        setEmail(member.getEmail());
+        setMembership(member.getMembership().getId());
+
+        // member address
+        setAddress1(member.getAddress1());
+        setAddress2(member.getAddress2());
+        setCity(member.getCity());
+        setCounty(member.getCounty());
+        setState(member.getState());
+        setPostalCode(member.getPostalCode());
     }
 }

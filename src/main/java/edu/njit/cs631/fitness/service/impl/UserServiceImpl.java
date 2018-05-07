@@ -3,14 +3,12 @@ package edu.njit.cs631.fitness.service.impl;
 import edu.njit.cs631.fitness.data.entity.*;
 import edu.njit.cs631.fitness.data.entity.security.Role;
 import edu.njit.cs631.fitness.data.entity.security.User;
-import edu.njit.cs631.fitness.data.repository.HourlyInstructorRepository;
-import edu.njit.cs631.fitness.data.repository.MemberRepository;
-import edu.njit.cs631.fitness.data.repository.MembershipRepository;
-import edu.njit.cs631.fitness.data.repository.SalariedInstructorRepository;
+import edu.njit.cs631.fitness.data.repository.*;
 import edu.njit.cs631.fitness.data.repository.security.RoleRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.UserService;
 import edu.njit.cs631.fitness.web.error.UserAlreadyExistException;
+import edu.njit.cs631.fitness.web.error.UserNotFoundException;
 import edu.njit.cs631.fitness.web.model.InstructorModel;
 import edu.njit.cs631.fitness.web.model.MemberModel;
 import org.slf4j.Logger;
@@ -56,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ClazzRepository clazzRepository;
 
     private static int lastGenerated = 0;
     private final Random random = new Random();
@@ -149,6 +150,75 @@ public class UserServiceImpl implements UserService {
         member.setRoles(Arrays.asList(roleRepository.findByName("ROLE_MEMBER")));
 
         return memberRepository.save(member);
+    }
+
+    @Override
+    public Member editMemberAccount(MemberModel memberDto) throws UserAlreadyExistException, UserNotFoundException {
+        if (memberDto == null) {
+            logger.info("I heard a null member model!");
+            return null;
+        }
+
+        if (memberDto.getId() == null) {
+            logger.info("I heard a member without an id");
+            return null;
+        }
+
+        Member member = memberRepository.findOne(memberDto.getId());
+
+        if (member == null) {
+            logger.error("I heard an id of a non-existant member");
+            throw new UserNotFoundException("A user with id " + memberDto.getId() + " was not found.");
+        }
+
+        User conflictingUser = userRepository.findByEmail(memberDto.getEmail());
+
+        if (conflictingUser != null &&
+                conflictingUser.getId() != null &&
+                !conflictingUser.getId().equals(member.getId())) {
+            logger.error("Conflciting user e-mail: " + conflictingUser.getEmail());
+            throw new UserAlreadyExistException("Conflciting user e-mail: " + conflictingUser.getEmail());
+        }
+
+        // we don't change passwords or registration date or roles etc
+        member.setName(memberDto.getName());
+        member.setEmail(memberDto.getEmail());
+        Membership membership = membershipRepository.findOne(memberDto.getMembership());
+        member.setMembership(membership);
+
+        member.setAddress1(memberDto.getAddress1());
+        if (memberDto.getAddress2() != null) {
+            member.setAddress2(memberDto.getAddress2());
+        }
+
+        member.setCity(memberDto.getCity());
+        member.setState(memberDto.getState());
+        member.setCounty(memberDto.getCounty());
+        member.setPostalCode(memberDto.getPostalCode());
+
+        return memberRepository.save(member);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMemberAccount(Integer id) throws UserNotFoundException {
+        Member member = memberRepository.findOne(id);
+
+        if (member == null) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        }
+
+        Set<Clazz> registrations = member.getClazzes();
+
+        for(Clazz clazz : registrations) {
+            clazz.getMembers().remove(member);
+            clazzRepository.save(clazz);
+        }
+
+
+        clazzRepository.flush();
+        memberRepository.delete(member);
+        memberRepository.flush();
     }
 
     /*

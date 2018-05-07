@@ -10,4 +10,5 @@ public interface ExerciseService {
 
 	void deleteExercise(Integer id);
     void addNewExercise(ExerciseModel model);
+    void editExercise(ExerciseModel exerciseModel);
 }

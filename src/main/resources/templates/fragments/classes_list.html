@@ -80,7 +80,7 @@
                 <thead>
                 <tr>
                     <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <th>View</th>
+                        <th>Details</th>
                     </div>
                     <th>Exercise</th>
                     <th>Start</th>
@@ -92,17 +92,18 @@
                     </div>
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <th>Cancel Class?</th>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_MEMBER')">
-                        <th>Delete Class?</th>
                     </div-->
                 </tr>
 
                 </thead>
                 <tbody>
                 <tr th:each="clazz : ${clazzes}">
-                    <div sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">
-                        <td><a href="#" th:href="@{/admin/classes/details(id=${clazz.id})}">(view)</a></td>
+                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
+                        <td>
+                        <a href="#" th:href="@{/admin/classes/details(id=${clazz.id})}">(view)</a><br/>
+                        <a href="#" th:href="@{/admin/classes/edit(id=${clazz.id})}">(edit)</a><br/>
+                        <a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}" th:if="${clazz.isInFuture()}">(delete)</a>
+                        </td>
                     </div>
                     <td th:inline="text">[[${clazz.exercise.name}]]</td>
                     <td th:inline="text">[[${clazz.start}]]</td>
@@ -110,15 +111,15 @@
                     <td th:inline="text">[[${clazz.instructor?.name}]]</td>
                     <td th:inline="text">[[${clazz.getTotalRegistered()}]] / [[${clazz.getCapacity()}]]</td>
                     <div sec:authorize="isAuthenticated() and hasAuthority('REGISTER_SELF_FOR_CLASS')">
-                        <td th:unless="${clazz.hasUserRegistered(currentUser)}"><a href="#" th:href="@{/classes/register(self=true, class=${clazz.getId()})}">Register?</a></td>
-                        <!-- see https://english.stackexchange.com/questions/25931/unregister-vs-deregister -->
-                        <td th:if="${clazz.hasUserRegistered(currentUser)}">Registered<br/><a href="#" th:href="@{/classes/deregister(self=true, class=${clazz.getId()})}">Revoke?</a></td>
+                        <td>
+                                <a th:if="${clazz.canRegister(currentUser)}" href="#" th:href="@{/classes/register(self=true, class=${clazz.getId()})}">Register?</a>
+                                <a th:if="${clazz.hasUserRegistered(currentUser)}" th:href="@{/classes/deregister(self=true, class=${clazz.getId()})}">Revoke registration?</a>
+                            &nbsp;
+                        </td>
+
                     </div>
                     <!--div sec:authorize="isAuthenticated() and hasAuthority('CANCEL_CLASS')">
                         <td><a href="#" th:href="@{class/cancel/{id}(id=${clazz.id})}">Cancel?</a></td>
-                    </div>
-                    <div sec:authorize="isAuthenticated() and hasAuthority('DELETE_CLASS')">
-                        <td><a href="#" th:href="@{/admin/classes/delete(id=${clazz.id})}">Delete?</a></td>
                     </div-->
                 </tr>
                 </tbody>

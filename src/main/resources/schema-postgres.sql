@@ -268,6 +268,7 @@ BEGIN
     	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
    			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
    		AND NEW.INSTRUCTOR_ID = c.INSTRUCTOR_ID
+   		AND NEW.CLASS_ID <> c.CLASS_ID
    		LIMIT 1;
     IF class_id is not null THEN
         RAISE EXCEPTION 'Instructor overlaps existing class >>%<<', class_id;
@@ -277,6 +278,7 @@ BEGIN
     	WHERE ((c.START_DATETIME, c.END_DATETIME) OVERLAPS
    			(NEW.START_DATETIME, NEW.DURATION * INTERVAL '1 minutes'))
    		AND NEW.ROOM_ID = c.ROOM_ID
+   		AND (NEW.CLASS_ID <> c.CLASS_ID)
    		LIMIT 1;
 	IF found THEN
         RAISE EXCEPTION 'Room overlaps existing class >>%<<', class_id;

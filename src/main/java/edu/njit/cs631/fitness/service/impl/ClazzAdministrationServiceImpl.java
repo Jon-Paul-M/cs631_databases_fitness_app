@@ -13,9 +13,11 @@ import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.service.api.UserService;
+import edu.njit.cs631.fitness.web.error.ClassConflictException;
 import edu.njit.cs631.fitness.web.error.InstructorConflictException;
 import edu.njit.cs631.fitness.web.error.RoomConflictException;
 
+import edu.njit.cs631.fitness.web.model.ClazzModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -119,7 +121,7 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
                     .stream()
                     .map(User::getId)
                     .collect(Collectors.toSet());
-            if(clazz.getCapacity() > registered_users.size()) {
+            if(clazz.getCapacity() >= registered_users.size()) {
                 int remainingCapacity = clazz.getCapacity() - registered_users.size();
                 Set<Integer> all_unregistered_members = new HashSet<>(all_members);
                 all_unregistered_members.removeAll(registered_users);
@@ -152,7 +154,14 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 
     @Override
 	@Transactional
-	public Clazz createClass(Integer exerciseId, Integer instructorId, Integer roomId, LocalDateTime start, Integer duration) {
+	public Clazz createClass(
+	        Integer exerciseId,
+            Integer instructorId,
+            Integer roomId,
+            LocalDateTime start,
+            Integer duration)
+            throws ClassConflictException
+    {
     	Clazz clazz = null;
 		try {
 			logger.info("In clazzAdministrationService.createClass");
@@ -186,13 +195,51 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 		return null;
 	}
 
+
+
+    @Override
+    @Transactional
+    public void editClass(ClazzModel clazzModel) {
+        Clazz clazz = clazzRepository.findOne(clazzModel.getId());
+        Exercise exercise = exerciseRepository.findOne(clazzModel.getExercise());
+        Instructor instructor = userService.findInstructor(clazzModel.getInstructor());
+        Room room = roomRepository.findOne(clazzModel.getRoom());
+        try {
+            logger.info("In clazzAdministrationService.editClass");
+            clazz.setExercise(exercise);
+            clazz.setInstructor((User)instructor);
+            clazz.setRoom(room);
+            clazz.setStart(Timestamp.valueOf(clazzModel.getStartTime()));
+            clazz.setDuration(clazzModel.getDuration());
+            clazzRepository.saveAndFlush(clazz);
+        } catch (Throwable t) {
+			Throwable root = ExceptionUtils.getRootCause(t);
+			if (root.getMessage().indexOf(INSTRUCTOR_OVERLAPS_MESSAGE) != -1) {
+				InstructorConflictException e = new InstructorConflictException(INSTRUCTOR_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else if (root.getMessage().indexOf(ROOM_OVERLAPS_MESSAGE) != -1) {
+				RoomConflictException e = new RoomConflictException(ROOM_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else {
+				ExceptionUtils.rethrow(t);
+			}
+		}
+    }
+
+
     @Override
     public void deleteClazz(Integer clazzId) {
         Clazz clazz = clazzRepository.findOne(clazzId);
 
         if(clazz.getMembers().size() > 0) {
             clazz.setMembers(new HashSet<>());
-            clazzRepository.saveAndFlush(clazz);
+            clazz.setRoom(null);
+            clazz.setExercise(null);
+            clazzRepository.save(clazz);
         }
 
         clazzRepository.delete(clazz);
@@ -261,17 +308,5 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
         }
     }
 
-    // TODO: How are we doing this?
-    // See https://stackoverflow.com/questions/17106670/how-to-check-a-timeperiod-is-overlapping-another-time-period-in-java
-    private boolean timePeriodsOverlap(LocalDateTime startA,
-                                       LocalDateTime stopA,
-                                       LocalDateTime startB,
-                                       LocalDateTime stopB) {
-	    return (
-                    ( startA.isBefore( stopB ) )
-                    &&
-                    ( stopA.isAfter( startB ) )
-                ) ;
-    }
 
 }
