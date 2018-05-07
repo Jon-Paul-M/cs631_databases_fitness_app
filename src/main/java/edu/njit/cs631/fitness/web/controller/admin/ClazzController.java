@@ -3,13 +3,12 @@ package edu.njit.cs631.fitness.web.controller.admin;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
+import edu.njit.cs631.fitness.data.entity.security.User;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
+import edu.njit.cs631.fitness.web.util.UserNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +86,12 @@ public class ClazzController extends BaseController {
 	    Clazz clazz = clazzRepository.findOne(id);
 
 	    if(clazz == null) return err;
+	    Set<User> members = clazz.getMembers();
+	    List<User> userList = new ArrayList<>(members);
+	    userList.sort(new UserNameComparator());
 
 	    mv.addObject("clazzes", Arrays.asList(clazz));
-	    mv.addObject("users", clazz.getMembers());
+	    mv.addObject("users", userList);
 
 	    return mv;
     }

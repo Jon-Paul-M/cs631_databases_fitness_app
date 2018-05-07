@@ -109,11 +109,20 @@ public class Clazz {
         return room.getCapacity();
     }
 
+    public boolean isFull() {
+        return getCapacity() <= getTotalRegistered();
+    }
+
     public boolean canRegister(User user) {
         return !hasUserRegistered(user) &&
                 isInFuture() &&
-                (this.getCapacity() > this.getMembers().size());
+                !isFull();
     }
+
+    public boolean canNotRegister(User user) {
+        return isInFuture() && !hasUserRegistered(user) && isFull();
+    }
+
 
     public boolean isInFuture() {
         return this.start.after(Timestamp.valueOf(LocalDateTime.now()));

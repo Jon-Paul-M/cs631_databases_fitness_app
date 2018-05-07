@@ -8,7 +8,7 @@ import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.MembershipRepository;
 import edu.njit.cs631.fitness.service.api.*;
 import edu.njit.cs631.fitness.web.util.ClazzDateComparator;
-import edu.njit.cs631.fitness.web.util.MemberNameComparator;
+import edu.njit.cs631.fitness.web.util.UserNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -78,7 +77,7 @@ public abstract class BaseController {
 
 
     protected void addMembers(ModelAndView modelAndView, List<Member> members) {
-        members.sort(new MemberNameComparator());
+        members.sort(new UserNameComparator());
         modelAndView.addObject("members", members);
     }
 
