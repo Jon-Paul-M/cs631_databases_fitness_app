@@ -13,14 +13,13 @@ import edu.njit.cs631.fitness.data.repository.MemberRepository;
 import edu.njit.cs631.fitness.data.repository.security.UserRepository;
 import edu.njit.cs631.fitness.service.api.ClazzService;
 import edu.njit.cs631.fitness.service.api.UserService;
-
 import edu.njit.cs631.fitness.web.error.ClassConflictException;
 import edu.njit.cs631.fitness.web.error.InstructorConflictException;
 import edu.njit.cs631.fitness.web.error.RoomConflictException;
+
 import edu.njit.cs631.fitness.web.model.ClazzModel;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.postgresql.util.PSQLException;
-import org.postgresql.util.PSQLState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,10 @@ import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 
 @Service("clazzAdministrationService")
 public class ClazzAdministrationServiceImpl implements ClazzAdministrationService {
+
+	private static final String INSTRUCTOR_OVERLAPS_MESSAGE = "Instructor overlaps existing class";
+
+	private static final String ROOM_OVERLAPS_MESSAGE = "Room overlaps existing class";
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -160,11 +163,11 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
             throws ClassConflictException
     {
     	Clazz clazz = null;
-        Exercise exercise = exerciseRepository.findOne(exerciseId);
-        Instructor instructor = userService.findInstructor(instructorId);
-        Room room = roomRepository.findOne(roomId);
 		try {
 			logger.info("In clazzAdministrationService.createClass");
+			Exercise exercise = exerciseRepository.findOne(exerciseId);
+			Instructor instructor = userService.findInstructor(instructorId);
+			Room room = roomRepository.findOne(roomId);
 			clazz = new Clazz();
 			clazz.setExercise(exercise);
 			clazz.setInstructor((User)instructor);
@@ -173,18 +176,18 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
 			clazz.setDuration(duration);
 			clazz = clazzRepository.saveAndFlush(clazz);
 			return clazz;
-
-        } catch (Throwable t) {
+		} catch (Throwable t) {
 			Throwable root = ExceptionUtils.getRootCause(t);
-			if (root.getMessage().contains("Instructor overlaps existing class")) {
-                throw new InstructorConflictException(
-                        String.format("Instructor %s (%s) conflicts in another time slot.",
-                                instructor.getName(), instructor.getEmail()));
-            } else if (root.getMessage().contains("Room overlaps existing class")) {
-                throw new RoomConflictException(
-                        String.format("Room %s %s conflicts in another time slot.",
-                                room.getBuildingName(), room.getRoomNumber()));
-
+			if (root.getMessage().indexOf(INSTRUCTOR_OVERLAPS_MESSAGE) != -1) {
+				InstructorConflictException e = new InstructorConflictException(INSTRUCTOR_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else if (root.getMessage().indexOf(ROOM_OVERLAPS_MESSAGE) != -1) {
+				RoomConflictException e = new RoomConflictException(ROOM_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
 			} else {
 				ExceptionUtils.rethrow(t);
 			}
@@ -210,21 +213,21 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
             clazz.setDuration(clazzModel.getDuration());
             clazzRepository.saveAndFlush(clazz);
         } catch (Throwable t) {
-            Throwable root = ExceptionUtils.getRootCause(t);
-            if (root == null) ExceptionUtils.rethrow(t);
-            if (root.getMessage() != null && root.getMessage().contains("Instructor overlaps existing class")) {
-                throw new InstructorConflictException(
-                        String.format("Instructor %s (%s) conflicts in another time slot.",
-                                instructor.getName(), instructor.getEmail()));
-            } else if (root.getMessage().contains("Room overlaps existing class")) {
-                throw new RoomConflictException(
-                        String.format("Room %s %s conflicts in another time slot.",
-                                room.getBuildingName(), room.getRoomNumber()));
-
-            } else {
-                ExceptionUtils.rethrow(t);
-            }
-        }
+			Throwable root = ExceptionUtils.getRootCause(t);
+			if (root.getMessage().indexOf(INSTRUCTOR_OVERLAPS_MESSAGE) != -1) {
+				InstructorConflictException e = new InstructorConflictException(INSTRUCTOR_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else if (root.getMessage().indexOf(ROOM_OVERLAPS_MESSAGE) != -1) {
+				RoomConflictException e = new RoomConflictException(ROOM_OVERLAPS_MESSAGE, root);
+				String classId = StringUtils.substringBetween(root.getMessage(), ">>", "<<");
+				e.setConflictingClassId(Integer.parseInt(classId));
+				throw e;
+			} else {
+				ExceptionUtils.rethrow(t);
+			}
+		}
     }
 
 
@@ -305,18 +308,5 @@ public class ClazzAdministrationServiceImpl implements ClazzAdministrationServic
         }
     }
 
-
-    // TODO: How are we doing this?
-    // See https://stackoverflow.com/questions/17106670/how-to-check-a-timeperiod-is-overlapping-another-time-period-in-java
-    private boolean timePeriodsOverlap(LocalDateTime startA,
-                                       LocalDateTime stopA,
-                                       LocalDateTime startB,
-                                       LocalDateTime stopB) {
-	    return (
-                    ( startA.isBefore( stopB ) )
-                    &&
-                    ( stopA.isAfter( startB ) )
-                ) ;
-    }
 
 }

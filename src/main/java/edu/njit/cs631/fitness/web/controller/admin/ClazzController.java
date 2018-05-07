@@ -10,9 +10,6 @@ import java.util.List;
 
 import edu.njit.cs631.fitness.data.entity.Clazz;
 import edu.njit.cs631.fitness.data.repository.ClazzRepository;
-import edu.njit.cs631.fitness.web.error.ClassConflictException;
-import edu.njit.cs631.fitness.web.error.InstructorConflictException;
-import edu.njit.cs631.fitness.web.error.RoomConflictException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.cs631.fitness.service.api.ClazzAdministrationService;
 import edu.njit.cs631.fitness.web.controller.BaseController;
+import edu.njit.cs631.fitness.web.error.InstructorConflictException;
+import edu.njit.cs631.fitness.web.error.RoomConflictException;
 import edu.njit.cs631.fitness.web.model.ClazzModel;
 import edu.njit.cs631.fitness.web.model.MonthModel;
 
@@ -157,26 +156,19 @@ public class ClazzController extends BaseController {
 			LocalDateTime start = parseStart(clazzModel);
 			Integer duration = clazzModel.getDuration();
 			try {
-                clazzAdministrationService.createClass(clazzModel.getExercise(),
-                        clazzModel.getInstructor(),
-                        clazzModel.getRoom(),
-                        start,
-                        duration);
-            } catch (InstructorConflictException ice) {
-                ModelAndView mv = commonModelAndView(m);
-                mv.addObject("clazzModel", clazzModel);
-                result.addError(new ObjectError("instructor", ice.getMessage()));
-                return mv;
-            } catch (RoomConflictException rce) {
-                ModelAndView mv = commonModelAndView(m);
-                mv.addObject("clazzModel", clazzModel);
-                result.addError(new ObjectError("room", rce.getMessage()));
-                return mv;
-            }
-            clazzModel = defaultClazz();
+				clazzAdministrationService.createClass(clazzModel.getExercise(),
+	                                                   clazzModel.getInstructor(),
+	                                                   clazzModel.getRoom(),
+	                                                   start,
+	                                                   duration);
+			} catch (InstructorConflictException | RoomConflictException e) {
+				ModelAndView mv = commonModelAndView(m);
+				mv.addObject("errorMessage", e.getMessage());
+	            mv.addObject("clazzModel", clazzModel);
+	            return mv;
+			}
 		}
-
-		return commonModelAndView().addObject("clazzModel", clazzModel);
+		return commonModelAndView().addObject("clazzModel", defaultClazz());
 
 	}
 

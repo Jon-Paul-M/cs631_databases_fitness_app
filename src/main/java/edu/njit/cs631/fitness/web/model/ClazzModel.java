@@ -11,6 +11,8 @@ import java.time.ZoneId;
 
 public class ClazzModel {
 
+	private static final String DURATION_MESSAGE = "Duration is in minutes. Please provide a value between 1 and 480.";
+
 	public ClazzModel() {
 		super();
 	}
@@ -53,9 +55,9 @@ public class ClazzModel {
 
 	private String startMeridiem;
 
-    @NotNull(message="Duration is in minutes. Please provide a value between 1 and 480, inclusive.")
-    @Min(value = 1)
-    @Max(value = 480)
+    @NotNull(message=DURATION_MESSAGE)
+    @Min(value = 1, message = DURATION_MESSAGE)
+    @Max(value = 480, message = DURATION_MESSAGE)
 	private Integer duration;
 
 
