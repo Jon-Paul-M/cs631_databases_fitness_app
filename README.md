@@ -1,4 +1,4 @@
-# Medical App
+# Fitness Application
 
 This is a spring boot app.
 
@@ -20,7 +20,7 @@ The eclipse built in is not 100% featureful, so I use it combined with the CLI.
 
 
 The main entry point to the application is this class:
-	edu.njit.cs631.medical.MedicalApplication
+	edu.njit.cs631.fitness.Application
 
 Once you have the STS plugin you can right click on that class, select: Run As -> Spring Boot App
 
