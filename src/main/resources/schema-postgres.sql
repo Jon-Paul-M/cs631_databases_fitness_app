@@ -254,9 +254,12 @@ CREATE OR REPLACE FUNCTION update_end_date() RETURNS trigger AS $$
     END;
 $$ LANGUAGE plpgsql;
 
-CREATE INDEX ix_class_start     ON class (START_DATETIME);
-CREATE INDEX ix_class_end       ON class (END_DATETIME);
-CREATE INDEX ix_class_start_end ON class (START_DATETIME, END_DATETIME);
+-- Since the above OVERLAPS queries are range queries, b-tree indexes are appropiate
+-- If index type unspecified, postgres defaults to btree.
+-- Explictly declaring these as btree for added clearity.
+CREATE INDEX ix_class_start     ON class using btree (START_DATETIME);
+CREATE INDEX ix_class_end       ON class using btree (END_DATETIME);
+CREATE INDEX ix_class_start_end ON class using btree (START_DATETIME, END_DATETIME);
 
 CREATE OR REPLACE FUNCTION check_class_for_conflicts() RETURNS trigger AS $$
 declare
@@ -293,23 +296,9 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER class_020_check_conflicts BEFORE INSERT OR UPDATE ON class 
 	FOR EACH ROW EXECUTE PROCEDURE check_class_for_conflicts();
 
-CREATE TRIGGER trigger_class_010_update_end_date BEFORE INSERT OR UPDATE ON class
+CREATE TRIGGER class_010_update_end_date BEFORE INSERT OR UPDATE ON class
 	FOR EACH ROW EXECUTE PROCEDURE update_end_date();
 
--- This is a dummy table
--- delete before submission and 
--- turn off hibernate schema validation
-CREATE TABLE INSTRUCTOR_PAYROLL (
-	ID               INTEGER,
-	NAME             VARCHAR(512),
-	WAGE             DECIMAL,
-	HOURS            DECIMAL,
-	GROSS            DECIMAL,
-	FED_TAX          DECIMAL,
-	STATE_TAX        DECIMAL,
-	OTHER_TAX        DECIMAL,
-	INSTRUCTOR_TYPE  VARCHAR(512)
-);
 
 
 -- these carrots are necessary for spring boot data loading
